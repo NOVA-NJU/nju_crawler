@@ -409,14 +409,18 @@ async def extract_embedded_pdf_attachment(
     ]
 
 
-def aggregate_content(text: str, image_texts: List[str], attachment_texts: List[str]) -> str:
+def aggregate_content(text: str, image_texts: List[str], attachments: List[Attachments]) -> str:
     """Merge base content, OCR outputs, and attachment snippets into one blob."""
-    chunks = [chunk for chunk in [text] if chunk]
+    chunks: List[str] = []
+    if text:
+        chunks.append(text.strip())
     if image_texts:
-        chunks.append("\n".join(image_texts))
-    if attachment_texts:
-        chunks.append("\n".join(attachment_texts))
-    return "\n\n".join(chunks)
+        chunks.append("\n".join(filter(None, image_texts)).strip())
+    for attachment in attachments:
+        snippet = build_attachment_text_snippet(attachment).strip()
+        if snippet:
+            chunks.append(snippet)
+    return "\n\n".join(chunk for chunk in chunks if chunk)
 
 
 def build_attachment_text_snippet(attachment: Attachments) -> str:
@@ -452,8 +456,7 @@ async def parse_detail_page(html: str, base_url: str, headers: dict) -> tuple[st
     )
 
     attachments = pdf_attachments + doc_attachments + embedded_pdf
-    attachment_texts = [build_attachment_text_snippet(att) for att in attachments if att.text]
-    content = aggregate_content(text_content, image_texts, attachment_texts)
+    content = aggregate_content(text_content, image_texts, attachments)
     return content, attachments
 
 
