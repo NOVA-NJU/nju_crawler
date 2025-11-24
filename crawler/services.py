@@ -429,16 +429,21 @@ def compute_sha256(*segments: Optional[str]) -> str:
 async def parse_detail_page(html: str, base_url: str, headers: dict) -> tuple[str, List[Attachments]]:
     """Parse a detail page and return aggregated text plus attachment metadata."""
     soup = BeautifulSoup(html, "lxml")
-    text_content = extract_text_content(soup, DETAIL_SELECTORS.get("text_selector"))
-    image_texts = await extract_image_texts(soup, DETAIL_SELECTORS.get("img_selector"), base_url, headers)
+    # 匹配当前 base_url 对应的 selector 配置
+    selector_cfg = next((cfg for cfg in DETAIL_SELECTORS if cfg["base_url"] == base_url), None)
+    if not selector_cfg:
+        selector_cfg = DETAIL_SELECTORS[0]  # 默认用第一个
+
+    text_content = extract_text_content(soup, selector_cfg.get("text_selector"))
+    image_texts = await extract_image_texts(soup, selector_cfg.get("img_selector"), base_url, headers)
     pdf_attachments = await extract_file_texts(
-        soup, DETAIL_SELECTORS.get("pdf_selector"), base_url, headers, allowed_ext=(".pdf",)
+        soup, selector_cfg.get("pdf_selector"), base_url, headers, allowed_ext=(".pdf",)
     )
     doc_attachments = await extract_file_texts(
-        soup, DETAIL_SELECTORS.get("doc_selector"), base_url, headers, allowed_ext=(".docx",)
+        soup, selector_cfg.get("doc_selector"), base_url, headers, allowed_ext=(".docx",)
     )
     embedded_pdf = await extract_embedded_pdf_attachment(
-        soup, DETAIL_SELECTORS.get("embedded_pdf_selector"), base_url, headers
+        soup, selector_cfg.get("embedded_pdf_selector"), base_url, headers
     )
 
     attachments = pdf_attachments + doc_attachments + embedded_pdf
