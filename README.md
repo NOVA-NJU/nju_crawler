@@ -46,14 +46,45 @@
 - `venv/`：虚拟环境目录（自动生成，无需提交到Git）
 - `.env`：环境变量配置文件（敏感信息请勿提交到Git）
 
+## 项目目录结构
+
+```
+nju_crawler/
+├─ main.py                # 主应用入口
+├─ requirements.txt       # 依赖列表
+├─ .env                   # 环境变量配置
+├─ crawler/               # 学院官网爬虫模块
+│    ├─ __init__.py
+│    ├─ config.py
+│    ├─ models.py
+│    ├─ services.py
+│    ├─ router.py
+│    └─ lifecycle.py
+├─ wechat/                # 微信公众号爬虫模块
+│    ├─ __init__.py
+│    ├─ config.py
+│    ├─ models.py
+│    ├─ services.py
+│    └─ router.py
+├─ storage/               # 公共数据库与API模块
+│    ├─ __init__.py
+│    ├─ config.py
+│    ├─ database.py
+│    └─ router.py         # 统一查询API
+└─ ...
+```
+
+- `crawler/`：学院官网爬虫相关代码
+- `wechat/`：公众号爬虫相关代码
+- `storage/`：数据库与通用API，crawler/wechat均可调用
+- `main.py`：主应用入口，统一挂载各模块路由
+
 ## 协作开发建议
 - 每位开发者建议使用虚拟环境，避免依赖冲突
 - 新增依赖请写入 `requirements.txt`，并及时同步
 - 数据库配置请勿提交敏感信息到 Git，可用 `.env` 管理
-- 代码风格建议遵循 PEP8，统一格式
 - 统一通过 `main.py` 或集成到其他 FastAPI 项目
 - 如需迁移历史数据，可用 CSV 导出/导入工具
-- 常见问题请查阅 PostgreSQL 官方文档或项目 Wiki
 
 ---
-如有问题请联系项目维护者。
+如有问题请联系项目维护者.
