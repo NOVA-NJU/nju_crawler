@@ -52,37 +52,65 @@ TARGET_SOURCES = [
             "type": ".wjj .lj",  # 类型标签
         },
         "detail_selector": "#d-container .wp_articlecontent p",  # 详情页正文选择器
+    },
+    {
+        "id": "bksy_ggxxw",
+        "name": "本科生院-公告信息网",
+        "base_url": "https://jw.nju.edu.cn",
+        "list_url": "https://jw.nju.edu.cn/24774/list1.htm",
+        "max_pages": 1,
+        "headers": {  # 请求头，模拟浏览器
+            "USER_AGENT": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+            ),
+            "host": "jw.nju.edu.cn",
+        },
+        "selectors": {  # CSS选择器，定位列表页各字段
+            "item_container": "#wp_news_w6 li.news",  # 每条新闻容器
+            "date": ".news_meta",  # 发布时间
+            "title": ".news_title a",  # 标题
+            "url": ".news_title a",  # 详情页链接
+        },
     }
 ]
 
-DETAIL_SELECTORS = {
-    # 详情页各类内容的CSS选择器配置
-    "meta_selector": {
-        "item_container": "#d-container",  # 元信息容器
-        "publisher": ".arti_publisher",   # 发布者
-        "views": ".arti_views",           # 阅读量
+DETAIL_SELECTORS = [
+    {
+        "base_url": "https://jw.nju.edu.cn",
+        "meta_selector": {
+            "item_container": "#d-container",
+            "publisher": ".arti_publisher",
+            "views": ".arti_views",
+        },
+        "text_selector": {
+            "item_container": "#d-container",
+            "content": ".wp_articlecontent",
+        },
+        "img_selector": {
+            "item_container": "#d-container",
+            "images": ".wp_articlecontent img[src]",
+        },
+        "pdf_selector": {
+            "item_container": "#d-container",
+            "files": ".wp_articlecontent a[href$=\".pdf\"]",
+            "name": ".wp_articlecontent a[href$=\".pdf\"] span",
+        },
+        "doc_selector": {
+            "item_container": "#d-container",
+            "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
+            "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
+        },
+        "embedded_pdf_selector": {
+            "item_container": "#d-container",
+            "viewer": ".wp_articlecontent iframe.wp_pdf_player",
+            "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a",
+        },
     },
-    "text_selector": {
-        "item_container": "#d-container",  # 正文容器
-        "content": ".wp_articlecontent",  # 正文内容
-    },
-    "img_selector": {
-        "item_container": "#d-container",  # 图片容器
-        "images": ".wp_articlecontent img[src]",  # 图片选择器
-    },
-    "pdf_selector": {
-        "item_container": "#d-container",  # PDF容器
-        "files": ".wp_articlecontent a[href$=\".pdf\"]",  # PDF文件链接
-        "name": ".wp_articlecontent a[href$=\".pdf\"] span",  # PDF文件名
-    },
-    "doc_selector": {
-        "item_container": "#d-container",  # Word文档容器
-        "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",  # Word文件链接
-        "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",  # Word文件名
-    },
-    "embedded_pdf_selector": {
-        "item_container": "#d-container",  # 内嵌PDF容器
-        "viewer": ".wp_articlecontent iframe.wp_pdf_player",  # PDF预览iframe
-        "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a",  # PDF下载链接
-    },
-}
+    # 如有其他 base_url，可继续添加
+    # {
+    #     "base_url": "https://example.com",
+    #     "meta_selector": {...},
+    #     ...
+    # },
+]
