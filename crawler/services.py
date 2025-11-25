@@ -513,6 +513,10 @@ async def crawl_source(source_id: str) -> List[CrawlItem]:
         detail_url = entry.get("url")
         if not detail_url:
             return None
+        item_id = compute_sha256((entry.get("title") or "") + (detail_url or ""), detail_url)
+        exists = await asyncio.to_thread(database.record_exists, item_id)
+        if exists:
+            return None
         try:
             async with semaphore:
                 detail_html = await fetch_html(detail_url, source_cfg["headers"])
@@ -524,12 +528,7 @@ async def crawl_source(source_id: str) -> List[CrawlItem]:
             content = "详情页不可访问"
             attachments = None
 
-        item_id = compute_sha256((entry.get("title") or "") + (detail_url or ""), detail_url)
         publish_time = parse_publish_time(entry.get("date"))
-
-        exists = await asyncio.to_thread(database.record_exists, item_id)
-        if exists:
-            return None
 
         attachments_payload = None
         if attachments:
