@@ -1,0 +1,73 @@
+{
+  "sources": [
+    {
+      "id": "med_xyxw",
+      "name": "医学院-学院新闻",
+      "base_url": "https://med.nju.edu.cn",
+      "list_url": "https://med.nju.edu.cn/10653/list.htm",
+      "max_pages": 1,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "med.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": "#wp_news_w26 li.list_item",
+        "date": ".Article_PublishDate",
+        "title": ".Article_Title a",
+        "url": ".Article_Title a"
+      }
+    },
+    {
+      "id": "med_xygg",
+      "name": "医学院-学院公告",
+      "base_url": "https://med.nju.edu.cn",
+      "list_url": "https://med.nju.edu.cn/10654/list.htm",
+      "max_pages": 1,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "med.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": "#wp_news_w26 li.list_item",
+        "date": ".Article_PublishDate",
+        "title": ".Article_Title a",
+        "url": ".Article_Title a"
+      }
+    }
+  ],
+  "detail_selectors": [
+    {
+      "base_url": "https://med.nju.edu.cn",
+      "meta_selector": {
+        "item_container": ".infobox",
+        "publisher": ".arti_publisher",
+        "views": ".arti_views",
+        "publish_time": ".arti_update"
+      },
+      "text_selector": {
+        "item_container": ".infobox",
+        "content": ".wp_articlecontent",
+        "title": ".arti_title"
+      },
+      "img_selector": {
+        "item_container": ".infobox",
+        "images": ".wp_articlecontent img[src]"
+      },
+      "pdf_selector": {
+        "item_container": ".infobox",
+        "files": ".wp_articlecontent a[href$=\".pdf\"]",
+        "name": ".wp_articlecontent a[href$=\".pdf\"]"
+      },
+      "doc_selector": {
+        "item_container": ".infobox",
+        "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
+        "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]"
+      },
+      "embedded_pdf_selector": {
+        "item_container": ".infobox",
+        "viewer": ".wp_articlecontent iframe[src*=\".pdf\"]",
+        "download_link": ".wp_articlecontent a[href$=\".pdf\"]"
+      }
+    }
+  ]
+}

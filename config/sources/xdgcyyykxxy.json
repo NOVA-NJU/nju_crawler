@@ -1,0 +1,71 @@
+{
+  "sources": [
+    {
+      "id": "xdgcyyykxxy_xwdt",
+      "name": "现代工程与应用科学学院-新闻动态",
+      "base_url": "https://eng.nju.edu.cn",
+      "list_url": "https://eng.nju.edu.cn/4967/list1.htm",
+      "max_pages": 1,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "eng.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": "#wp_news_w6 li.list_item",
+        "date": ".Article_PublishDate",
+        "title": ".Article_Title a",
+        "url": ".Article_Title a"
+      }
+    },
+    {
+      "id": "xdgcyyykxxy_tzgg",
+      "name": "现代工程与应用科学学院-通知公告",
+      "base_url": "https://eng.nju.edu.cn",
+      "list_url": "https://eng.nju.edu.cn/4968/list1.htm",
+      "max_pages": 1,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "eng.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": "#wp_news_w6 li.list_item",
+        "date": ".Article_PublishDate",
+        "title": ".Article_Title a",
+        "url": ".Article_Title a"
+      }
+    }
+  ],
+  "detail_selectors": [
+    {
+      "base_url": "https://eng.nju.edu.cn",
+      "meta_selector": {
+        "item_container": "#d-container",
+        "publisher": ".arti_publisher",
+        "views": ".arti_views"
+      },
+      "text_selector": {
+        "item_container": "#d-container",
+        "content": ".wp_articlecontent"
+      },
+      "img_selector": {
+        "item_container": "#d-container",
+        "images": ".wp_articlecontent img[src]"
+      },
+      "pdf_selector": {
+        "item_container": "#d-container",
+        "files": ".wp_articlecontent a[href$=\".pdf\"]",
+        "name": ".wp_articlecontent a[href$=\".pdf\"] span"
+      },
+      "doc_selector": {
+        "item_container": "#d-container",
+        "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
+        "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]"
+      },
+      "embedded_pdf_selector": {
+        "item_container": "#d-container",
+        "viewer": ".wp_articlecontent iframe.wp_pdf_player",
+        "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a"
+      }
+    }
+  ]
+}

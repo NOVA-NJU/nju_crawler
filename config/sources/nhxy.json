@@ -1,0 +1,73 @@
+{
+  "sources": [
+    {
+      "id": "nhxy_xyxw",
+      "name": "南赫学院-学院新闻",
+      "base_url": "https://nh.nju.edu.cn",
+      "list_url": "https://nh.nju.edu.cn/index/xyxw.htm",
+      "max_pages": 1,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "nh.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": ".s1-d ul.flex li",
+        "date": "span",
+        "title": "h3 em",
+        "url": "a"
+      }
+    },
+    {
+    "id": "nh_zxtz",
+    "name": "南赫学院-通知公告", 
+    "base_url": "https://nh.nju.edu.cn",
+    "list_url": "https://nh.nju.edu.cn/index/zxtz.htm",
+    "max_pages": 1,
+    "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "nh.nju.edu.cn"
+    },
+    "selectors": {
+        "item_container": ".list-txt ul.flex li",
+        "date": "span",
+        "title": "h3 em",
+        "url": "a"
+    }
+}
+  ],
+  "detail_selectors": [
+    {
+      "base_url": "https://nh.nju.edu.cn",
+      "meta_selector": {
+        "item_container": ".art-main",
+        "publisher": ".art-titd p span:first-child",
+        "views": ".art-titd p span:contains('浏览量')",
+        "publish_time": ".art-titd p span:contains('发布日期')"
+      },
+      "text_selector": {
+        "item_container": ".art-main",
+        "content": ".v_news_content",
+        "title": ".art-tit h3"
+      },
+      "img_selector": {
+        "item_container": ".art-main",
+        "images": ".v_news_content img.img_vsb_content"
+      },
+      "pdf_selector": {
+        "item_container": ".art-main",
+        "files": ".v_news_content a[href$=\".pdf\"]",
+        "name": ".v_news_content a[href$=\".pdf\"]"
+      },
+      "doc_selector": {
+        "item_container": ".art-main",
+        "files": ".v_news_content a[href$=\".doc\"], .v_news_content a[href$=\".docx\"]",
+        "name": ".v_news_content a[href$=\".doc\"], .v_news_content a[href$=\".docx\"]"
+      },
+      "embedded_pdf_selector": {
+        "item_container": ".art-main",
+        "viewer": ".v_news_content iframe[src*=\".pdf\"]",
+        "download_link": ".v_news_content a[href$=\".pdf\"]"
+      }
+    }
+  ]
+}

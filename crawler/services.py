@@ -93,7 +93,7 @@ PAGINATION_PATTERN = re.compile(r"(list)(\d+)(\.htm)$", re.IGNORECASE)
 
 
 # 全局异步HTTP会话，模拟Chrome浏览器
-ASYNC_HTTP = curl_requests.AsyncSession(impersonate="chrome120")
+ASYNC_HTTP = curl_requests.AsyncSession(impersonate="chrome120", verify=False)
 
 
 

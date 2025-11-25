@@ -1,0 +1,71 @@
+{
+  "sources": [
+    {
+      "id": "dlyhykxxy_xyxw",
+      "name": "地理与海洋科学学院-学院新闻",
+      "base_url": "https://sgos.nju.edu.cn",
+      "list_url": "https://sgos.nju.edu.cn/8416/list1.htm",
+      "max_pages": 1,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "sgos.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": "ul.news_list li.news",
+        "date": ".news_meta",
+        "title": ".news_title a",
+        "url": ".news_title a"
+      }
+    },
+    {
+      "id": "dlyhykxxy_tzgg",
+      "name": "地理与海洋科学学院-通知公告",
+      "base_url": "https://sgos.nju.edu.cn",
+      "list_url": "https://sgos.nju.edu.cn/8420/list1.htm",
+      "max_pages": 1,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "sgos.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": "ul.news_list li.news",
+        "date": ".news_meta",
+        "title": ".news_title a",
+        "url": ".news_title a"
+      }
+    }
+  ],
+  "detail_selectors": [
+    {
+      "base_url": "https://sgos.nju.edu.cn",
+      "meta_selector": {
+        "item_container": "#d-container",
+        "publisher": ".arti_publisher",
+        "views": ".arti_views"
+      },
+      "text_selector": {
+        "item_container": "#d-container",
+        "content": ".wp_articlecontent"
+      },
+      "img_selector": {
+        "item_container": "#d-container",
+        "images": ".wp_articlecontent img[src]"
+      },
+      "pdf_selector": {
+        "item_container": "#d-container",
+        "files": ".wp_articlecontent a[href$=\".pdf\"]",
+        "name": ".wp_articlecontent a[href$=\".pdf\"] span"
+      },
+      "doc_selector": {
+        "item_container": "#d-container",
+        "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
+        "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]"
+      },
+      "embedded_pdf_selector": {
+        "item_container": "#d-container",
+        "viewer": ".wp_articlecontent iframe.wp_pdf_player",
+        "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a"
+      }
+    }
+  ]
+}
