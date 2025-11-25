@@ -82,11 +82,6 @@
     "detail_selectors": [
         {
         "base_url": "https://sfs.nju.edu.cn",
-        "meta_selector": {
-            "item_container": ".lm5",
-            "title": "h3",
-            "publish_time": ".wzy span:nth-child(1)"
-        },
         "text_selector": {
             "item_container": ".lm5",
             "content": "p"
