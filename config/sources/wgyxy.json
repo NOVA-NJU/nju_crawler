@@ -1,96 +1,96 @@
 {
     "sources": [
         {
-        "id": "wgyxy_wydt",
-        "name": "外国语学院-外院动态",
-        "type": "api",
-        "base_url": "https://sfs.nju.edu.cn",
-        "list_url": "https://sfs.nju.edu.cn//xwgg/wydt/index.html",
-        "api_url": "https://sfs.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "sfs.nju.edu.cn",
-            "Origin": "https://sfs.nju.edu.cn",
-            "Referer": "https://sfs.nju.edu.cn/xwgg/wydt/index.html"
-        },
-        "payload": {
-            "siteid": "130",
-            "channelid": "9224",
-            "pagesize": "14"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
-        },
-        {
-        "id": "wgyxy_gltz",
-        "name": "外国语学院-各类通知",
-        "type": "api",
-        "base_url": "https://sfs.nju.edu.cn",
-        "list_url": "https://sfs.nju.edu.cn//xwgg/gltz/index.html",
-        "api_url": "https://sfs.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 10,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "sfs.nju.edu.cn",
-            "Origin": "https://sfs.nju.edu.cn",
-            "Referer": "https://sfs.nju.edu.cn/xwgg/gltz/index.html"
-        },
-        "payload": {
-            "siteid": "130",
-            "channelid": "9226",
-            "pagesize": "14"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+            "id": "wgyxy_wydt",
+            "name": "外国语学院-外院动态",
+            "type": "api",
+            "base_url": "https://sfs.nju.edu.cn",
+            "list_url": "https://sfs.nju.edu.cn//xwgg/wydt/index.html",
+            "api_url": "https://sfs.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 5,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "sfs.nju.edu.cn",
+                "Origin": "https://sfs.nju.edu.cn",
+                "Referer": "https://sfs.nju.edu.cn/xwgg/wydt/index.html"
+            },
+            "payload": {
+                "siteid": "130",
+                "channelid": "9224",
+                "pagesize": "14"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         },
         {
-        "id": "wgyxy_jzyhd",
-        "name": "外国语学院-讲座与活动",
-        "type": "api",
-        "base_url": "https://sfs.nju.edu.cn",
-        "list_url": "https://sfs.nju.edu.cn//xwgg/jzyhd/index.html",
-        "api_url": "https://sfs.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 10,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "sfs.nju.edu.cn",
-            "Origin": "https://sfs.nju.edu.cn",
-            "Referer": "https://sfs.nju.edu.cn/xwgg/jzyhd/index.html"
+            "id": "wgyxy_gltz",
+            "name": "外国语学院-各类通知",
+            "type": "api",
+            "base_url": "https://sfs.nju.edu.cn",
+            "list_url": "https://sfs.nju.edu.cn//xwgg/gltz/index.html",
+            "api_url": "https://sfs.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 10,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "sfs.nju.edu.cn",
+                "Origin": "https://sfs.nju.edu.cn",
+                "Referer": "https://sfs.nju.edu.cn/xwgg/gltz/index.html"
+            },
+            "payload": {
+                "siteid": "130",
+                "channelid": "9226",
+                "pagesize": "14"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         },
-        "payload": {
-            "siteid": "130",
-            "channelid": "9299",
-            "pagesize": "14"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+        {
+            "id": "wgyxy_jzyhd",
+            "name": "外国语学院-讲座与活动",
+            "type": "api",
+            "base_url": "https://sfs.nju.edu.cn",
+            "list_url": "https://sfs.nju.edu.cn//xwgg/jzyhd/index.html",
+            "api_url": "https://sfs.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 10,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "sfs.nju.edu.cn",
+                "Origin": "https://sfs.nju.edu.cn",
+                "Referer": "https://sfs.nju.edu.cn/xwgg/jzyhd/index.html"
+            },
+            "payload": {
+                "siteid": "130",
+                "channelid": "9299",
+                "pagesize": "14"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://sfs.nju.edu.cn",
-        "meta_selector": {
-            "item_container": ".lm5",
-            "title": "h3",
-            "publish_time": ".wzy span:nth-child(1)"
-        },
-        "text_selector": {
-            "item_container": ".lm5",
-            "content": "p"
-        }
+            "base_url": "https://sfs.nju.edu.cn",
+            "meta_selector": {
+                "item_container": ".lm5",
+                "title": "h3",
+                "publish_time": ".wzy span:nth-child(1)"
+            },
+            "text_selector": {
+                "item_container": ".lm5",
+                "content": "p"
+            }
         }
     ]
 }
