@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
 # 默认测试配置
-DEFAULT_CONFIG_FILE = "config/sources/bksy.json"
-DEFAULT_SOURCE_ID = "bksy_ggtz"
+DEFAULT_CONFIG_FILE = "config/sources/sxy.json"
+DEFAULT_SOURCE_ID = "sxy_zxdt"
 
 async def fetch_html(url: str, headers: dict = None):
     print(f"正在抓取: {url} ...")
