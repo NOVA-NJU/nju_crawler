@@ -1,4 +1,3 @@
-
 """
 爬虫服务核心模块 (Crawler Services Core Module)
 
@@ -46,6 +45,7 @@
 # 依赖众多第三方库，支持异步、OCR、PDF/Word解析、向量同步等。
 
 import asyncio  # 异步任务调度
+import base64   # Base64编码
 import hashlib  # 用于生成唯一ID
 import io       # 字节流处理
 import json     # 附件序列化
@@ -229,7 +229,11 @@ def parse_publish_time(date_str: Optional[str]) -> datetime:
     """
     if not date_str:
         return datetime.now(timezone.utc)
-    for fmt in ("%Y-%m-%d", "%Y/%m/%d", "%Y.%m.%d"):
+    
+    # 确保转换为字符串，处理 API 返回整数的情况
+    date_str = str(date_str).strip()
+
+    for fmt in ("%Y-%m-%d", "%Y/%m/%d", "%Y.%m.%d", "%Y%m%d"):
         try:
             return datetime.strptime(date_str, fmt)
         except ValueError:
@@ -467,19 +471,42 @@ async def crawl_source(source_id: str) -> List[CrawlItem]:
         raise ValueError(f"Unknown source id: {source_id}")
 
     max_pages = int(source_cfg.get("max_pages", 1))
-    list_urls = build_paginated_urls(source_cfg["list_url"], max_pages)
-
     entries: List[dict] = []
-    for page_number, list_url in enumerate(list_urls, start=1):
-        try:
-            list_html = await fetch_html(list_url, source_cfg["headers"])
-        except RuntimeError as exc:
-            print(f"[WARN] skip list page {list_url}: {exc}")
-            continue
-        page_entries = parse_list(list_html, source_cfg["selectors"], source_cfg["base_url"])
-        if not page_entries:
-            print(f"[INFO] list page {page_number} returned no entries")
-        entries.extend(page_entries)
+
+    # 分支处理：API 模式 vs 静态 HTML 模式
+    if source_cfg.get("type") == "api":
+        api_url = source_cfg.get("api_url")
+        base_payload = source_cfg.get("payload", {})
+        
+        for page in range(1, max_pages + 1):
+            # 构造当前页的 payload
+            current_payload = base_payload.copy()
+            current_payload["pageno"] = str(page)
+            current_payload["hasPage"] = "true" # 确保包含此参数
+            
+            try:
+                json_data = await fetch_api(api_url, current_payload, source_cfg["headers"])
+                page_entries = parse_api_response(json_data, source_cfg["selectors"], source_cfg["base_url"])
+                if not page_entries:
+                    print(f"[INFO] API page {page} returned no entries. Stopping pagination.")
+                    break
+                entries.extend(page_entries)
+            except RuntimeError as exc:
+                print(f"[WARN] skip API page {page}: {exc}")
+                continue
+    else:
+        list_urls = build_paginated_urls(source_cfg["list_url"], max_pages)
+        for page_number, list_url in enumerate(list_urls, start=1):
+            try:
+                list_html = await fetch_html(list_url, source_cfg["headers"])
+            except RuntimeError as exc:
+                print(f"[WARN] skip list page {list_url}: {exc}")
+                continue
+            page_entries = parse_list(list_html, source_cfg["selectors"], source_cfg["base_url"])
+            if not page_entries:
+                print(f"[INFO] list page {page_number} returned no entries. Stopping pagination.")
+                break
+            entries.extend(page_entries)
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_DETAIL_REQUESTS)
 
     async def process_entry(entry: dict) -> Optional[CrawlItem]:
@@ -547,8 +574,84 @@ async def crawl_source(source_id: str) -> List[CrawlItem]:
             continue
         if result:
             crawl_items.append(result)
+
+    # 终端显示提醒
+    if crawl_items:
+        print(f"\n[SUCCESS] Source '{source_cfg['name']}' crawled successfully. {len(crawl_items)} new items added.")
+    else:
+        print(f"\n[INFO] Source '{source_cfg['name']}' crawled. No new items found.")
+
     return crawl_items
 
 
 def fetch_detail(parsed_lists, headers):
     raise NotImplementedError("fetch_detail is superseded by crawl_source.")
+
+def base64_encode(s):
+    """
+    辅助函数: 将字符串转换为 Base64 编码。
+    """
+    return base64.b64encode(str(s).encode('utf-8')).decode('utf-8')
+
+
+async def fetch_api(
+    url: str,
+    payload: dict,
+    headers: dict,
+    timeout: int = REQUEST_TIMEOUT,
+    retries: int = MAX_RETRIES,
+) -> dict:
+    """
+    异步获取API JSON数据，带重试机制。
+    """
+    # 对 payload 中的所有值进行 Base64 编码
+    encoded_data = {k: base64_encode(v) for k, v in payload.items()}
+    
+    # 确保 headers 中包含 Content-Type
+    if "Content-Type" not in headers:
+        headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
+
+    for attempt in range(retries):
+        try:
+            response = await ASYNC_HTTP.post(url, data=encoded_data, headers=headers, timeout=timeout)
+            response.raise_for_status()
+            return response.json()
+        except Exception as exc:
+            if attempt == retries - 1:
+                raise RuntimeError(f"Failed to fetch API {url} after {retries} attempts.") from exc
+            wait_seconds = 1 + attempt
+            print(f"[WARN] API attempt {attempt + 1} for {url} failed: {exc}; retry in {wait_seconds}s.")
+            await asyncio.sleep(wait_seconds)
+    raise RuntimeError(f"Failed to fetch API {url}")
+
+
+def parse_api_response(json_data: dict, selectors: dict, base_url: str) -> List[dict]:
+    """
+    解析API返回的JSON数据。
+    selectors 映射关系:
+    - item_container: 列表数据在JSON中的键名 (如 "infolist")
+    - title: 标题键名
+    - date: 日期键名
+    - url: URL键名
+    """
+    list_key = selectors.get("item_container", "infolist")
+    items = json_data.get(list_key, [])
+    if not items:
+        return []
+
+    results = []
+    for item in items:
+        title_key = selectors.get("title", "title")
+        date_key = selectors.get("date", "releasetime")
+        url_key = selectors.get("url", "url")
+        
+        raw_url = item.get(url_key)
+        full_url = normalize_url(base_url, raw_url)
+
+        results.append({
+            "title": item.get(title_key),
+            "date": item.get(date_key),
+            "url": full_url,
+            "type": None # API通常不直接返回类型，或者需要额外配置
+        })
+    return results

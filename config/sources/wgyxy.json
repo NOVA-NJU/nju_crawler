@@ -15,12 +15,12 @@
             "Referer": "https://sfs.nju.edu.cn/xwgg/wydt/index.html"
         },
         "payload": {
-            "site_id": "130",
-            "channel_id": "9224",
-            "page_size": "14"
+            "siteid": "130",
+            "channelid": "9224",
+            "pagesize": "14"
         },
-        "fields": {
-            "list_key": "infolist",
+        "selectors": {
+            "item_container": "infolist",
             "title": "title",
             "date": "releasetime",
             "url": "url"
@@ -41,12 +41,12 @@
             "Referer": "https://sfs.nju.edu.cn/xwgg/gltz/index.html"
         },
         "payload": {
-            "site_id": "130",
-            "channel_id": "9226",
-            "page_size": "14"
+            "siteid": "130",
+            "channelid": "9226",
+            "pagesize": "14"
         },
-        "fields": {
-            "list_key": "infolist",
+        "selectors": {
+            "item_container": "infolist",
             "title": "title",
             "date": "releasetime",
             "url": "url"
@@ -67,12 +67,12 @@
             "Referer": "https://sfs.nju.edu.cn/xwgg/jzyhd/index.html"
         },
         "payload": {
-            "site_id": "130",
-            "channel_id": "9299",
-            "page_size": "14"
+            "siteid": "130",
+            "channelid": "9299",
+            "pagesize": "14"
         },
-        "fields": {
-            "list_key": "infolist",
+        "selectors": {
+            "item_container": "infolist",
             "title": "title",
             "date": "releasetime",
             "url": "url"
