@@ -1,0 +1,85 @@
+{
+    "sources": [
+        {
+            "id": "tw_zxdt",
+            "name": "团委-最新动态",
+            "base_url": "https://tuanwei.nju.edu.cn",
+            "list_url": "https://tuanwei.nju.edu.cn/24480/list.htm",
+            "max_pages": 1,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "tuanwei.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#wp_news_w6 li.news",
+                "date": ".news_meta",
+                "title": ".news_title a",
+                "url": ".news_title a"
+            }
+        },
+        {
+            "id": "tw_ggtz",
+            "name": "团委-公告通知",
+            "base_url": "https://tuanwei.nju.edu.cn",
+            "list_url": "https://tuanwei.nju.edu.cn/ggtz/list.htm",
+            "max_pages": 1,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "tuanwei.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#wp_news_w6 li.news",
+                "date": ".news_meta",
+                "title": ".news_title a",
+                "url": ".news_title a"
+            }
+        },
+        {
+            "id": "tw_xxtx",
+            "name": "团委-学院团讯",
+            "base_url": "https://tuanwei.nju.edu.cn",
+            "list_url": "https://tuanwei.nju.edu.cn/24473/list.htm",
+            "max_pages": 1,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "tuanwei.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#wp_news_w6 li.news",
+                "date": ".news_meta",
+                "title": ".news_title a",
+                "url": ".news_title a"
+            }
+        },
+        {
+            "id": "tw_xymt",
+            "name": "团委-校园媒体",
+            "base_url": "https://tuanwei.nju.edu.cn",
+            "list_url": "https://tuanwei.nju.edu.cn/xymt/list.htm",
+            "max_pages": 1,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "tuanwei.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#wp_news_w6 li.news",
+                "date": ".news_meta",
+                "title": ".news_title a",
+                "url": ".news_title a"
+            }
+        }
+    ],
+    "detail_selectors": [
+        {
+            "base_url": "https://tuanwei.nju.edu.cn",
+            "meta_selector": {
+                "item_container": "#d-container",
+                "views": ".arti_views"
+            },
+            "text_selector": {
+                "item_container": "#d-container",
+                "content": ".wp_articlecontent"
+            }
+        }
+    ]
+}

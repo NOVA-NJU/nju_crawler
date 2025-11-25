@@ -516,14 +516,15 @@ async def crawl_source(source_id: str) -> List[CrawlItem]:
         try:
             async with semaphore:
                 detail_html = await fetch_html(detail_url, source_cfg["headers"])
+            content, attachments = await parse_detail_page(detail_html, source_cfg["base_url"], source_cfg["headers"])
+            content = content or ""
         except RuntimeError as exc:
             print(f"[WARN] skip detail {detail_url}: {exc}")
-            return None
+            # 详情页不可访问时，直接存储列表页字段
+            content = "详情页不可访问"
+            attachments = None
 
-        content, attachments = await parse_detail_page(detail_html, source_cfg["base_url"], source_cfg["headers"])
-        content = content or ""
-
-        item_id = compute_sha256(content.strip() or detail_url or "", detail_url)
+        item_id = compute_sha256((entry.get("title") or "") + (detail_url or ""), detail_url)
         publish_time = parse_publish_time(entry.get("date"))
 
         exists = await asyncio.to_thread(database.record_exists, item_id)
