@@ -86,5 +86,18 @@
       }
     }
   ],
-  "detail_selectors": []
+  "detail_selectors": [
+    {
+      "base_url": "https://nubs.nju.edu.cn",
+      "meta_selector": {
+        "item_container": "#container",
+        "publisher": ".arti_publisher",
+        "views": ".arti_views"
+      },
+      "text_selector": {
+        "item_container": "#container",
+        "content": ".wp_articlecontent"
+      }
+    }
+  ]
 }
