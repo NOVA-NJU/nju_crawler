@@ -12,7 +12,7 @@
       },
       "selectors": {
         "item_container": ".newlist1",
-        "date": ".flex",
+        "date": ".flex span",
         "title": ".l1",
         "url": "a"
       },
@@ -30,7 +30,7 @@
       },
       "selectors": {
         "item_container": ".newlist",
-        "date": ".flex",
+        "date": ".flex span",
         "title": ".l1",
         "url": "a"
       },
