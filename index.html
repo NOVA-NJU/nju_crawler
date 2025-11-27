@@ -495,6 +495,11 @@
 
                 // 导出为 Word
                 const exportToWord = () => {
+                    const bodyFontSize = '12pt';      // 正文字体大小
+                    const h1FontSize = '18pt';        // 主标题
+                    const h2FontSize = '12pt';        // 二级标题
+                    const listFontSize = bodyFontSize;
+
                     let htmlContent = `
                         <!DOCTYPE html>
                         <html lang="zh-CN">
@@ -502,13 +507,13 @@
                             <meta charset="UTF-8">
                             <title>南京大学教育资讯</title>
                             <style>
-                                body { font-family: 'SimSun', '宋体', serif; font-size: 14pt; }
-                                h1 { text-align: center; font-family: 'SimHei', '黑体', sans-serif; }
-                                h2 { font-family: 'SimHei', '黑体', sans-serif; font-size: 16pt; margin-top: 20px; margin-bottom: 10px; }
-                                ul { list-style-type: none; padding-left: 20px; }
-                                li { margin-bottom: 8px; }
-                                p { margin-left: 20px; color: #555; }
-                                a { color: #0000FF; text-decoration: none; }
+                                body { font-family: 'SimSun','宋体',serif; font-size: ${bodyFontSize}; }
+                                h1 { text-align: center; font-family: 'SimHei','宋体',sans-serif; font-size: ${h1FontSize}; margin: 16px 0; }
+                                h2 { font-family: 'SimHei','宋体',sans-serif; font-size: ${h2FontSize}; margin-top: 18px; margin-bottom: 8px; }
+                                ul { list-style-type: none; padding-left: 24px; font-size: ${listFontSize}; }
+                                li { margin-bottom: 6px; }
+                                p { margin-left: 24px; color: #555; font-size: ${bodyFontSize}; }
+                                a { color: #0000FF; text-decoration: none; font-size: ${bodyFontSize}; }
                             </style>
                         </head>
                         <body>
