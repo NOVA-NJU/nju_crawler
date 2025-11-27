@@ -4,6 +4,9 @@
 本文件将 crawler 作为主应用运行，支持直接启动。
 """
 from fastapi import FastAPI
+import os
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from crawler.router import router as crawler_router
 from crawler.lifecycle import crawler_lifespan
