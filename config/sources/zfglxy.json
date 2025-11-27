@@ -1,121 +1,121 @@
 {
     "sources": [
         {
-        "id": "zfglxy_xyxw",
-        "name": "政府管理学院-学院新闻",
-        "type": "api",
-        "base_url": "https://public.nju.edu.cn",
-        "list_url": "https://public.nju.edu.cn/sy/xyxw/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "public.nju.edu.cn",
-            "Origin": "https://public.nju.edu.cn",
-            "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
-        },
-        "payload": {
-            "siteid": "32",
-            "channelid": "1648",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
-        },
-        {
-        "id": "zfglxy_tzgg",
-        "name": "政府管理学院-通知公告",
-        "type": "api",
-        "base_url": "https://public.nju.edu.cn",
-        "list_url": "https://public.nju.edu.cn/sy/tzgg/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "public.nju.edu.cn",
-            "Origin": "https://public.nju.edu.cn",
-            "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
-        },
-        "payload": {
-            "siteid": "32",
-            "channelid": "1649",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+            "id": "zfglxy_xyxw",
+            "name": "政府管理学院-学院新闻",
+            "type": "api",
+            "base_url": "https://public.nju.edu.cn",
+            "list_url": "https://public.nju.edu.cn/sy/xyxw/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "public.nju.edu.cn",
+                "Origin": "https://public.nju.edu.cn",
+                "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
+            },
+            "payload": {
+                "siteid": "32",
+                "channelid": "1648",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
         {
-        "id": "zfglxy_jydt",
-        "name": "政府管理学院-教研动态",
-        "type": "api",
-        "base_url": "https://public.nju.edu.cn",
-        "list_url": "https://public.nju.edu.cn/sy/jydt/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "public.nju.edu.cn",
-            "Origin": "https://public.nju.edu.cn",
-            "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
-        },
-        "payload": {
-            "siteid": "32",
-            "channelid": "15249",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+            "id": "zfglxy_tzgg",
+            "name": "政府管理学院-通知公告",
+            "type": "api",
+            "base_url": "https://public.nju.edu.cn",
+            "list_url": "https://public.nju.edu.cn/sy/tzgg/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "public.nju.edu.cn",
+                "Origin": "https://public.nju.edu.cn",
+                "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
+            },
+            "payload": {
+                "siteid": "32",
+                "channelid": "1649",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
         {
-        "id": "zfglxy_xshd",
-        "name": "政府管理学院-学生活动",
-        "type": "api",
-        "base_url": "https://public.nju.edu.cn",
-        "list_url": "https://public.nju.edu.cn/sy/xshd/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "public.nju.edu.cn",
-            "Origin": "https://public.nju.edu.cn",
-            "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
+            "id": "zfglxy_jydt",
+            "name": "政府管理学院-教研动态",
+            "type": "api",
+            "base_url": "https://public.nju.edu.cn",
+            "list_url": "https://public.nju.edu.cn/sy/jydt/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "public.nju.edu.cn",
+                "Origin": "https://public.nju.edu.cn",
+                "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
+            },
+            "payload": {
+                "siteid": "32",
+                "channelid": "15249",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
-        "payload": {
-            "siteid": "32",
-            "channelid": "1652",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+        {
+            "id": "zfglxy_xshd",
+            "name": "政府管理学院-学生活动",
+            "type": "api",
+            "base_url": "https://public.nju.edu.cn",
+            "list_url": "https://public.nju.edu.cn/sy/xshd/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://public.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "public.nju.edu.cn",
+                "Origin": "https://public.nju.edu.cn",
+                "Referer": "https://public.nju.edu.cn/sy/xyxw/index.html"
+            },
+            "payload": {
+                "siteid": "32",
+                "channelid": "1652",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://public.nju.edu.cn",
-        "text_selector": {
-            "item_container": ".mn_content",
-            "content": "p"
-        }
+            "base_url": "https://public.nju.edu.cn",
+            "text_selector": {
+                "item_container": ".mn_content",
+                "content": "p"
+            }
         }
     ]
 }

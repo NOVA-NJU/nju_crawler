@@ -1,84 +1,83 @@
 {
     "sources": [
         {
-        "id": "arch_xwdt",
-        "name": "建筑与城市规划学院-新闻动态",
-        "type": "api",
-        "base_url": "https://arch.nju.edu.cn",
-        "list_url": "https://arch.nju.edu.cn/xwdt/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://arch.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "arch.nju.edu.cn",
-            "Origin": "https://arch.nju.edu.cn",
-            "Referer": "https://arch.nju.edu.cn/xwdt/index.html"
-        },
-        "payload": {
-			"channelid":16882,
-			"pagesize":15
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+            "id": "arch_xwdt",
+            "name": "建筑与城市规划学院-新闻动态",
+            "type": "api",
+            "base_url": "https://arch.nju.edu.cn",
+            "list_url": "https://arch.nju.edu.cn/xwdt/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://arch.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "arch.nju.edu.cn",
+                "Origin": "https://arch.nju.edu.cn",
+                "Referer": "https://arch.nju.edu.cn/xwdt/index.html"
+            },
+            "payload": {
+                "channelid": 16882,
+                "pagesize": 15
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         },
         {
-        "id": "arch_xwdt_jzg",
-        "name": "建筑与城市规划学院-新闻动态-教职工",
-        "type": "api",
-        "base_url": "https://arch.nju.edu.cn",
-        "list_url": "https://arch.nju.edu.cn/tzgg/jzg/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://arch.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "arch.nju.edu.cn",
-            "Origin": "https://arch.nju.edu.cn",
-            "Referer": "https://arch.nju.edu.cn/tzgg/jzg/index.html"
+            "id": "arch_xwdt_jzg",
+            "name": "建筑与城市规划学院-新闻动态-教职工",
+            "type": "api",
+            "base_url": "https://arch.nju.edu.cn",
+            "list_url": "https://arch.nju.edu.cn/tzgg/jzg/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://arch.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "arch.nju.edu.cn",
+                "Origin": "https://arch.nju.edu.cn",
+                "Referer": "https://arch.nju.edu.cn/tzgg/jzg/index.html"
+            },
+            "payload": {
+                "channelid": 14851,
+                "pagesize": 15
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         },
-        "payload": {
-			"channelid":14851,
-			"pagesize":15
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
-        },
-                {
-        "id": "arch_xwdt_xs",
-        "name": "建筑与城市规划学院-新闻动态-学生",
-        "type": "api",
-        "base_url": "https://arch.nju.edu.cn",
-        "list_url": "https://arch.nju.edu.cn/xwdt/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://arch.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "arch.nju.edu.cn",
-            "Origin": "https://arch.nju.edu.cn",
-            "Referer": "https://arch.nju.edu.cn/tzgg/xs/index.html"
-        },
-        "payload": {
-			"channelid":14852,
-			"pagesize":15
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+        {
+            "id": "arch_xwdt_xs",
+            "name": "建筑与城市规划学院-新闻动态-学生",
+            "type": "api",
+            "base_url": "https://arch.nju.edu.cn",
+            "list_url": "https://arch.nju.edu.cn/xwdt/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://arch.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "arch.nju.edu.cn",
+                "Origin": "https://arch.nju.edu.cn",
+                "Referer": "https://arch.nju.edu.cn/tzgg/xs/index.html"
+            },
+            "payload": {
+                "channelid": 14852,
+                "pagesize": 15
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         }
     ],
-    "detail_selectors": [
-    ]
+    "detail_selectors": []
 }

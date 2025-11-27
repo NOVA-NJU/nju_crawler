@@ -1,73 +1,73 @@
 {
     "sources": [
         {
-        "id": "jqryzdhxy_xwdt",
-        "name": "机器人与自动化学院-新闻动态",
-        "type": "api",
-        "base_url": "https://ra.nju.edu.cn",
-        "list_url": "https://ra.nju.edu.cn/xydt/xwdt/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://ra.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "ra.nju.edu.cn",
-            "Origin": "https://ra.nju.edu.cn",
-            "Referer": "https://ra.nju.edu.cn/xydt/xwdt/index.html"
-        },
-        "payload": {
-			"channelid":17159,
-			"pagesize":15
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+            "id": "jqryzdhxy_xwdt",
+            "name": "机器人与自动化学院-新闻动态",
+            "type": "api",
+            "base_url": "https://ra.nju.edu.cn",
+            "list_url": "https://ra.nju.edu.cn/xydt/xwdt/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://ra.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "ra.nju.edu.cn",
+                "Origin": "https://ra.nju.edu.cn",
+                "Referer": "https://ra.nju.edu.cn/xydt/xwdt/index.html"
+            },
+            "payload": {
+                "channelid": 17159,
+                "pagesize": 15
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         },
         {
-        "id": "jqryzdhxy_tzgg",
-        "name": "机器人与自动化学院-通知公告",
-        "type": "api",
-        "base_url": "https://ra.nju.edu.cn",
-        "list_url": "https://ra.nju.edu.cn/xydt/tzgg/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://ra.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "ra.nju.edu.cn",
-            "Origin": "https://ra.nju.edu.cn",
-            "Referer": "https://ra.nju.edu.cn/xydt/tzgg/index.html"
-        },
-        "payload": {
-			"channelid":17160,
-			"pagesize":15
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+            "id": "jqryzdhxy_tzgg",
+            "name": "机器人与自动化学院-通知公告",
+            "type": "api",
+            "base_url": "https://ra.nju.edu.cn",
+            "list_url": "https://ra.nju.edu.cn/xydt/tzgg/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://ra.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "ra.nju.edu.cn",
+                "Origin": "https://ra.nju.edu.cn",
+                "Referer": "https://ra.nju.edu.cn/xydt/tzgg/index.html"
+            },
+            "payload": {
+                "channelid": 17160,
+                "pagesize": 15
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://ra.nju.edu.cn",
-        "meta_selector": {
-            "item_container": ".info",
-            "publisher": ".item"
-        },
-        "text_selector": {
-            "item_container": ".info",
-            "content": ".zw p"
-        },
-        "img_selector": {
-            "item_container": ".info",
-            "images": ".zw p img[src]"
-        }
+            "base_url": "https://ra.nju.edu.cn",
+            "meta_selector": {
+                "item_container": ".info",
+                "publisher": ".item"
+            },
+            "text_selector": {
+                "item_container": ".info",
+                "content": ".zw p"
+            },
+            "img_selector": {
+                "item_container": ".info",
+                "images": ".zw p img[src]"
+            }
         }
     ]
 }

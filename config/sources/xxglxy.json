@@ -6,7 +6,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwdt/ggtz/xggg.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"
@@ -24,7 +24,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwdt/jxdt.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"
@@ -42,7 +42,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwdt/xsdt.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"
@@ -60,7 +60,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwdt/dqgz.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"
@@ -78,7 +78,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwdt/zsdt.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"
@@ -96,7 +96,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwdt/xgdt.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"
@@ -114,7 +114,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwdt/shfw.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"
@@ -132,7 +132,7 @@
             "base_url": "https://im.nju.edu.cn",
             "list_url": "https://im.nju.edu.cn/xwsd.htm",
             "pagination_mode": "reverse",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "im.nju.edu.cn"

@@ -170,11 +170,11 @@
                         <!-- 展开的子卡片列表 -->
                         <transition
                             enter-active-class="transition ease-out duration-300"
-                            enter-from-class="transform opacity-0 scale-y-95 -translate-y-2"
-                            enter-to-class="transform opacity-100 scale-y-100 translate-y-0"
+                            enter-from-class="opacity-0 -translate-y-4"
+                            enter-to-class="opacity-100 translate-y-0"
                             leave-active-class="transition ease-in duration-200"
-                            leave-from-class="transform opacity-100 scale-y-100 translate-y-0"
-                            leave-to-class="transform opacity-0 scale-y-95 -translate-y-2">
+                            leave-from-class="opacity-100 translate-y-0"
+                            leave-to-class="opacity-0 -translate-y-4">
                             <div v-if="isSourceExpanded(source.id)" class="border-t border-gray-200">
                                 <div v-if="source.items.length > 0" class="divide-y divide-gray-100">
                                     <div v-for="item in source.items" :key="item.id"
@@ -293,49 +293,53 @@
                 // 预定义的信息源列表 (!!! 顺序和 ID 必须与后端匹配 !!!)
                 // 这里的 ID (如 'xsxy') 是一个示例, 您需要替换为后端实际使用的 source_id
                 const sourceList = ref([
-                    { id: 'arch', name: '建筑与城市规划学院' },
-                    { id: 'bksy', name: '本科生院' },
-                    { id: 'dlyhykxxy', name: '地理与海洋科学学院' },
-                    { id: 'dqkxygcxy', name: '地球科学与工程学院' },
-                    { id: 'dzkxygcxy', name: '电子科学与工程学院' },
-                    { id: 'fxy', name: '法学院' },
-                    { id: 'gcglxy', name: '工程管理学院' },
-                    { id: 'gjgxxy', name: '国际关系学院' },
-                    { id: 'hjxy', name: '环境学院' },
-                    { id: 'hwjyxy', name: '海外教育学院' },
-                    { id: 'hxhgxy', name: '化学化工学院' },
-                    { id: 'jcdlxy', name: '集成电路学院' },
-                    { id: 'jqryzdhxy', name: '机器人与自动化学院'},
-                    { id: 'jsjxy', name: '计算机学院' },
-                    { id: 'kymxy', name: '匡亚明学院' },
-                    { id: 'lsxy', name: '历史学院' },
-                    { id: 'mkszyxy', name: '马克思主义学院' },
+                    // 非学院的放最前面
                     { id: 'ndxw', name: '南大新闻' },
-                    { id: 'nhxy', name: '南赫学院' },
-                    { id: 'nyyzyxy', name: '能源与资源学院'},
-                    { id: 'qykxxy', name: '前沿科学学院'},
-                    { id: 'rgznxy', name: '人工智能学院' },
-                    { id: 'rjxy', name: '软件学院' },
-                    { id: 'shxy', name: '社会学院' },
-                    { id: 'smkxxy', name: '生命科学学院' },
-                    { id: 'sxxy', name: '数学学院' },
-                    { id: 'sxy', name: '商学院' },
-                    { id: 'szjjyglxy', name: '数字经济与管理学院' },
                     { id: 'tw', name: '团委' },
-                    { id: 'twykjkxxy', name: '天文与空间科学学院' },
-                    { id: 'wgyxy', name: '外国语学院' },
-                    { id: 'wlxy', name: '物理学院' },
-                    { id: 'wxy', name: '文学院' },
-                    { id: 'xdgcyyykxxy', name: '现代工程与应用科学学院' },
+                    { id: 'bksy', name: '本科生院' },
+                    // 学院顺序如下
                     { id: 'xsxy', name: '新生学院' },
-                    { id: 'xwcbxy', name: '新闻传播学院' },
-                    { id: 'xxglxy', name: '信息管理学院' },
-                    { id: 'ysxy', name: '艺术学院' },
-                    { id: 'yxy', name: '医学院' },
-                    { id: 'zfglxy', name: '政府管理学院' },
-                    { id: 'znkxyjsxy', name: '智能科学与技术学院' },
-                    { id: 'znrjygcxy', name: '智能软件与工程学院学院' },
+                    { id: 'wxy', name: '文学院' },
+                    { id: 'lsxy', name: '历史学院' },
                     { id: 'zxxy', name: '哲学学院' },
+                    { id: 'xwcbxy', name: '新闻传播学院' },
+                    { id: 'fxy', name: '法学院' },
+                    { id: 'sxy', name: '商学院' },
+                    { id: 'wgyxy', name: '外国语学院' },
+                    { id: 'zfglxy', name: '政府管理学院' },
+                    { id: 'gjgxxy', name: '国际关系学院' },
+                    { id: 'xxglxy', name: '信息管理学院' },
+                    { id: 'shxy', name: '社会学院' },
+                    { id: 'sxxy', name: '数学学院' },
+                    { id: 'wlxy', name: '物理学院' },
+                    { id: 'twykjkxxy', name: '天文与空间科学学院' },
+                    { id: 'hxhgxy', name: '化学化工学院' },
+                    { id: 'jsjxy', name: '计算机学院' },
+                    { id: 'rjxy', name: '软件学院' },
+                    { id: 'rgznxy', name: '人工智能学院' },
+                    { id: 'dzkxygcxy', name: '电子科学与工程学院' },
+                    { id: 'xdgcyyykxxy', name: '现代工程与应用科学学院' },
+                    { id: 'hjxy', name: '环境学院' },
+                    { id: 'dqkxygcxy', name: '地球科学与工程学院' },
+                    { id: 'dlyhykxxy', name: '地理与海洋科学学院' },
+                    { id: 'dqkxxy', name: '大气科学学院'},
+                    { id: 'nhxy', name: '南京赫尔辛基大气与地球系统科学学院（南赫学院）' },
+                    { id: 'smkxxy', name: '生命科学学院' },
+                    { id: 'yxy', name: '医学院' },
+                    { id: 'gcglxy', name: '工程管理学院' },
+                    { id: 'kymxy', name: '匡亚明学院' },
+                    { id: 'hwjyxy', name: '海外教育学院' },
+                    { id: 'arch', name: '建筑与城市规划学院' },
+                    { id: 'mkszyxy', name: '马克思主义学院' },
+                    { id: 'ysxy', name: '艺术学院' },
+                    { id: 'znkxyjsxy', name: '智能科学与技术学院' },
+                    { id: 'znrjygcxy', name: '智能软件与工程学院' },
+                    { id: 'jcdlxy', name: '集成电路学院' },
+                    { id: 'szjjyglxy', name: '数字经济与管理学院' },
+                    { id: 'nyyzyxy', name: '能源与资源学院' },
+                    { id: 'jqryzdhxy', name: '机器人与自动化学院' },
+                    { id: 'wlkxy', name: '未来技术学院' },
+                    { id: 'qykxxy', name: '前沿科学学院' },
                 ]);
 
                 // 搜索条件
@@ -375,8 +379,8 @@
                         resultsBySource.get(item.source_id).push(item);
                     });
 
-                    // 2. 遍历预定义的 sourceList 以保证顺序
-                    return sourceList.value.map(source => {
+                    // 2. 只显示已选中的 source
+                    return sourceList.value.filter(source => selectedSourceIds.value.includes(source.id)).map(source => {
                         // 前缀匹配分组
                         const items = [];
                         for (const [sid, arr] of resultsBySource.entries()) {

@@ -6,7 +6,7 @@
       "base_url": "https://sser.nju.edu.cn",
       "list_url": "https://sser.nju.edu.cn/tzgg.htm",
       "pagination_mode": "reverse",
-      "max_pages": 5,
+      "max_pages": 3,
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "sser.nju.edu.cn"
@@ -25,7 +25,7 @@
       "base_url": "https://sser.nju.edu.cn",
       "list_url": "https://sser.nju.edu.cn/xwdt.htm",
       "pagination_mode": "reverse",
-      "max_pages": 5,
+      "max_pages": 3,
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "sser.nju.edu.cn"

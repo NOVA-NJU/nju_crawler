@@ -1,73 +1,73 @@
 {
     "sources": [
         {
-        "id": "hwjyxy_xw",
-        "name": "海外教育学院-新闻",
-        "type": "api",
-        "base_url": "https://hwxy.nju.edu.cn",
-        "list_url": "https://hwxy.nju.edu.cn/syxx/xw/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://hwxy.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "hwxy.nju.edu.cn",
-            "Origin": "https://hwxy.nju.edu.cn",
-            "Referer": "https://hwxy.nju.edu.cn/syxx/xw/index.html"
-        },
-        "payload": {
-			"channelid":12705,
-			"pagesize":15
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+            "id": "hwjyxy_xw",
+            "name": "海外教育学院-新闻",
+            "type": "api",
+            "base_url": "https://hwxy.nju.edu.cn",
+            "list_url": "https://hwxy.nju.edu.cn/syxx/xw/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://hwxy.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "hwxy.nju.edu.cn",
+                "Origin": "https://hwxy.nju.edu.cn",
+                "Referer": "https://hwxy.nju.edu.cn/syxx/xw/index.html"
+            },
+            "payload": {
+                "channelid": 12705,
+                "pagesize": 15
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         },
         {
-        "id": "hwjyxy_gg",
-        "name": "海外教育学院-公告",
-        "type": "api",
-        "base_url": "https://hwxy.nju.edu.cn",
-        "list_url": "https://hwxy.nju.edu.cn/syxx/gg/index.html",
-        "pagination_mode": "api",
-        "api_url": "https://hwxy.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "hwxy.nju.edu.cn",
-            "Origin": "https://hwxy.nju.edu.cn",
-            "Referer": "https://hwxy.nju.edu.cn/syxx/xw/index.html"
-        },
-        "payload": {
-			"channelid":12706,
-			"pagesize":15
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "releasetime",
-            "url": "url"
-        }
+            "id": "hwjyxy_gg",
+            "name": "海外教育学院-公告",
+            "type": "api",
+            "base_url": "https://hwxy.nju.edu.cn",
+            "list_url": "https://hwxy.nju.edu.cn/syxx/gg/index.html",
+            "pagination_mode": "api",
+            "api_url": "https://hwxy.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "hwxy.nju.edu.cn",
+                "Origin": "https://hwxy.nju.edu.cn",
+                "Referer": "https://hwxy.nju.edu.cn/syxx/xw/index.html"
+            },
+            "payload": {
+                "channelid": 12706,
+                "pagesize": 15
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "releasetime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://hwxy.nju.edu.cn",
-        "meta_selector": {
-            "item_container": ".wenzhang_1",
-            "views": ".visit"
-        },
-        "text_selector": {
-            "item_container": ".wenzhang_1",
-            "content": ".words"
-        },
-        "img_selector": {
-            "item_container": ".wenzhang_1",
-            "images": ".words img[src]"
-        }
+            "base_url": "https://hwxy.nju.edu.cn",
+            "meta_selector": {
+                "item_container": ".wenzhang_1",
+                "views": ".visit"
+            },
+            "text_selector": {
+                "item_container": ".wenzhang_1",
+                "content": ".words"
+            },
+            "img_selector": {
+                "item_container": ".wenzhang_1",
+                "images": ".words img[src]"
+            }
         }
     ]
 }

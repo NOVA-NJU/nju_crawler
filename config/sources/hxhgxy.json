@@ -1,72 +1,72 @@
 {
     "sources": [
         {
-        "id": "hxhgxy_ynxw",
-        "name": "化学化工学院-院内新闻",
-        "base_url": "https://chem.nju.edu.cn",
-        "list_url": "https://chem.nju.edu.cn/12639/list.htm",
-        "max_pages": 1,
-        "pagination_mode": "forward",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "chem.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
-        },
-        {
-        "id": "hxhgxy_yntz",
-        "name": "化学化工学院-院内通知",
-        "base_url": "https://chem.nju.edu.cn",
-        "list_url": "https://chem.nju.edu.cn/12641/list.htm",
-        "max_pages": 1,
-        "pagination_mode": "forward",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "chem.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
+            "id": "hxhgxy_ynxw",
+            "name": "化学化工学院-院内新闻",
+            "base_url": "https://chem.nju.edu.cn",
+            "list_url": "https://chem.nju.edu.cn/12639/list.htm",
+            "max_pages": 3,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "chem.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         },
         {
-        "id": "hxhgxy_yntz",
-        "name": "化学化工学院-院内通知",
-        "base_url": "https://chem.nju.edu.cn",
-        "list_url": "https://chem.nju.edu.cn/12641/list.htm",
-        "max_pages": 1,
-        "pagination_mode": "forward",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "chem.nju.edu.cn"
+            "id": "hxhgxy_yntz",
+            "name": "化学化工学院-院内通知",
+            "base_url": "https://chem.nju.edu.cn",
+            "list_url": "https://chem.nju.edu.cn/12641/list.htm",
+            "max_pages": 3,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "chem.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
+        {
+            "id": "hxhgxy_yntz",
+            "name": "化学化工学院-院内通知",
+            "base_url": "https://chem.nju.edu.cn",
+            "list_url": "https://chem.nju.edu.cn/12641/list.htm",
+            "max_pages": 3,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "chem.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://chem.nju.edu.cn",
-        "meta_selector": {
-            "item_container": ".infobox",
-            "publisher": ".arti_publisher",
-            "views": ".WP_VisitCount"
-        },
-        "text_selector": {
-            "item_container": ".infobox",
-            "content": ".wp_articlecontent"
-        }
+            "base_url": "https://chem.nju.edu.cn",
+            "meta_selector": {
+                "item_container": ".infobox",
+                "publisher": ".arti_publisher",
+                "views": ".WP_VisitCount"
+            },
+            "text_selector": {
+                "item_container": ".infobox",
+                "content": ".wp_articlecontent"
+            }
         }
     ]
 }

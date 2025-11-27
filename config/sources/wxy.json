@@ -5,7 +5,7 @@
             "name": "文学院-学院新闻",
             "base_url": "https://chin.nju.edu.cn",
             "list_url": "https://chin.nju.edu.cn/njdx/front/datacall/channel/info.do?iid=28&siteid=37&ctype=1&pagesize=30&cid=1954",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "forward",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -25,7 +25,7 @@
             "name": "文学院-通知公告",
             "base_url": "https://chin.nju.edu.cn",
             "list_url": "https://chin.nju.edu.cn/njdx/front/datacall/channel/info.do?iid=28&siteid=37&ctype=1&pagesize=30&cid=1996",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "forward",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -45,7 +45,7 @@
             "name": "文学院-学院活动",
             "base_url": "https://chin.nju.edu.cn",
             "list_url": "https://chin.nju.edu.cn/njdx/front/datacall/channel/info.do?iid=28&siteid=37&ctype=1&pagesize=30&cid=2005",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "forward",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",

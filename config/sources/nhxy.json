@@ -6,7 +6,7 @@
       "base_url": "https://nh.nju.edu.cn",
       "list_url": "https://nh.nju.edu.cn/index/xyxw.htm",
       "pagination_mode": "reverse",
-      "max_pages": 1,
+      "max_pages": 3,
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "nh.nju.edu.cn"
@@ -19,23 +19,23 @@
       }
     },
     {
-    "id": "nh_zxtz",
-    "name": "南赫学院-通知公告", 
-    "base_url": "https://nh.nju.edu.cn",
-    "list_url": "https://nh.nju.edu.cn/index/zxtz.htm",
-    "pagination_mode": "reverse",
-    "max_pages": 1,
-    "headers": {
+      "id": "nh_zxtz",
+      "name": "南赫学院-通知公告",
+      "base_url": "https://nh.nju.edu.cn",
+      "list_url": "https://nh.nju.edu.cn/index/zxtz.htm",
+      "pagination_mode": "reverse",
+      "max_pages": 3,
+      "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "nh.nju.edu.cn"
-    },
-    "selectors": {
+      },
+      "selectors": {
         "item_container": ".list-txt ul.flex li",
         "date": "span",
         "title": "h3 em",
         "url": "a"
+      }
     }
-}
   ],
   "detail_selectors": [
     {

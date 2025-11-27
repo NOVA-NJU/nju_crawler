@@ -1,54 +1,54 @@
 {
     "sources": [
         {
-        "id": "gjgxxy_xydt",
-        "name": "国际关系学院-学院动态",
-        "base_url": "https://sis.nju.edu.cn",
-        "list_url": "https://sis.nju.edu.cn/46083/list1.htm",
-        "pagination_mode": "forward",
-        "max_pages": 1,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "sis.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
+            "id": "gjgxxy_xydt",
+            "name": "国际关系学院-学院动态",
+            "base_url": "https://sis.nju.edu.cn",
+            "list_url": "https://sis.nju.edu.cn/46083/list1.htm",
+            "pagination_mode": "forward",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "sis.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         },
         {
-        "id": "gjgxxy_tzgg",
-        "name": "国际关系学院-通知公告",
-        "base_url": "https://sis.nju.edu.cn",
-        "list_url": "https://sis.nju.edu.cn/46084/list.htm",
-        "pagination_mode": "forward",
-        "max_pages": 1,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "sis.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
+            "id": "gjgxxy_tzgg",
+            "name": "国际关系学院-通知公告",
+            "base_url": "https://sis.nju.edu.cn",
+            "list_url": "https://sis.nju.edu.cn/46084/list.htm",
+            "pagination_mode": "forward",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "sis.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://sis.nju.edu.cn",
-        "meta_selector": {
-            "item_container": "#d-container",
-            "publisher": ".arti_publisher",
-            "views": ".arti_views   "
-        },
-        "text_selector": {
-            "item_container": "#d-container",
-            "content": ".wp_articlecontent"
-        }
+            "base_url": "https://sis.nju.edu.cn",
+            "meta_selector": {
+                "item_container": "#d-container",
+                "publisher": ".arti_publisher",
+                "views": ".arti_views   "
+            },
+            "text_selector": {
+                "item_container": "#d-container",
+                "content": ".wp_articlecontent"
+            }
         }
     ]
 }

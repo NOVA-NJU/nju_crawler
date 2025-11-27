@@ -5,7 +5,7 @@
             "name": "历史学院-学院新闻",
             "base_url": "https://history.nju.edu.cn",
             "list_url": "https://history.nju.edu.cn/28497/list.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "forward",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
@@ -23,7 +23,7 @@
             "name": "历史学院-公告通知",
             "base_url": "https://history.nju.edu.cn",
             "list_url": "https://history.nju.edu.cn/28498/list.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "forward",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
@@ -51,6 +51,11 @@
                 "item_container": ".info-box",
                 "content": ".wp_articlecontent",
                 "images": ".wp_articlecontent img"
+            },
+            "embedded_pdf_selector": {
+                "item_container": ".info-box",
+                "viewer": ".wp_pdf_player",
+                "download_link": ".wp_pdf_player"
             }
         }
     ]

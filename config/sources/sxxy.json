@@ -1,40 +1,40 @@
 {
     "sources": [
         {
-        "id": "sxxy_xygg",
-        "name": "数学学院-学院公告",
-        "type": "api",
-        "base_url": "https://math.nju.edu.cn",
-        "list_url": "https://math.nju.edu.cn/sy/yxgg/index.html",
-        "api_url": "https://math.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "math.nju.edu.cn",
-            "Origin": "https://math.nju.edu.cn",
-            "Referer": "https://math.nju.edu.cn/sy/yxgg/index.html"
-        },
-        "payload": {
-            "siteid": "38",
-            "channelid": "16411",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+            "id": "sxxy_xygg",
+            "name": "数学学院-学院公告",
+            "type": "api",
+            "base_url": "https://math.nju.edu.cn",
+            "list_url": "https://math.nju.edu.cn/sy/yxgg/index.html",
+            "api_url": "https://math.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "math.nju.edu.cn",
+                "Origin": "https://math.nju.edu.cn",
+                "Referer": "https://math.nju.edu.cn/sy/yxgg/index.html"
+            },
+            "payload": {
+                "siteid": "38",
+                "channelid": "16411",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://math.nju.edu.cn",
-        "text_selector": {
-            "item_container": ".container",
-            "content": "p"
-        }
+            "base_url": "https://math.nju.edu.cn",
+            "text_selector": {
+                "item_container": ".container",
+                "content": "p"
+            }
         }
     ]
 }

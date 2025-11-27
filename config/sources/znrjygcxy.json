@@ -6,18 +6,15 @@
       "base_url": "https://ise.nju.edu.cn",
       "list_url": "https://ise.nju.edu.cn/tzgg.htm",
       "pagination_mode": "reverse",
-      "max_pages": 5,
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "ise.nju.edu.cn"
       },
-      "selectors": {
-        "item_container": ".text-list",
-        "date": "li span",
-        "title": "li a",
-        "url": "li a"
-      },
-      "detail_selector": ".art-main ts-art .v_news_content p"
+      "max_pages": 3,
+      "item_container": ".text-list",
+      "date": "li span",
+      "title": "li a",
+      "url": "li a"
     },
     {
       "id": "znrjygcxy_xgdt",
@@ -25,7 +22,7 @@
       "base_url": "https://ise.nju.edu.cn",
       "list_url": "https://ise.nju.edu.cn/xgdt.htm",
       "pagination_mode": "reverse",
-      "max_pages": 5,
+      "max_pages": 3,
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "ise.nju.edu.cn"

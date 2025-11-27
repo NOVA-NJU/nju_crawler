@@ -8,7 +8,7 @@
             "list_url": "https://hjxy.nju.edu.cn/sy/xydt/index.html",
             "pagination_mode": "api",
             "api_url": "https://hjxy.nju.edu.cn/njdx/openapi/t/info/list.do",
-            "max_pages": 5,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "hjxy.nju.edu.cn",
@@ -35,7 +35,7 @@
             "list_url": "https://hjxy.nju.edu.cn/sy/tzgg/index.html",
             "pagination_mode": "api",
             "api_url": "https://hjxy.nju.edu.cn/njdx/openapi/t/info/list.do",
-            "max_pages": 5,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "hjxy.nju.edu.cn",
@@ -62,7 +62,7 @@
             "list_url": "https://hjxy.nju.edu.cn/sy/kjjz/index.html",
             "pagination_mode": "api",
             "api_url": "https://hjxy.nju.edu.cn/njdx/openapi/t/info/list.do",
-            "max_pages": 5,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "hjxy.nju.edu.cn",
@@ -89,7 +89,7 @@
             "list_url": "https://hjxy.nju.edu.cn/sy/hdfc/index.html",
             "pagination_mode": "api",
             "api_url": "https://hjxy.nju.edu.cn/njdx/openapi/t/info/list.do",
-            "max_pages": 5,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "hjxy.nju.edu.cn",

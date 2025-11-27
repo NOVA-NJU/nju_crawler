@@ -1,89 +1,89 @@
 {
     "sources": [
         {
-        "id": "jsjxy_xwdt",
-        "name": "计算机学院-新闻动态",
-        "base_url": "https://cs.nju.edu.cn",
-        "list_url": "https://cs.nju.edu.cn/1660/list.htm",
-        "max_pages": 1,
-        "pagination_mode": "forward",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "cs.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
-        },
-        {
-        "id": "jsjxy_yngg",
-        "name": "计算机学院-院内公告",
-        "base_url": "https://cs.nju.edu.cn",
-        "list_url": "https://cs.nju.edu.cn/1702/list.htm",
-        "max_pages": 1,
-        "pagination_mode": "forward",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "cs.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
+            "id": "jsjxy_xwdt",
+            "name": "计算机学院-新闻动态",
+            "base_url": "https://cs.nju.edu.cn",
+            "list_url": "https://cs.nju.edu.cn/1660/list.htm",
+            "max_pages": 3,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "cs.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         },
         {
-        "id": "jsjxy_bksggl",
-        "name": "计算机学院-本科生公告栏",
-        "base_url": "https://cs.nju.edu.cn",
-        "list_url": "https://cs.nju.edu.cn/1704/list.htm",
-        "max_pages": 1,
-        "pagination_mode": "forward",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "cs.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
+            "id": "jsjxy_yngg",
+            "name": "计算机学院-院内公告",
+            "base_url": "https://cs.nju.edu.cn",
+            "list_url": "https://cs.nju.edu.cn/1702/list.htm",
+            "max_pages": 3,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "cs.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         },
         {
-        "id": "jsjxy_hyjzxx",
-        "name": "计算机学院-会议讲座信息",
-        "base_url": "https://cs.nju.edu.cn",
-        "list_url": "https://cs.nju.edu.cn/1706/list.htm",
-        "max_pages": 1,
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "cs.nju.edu.cn"
+            "id": "jsjxy_bksggl",
+            "name": "计算机学院-本科生公告栏",
+            "base_url": "https://cs.nju.edu.cn",
+            "list_url": "https://cs.nju.edu.cn/1704/list.htm",
+            "max_pages": 3,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "cs.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "title": ".news_title a",
-            "date": ".news_meta",
-            "url": ".news_title a"
-        }
+        {
+            "id": "jsjxy_hyjzxx",
+            "name": "计算机学院-会议讲座信息",
+            "base_url": "https://cs.nju.edu.cn",
+            "list_url": "https://cs.nju.edu.cn/1706/list.htm",
+            "max_pages": 3,
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "cs.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "title": ".news_title a",
+                "date": ".news_meta",
+                "url": ".news_title a"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://cs.nju.edu.cn",
-        "meta_selector": {
-            "item_container": "#d-container",
-            "publisher": ".arti_publisher",
-            "views": ".WP_VisitCount"
-        },
-        "text_selector": {
-            "item_container": "#d-container",
-            "content": ".wp_articlecontent"
-        }
+            "base_url": "https://cs.nju.edu.cn",
+            "meta_selector": {
+                "item_container": "#d-container",
+                "publisher": ".arti_publisher",
+                "views": ".WP_VisitCount"
+            },
+            "text_selector": {
+                "item_container": "#d-container",
+                "content": ".wp_articlecontent"
+            }
         }
     ]
 }

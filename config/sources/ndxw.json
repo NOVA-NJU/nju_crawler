@@ -5,7 +5,7 @@
             "name": "南大新闻-综合新闻",
             "base_url": "https://www.nju.edu.cn",
             "list_url": "https://www.nju.edu.cn/xww/zhxw.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "reverse",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
@@ -23,7 +23,7 @@
             "name": "南大新闻-校园动态",
             "base_url": "https://www.nju.edu.cn",
             "list_url": "https://www.nju.edu.cn/xww/xydt.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "reverse",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
@@ -41,7 +41,7 @@
             "name": "南大新闻-媒体传真",
             "base_url": "https://www.nju.edu.cn",
             "list_url": "https://www.nju.edu.cn/xww/mtcz.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "reverse",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",

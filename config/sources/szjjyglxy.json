@@ -5,7 +5,7 @@
       "name": "数字经济与管理学院-通知公告",
       "base_url": "https://sdem.nju.edu.cn/",
       "list_url": "https://sdem.nju.edu.cn/56988/list1.htm",
-      "max_pages": 5,
+      "max_pages": 3,
       "pagination_mode": "forward",
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
@@ -24,7 +24,7 @@
       "name": "数字经济与管理学院-学院新闻",
       "base_url": "https://sdem.nju.edu.cn/",
       "list_url": "https://sdem.nju.edu.cn/56973/list1.htm",
-      "max_pages": 5,
+      "max_pages": 3,
       "pagination_mode": "forward",
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
@@ -38,38 +38,38 @@
       },
       "detail_selector": "#d-container .wp_articlecontent p"
     }
-  ],
-  "detail_selectors": [
-    {
-      "base_url": "https://sdem.nju.edu.cn",
-      "meta_selector": {
-        "item_container": "#d-container",
-        "publisher": ".arti_publisher",
-        "views": ".arti_views"
-      },
-      "text_selector": {
-        "item_container": "#d-container",
-        "content": ".wp_articlecontent"
-      },
-      "img_selector": {
-        "item_container": "#d-container",
-        "images": ".wp_articlecontent img[src]"
-      },
-      "pdf_selector": {
-        "item_container": "#d-container",
-        "files": ".wp_articlecontent a[href$=\".pdf\"]",
-        "name": ".wp_articlecontent a[href$=\".pdf\"] span"
-      },
-      "doc_selector": {
-        "item_container": "#d-container",
-        "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
-        "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]"
-      },
-      "embedded_pdf_selector": {
-        "item_container": "#d-container",
-        "viewer": ".wp_articlecontent iframe.wp_pdf_player",
-        "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a"
+      "max_pages": 3,
+    "detail_selectors": [
+      {
+        "base_url": "https://sdem.nju.edu.cn",
+        "meta_selector": {
+          "item_container": "#d-container",
+          "publisher": ".arti_publisher",
+          "views": ".arti_views"
+        },
+        "text_selector": {
+          "item_container": "#d-container",
+          "content": ".wp_articlecontent"
+        },
+        "img_selector": {
+          "item_container": "#d-container",
+          "images": ".wp_articlecontent img[src]"
+        },
+        "pdf_selector": {
+          "item_container": "#d-container",
+          "files": ".wp_articlecontent a[href$=\".pdf\"]",
+          "name": ".wp_articlecontent a[href$=\".pdf\"] span"
+        },
+        "doc_selector": {
+          "item_container": "#d-container",
+          "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
+          "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]"
+        },
+        "embedded_pdf_selector": {
+          "item_container": "#d-container",
+          "viewer": ".wp_articlecontent iframe.wp_pdf_player",
+          "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a"
+        }
       }
-    }
-  ]
-}
+    ]
+  }

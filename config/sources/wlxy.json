@@ -1,121 +1,121 @@
 {
     "sources": [
         {
-        "id": "wlxy_xshd",
-        "name": "物理学院-学术活动",
-        "type": "api",
-        "base_url": "https://physics.nju.edu.cn",
-        "list_url": "https://physics.nju.edu.cn/xwdt/xshd/index.html",
-        "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "physics.nju.edu.cn",
-            "Origin": "https://physics.nju.edu.cn",
-            "Referer": "https://physics.nju.edu.cn/xwdt/xshd/index.html"
-        },
-        "payload": {
-            "siteid": "34",
-            "channelid": "16196",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
-        },
-        {
-        "id": "wlxy_xwdt",
-        "name": "物理学院-新闻动态",
-        "type": "api",
-        "base_url": "https://physics.nju.edu.cn",
-        "list_url": "https://physics.nju.edu.cn/xwdt/xwdtyjcgbdzdhdhj/index.html",
-        "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "physics.nju.edu.cn",
-            "Origin": "https://physics.nju.edu.cn",
-            "Referer": "https://physics.nju.edu.cn/xwdt/xwdtyjcgbdzdhdhj/index.html"
-        },
-        "payload": {
-            "siteid": "34",
-            "channelid": "16197",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+            "id": "wlxy_xshd",
+            "name": "物理学院-学术活动",
+            "type": "api",
+            "base_url": "https://physics.nju.edu.cn",
+            "list_url": "https://physics.nju.edu.cn/xwdt/xshd/index.html",
+            "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "physics.nju.edu.cn",
+                "Origin": "https://physics.nju.edu.cn",
+                "Referer": "https://physics.nju.edu.cn/xwdt/xshd/index.html"
+            },
+            "payload": {
+                "siteid": "34",
+                "channelid": "16196",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
         {
-        "id": "wlxy_tzgg",
-        "name": "物理学院-通知公告",
-        "type": "api",
-        "base_url": "https://physics.nju.edu.cn",
-        "list_url": "https://physics.nju.edu.cn/xwdt/tzggxlycgzhd/index.html",
-        "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "physics.nju.edu.cn",
-            "Origin": "https://physics.nju.edu.cn",
-            "Referer": "https://physics.nju.edu.cn/xwdt/tzggxlycgzhd/index.html"
-        },
-        "payload": {
-            "siteid": "34",
-            "channelid": "16198",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+            "id": "wlxy_xwdt",
+            "name": "物理学院-新闻动态",
+            "type": "api",
+            "base_url": "https://physics.nju.edu.cn",
+            "list_url": "https://physics.nju.edu.cn/xwdt/xwdtyjcgbdzdhdhj/index.html",
+            "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "physics.nju.edu.cn",
+                "Origin": "https://physics.nju.edu.cn",
+                "Referer": "https://physics.nju.edu.cn/xwdt/xwdtyjcgbdzdhdhj/index.html"
+            },
+            "payload": {
+                "siteid": "34",
+                "channelid": "16197",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
         {
-        "id": "wlxy_jb",
-        "name": "物理学院-简报",
-        "type": "api",
-        "base_url": "https://physics.nju.edu.cn",
-        "list_url": "https://physics.nju.edu.cn/xwdt/jb/index.html",
-        "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "physics.nju.edu.cn",
-            "Origin": "https://physics.nju.edu.cn",
-            "Referer": "https://physics.nju.edu.cn/xwdt/jb/index.html"
+            "id": "wlxy_tzgg",
+            "name": "物理学院-通知公告",
+            "type": "api",
+            "base_url": "https://physics.nju.edu.cn",
+            "list_url": "https://physics.nju.edu.cn/xwdt/tzggxlycgzhd/index.html",
+            "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "physics.nju.edu.cn",
+                "Origin": "https://physics.nju.edu.cn",
+                "Referer": "https://physics.nju.edu.cn/xwdt/tzggxlycgzhd/index.html"
+            },
+            "payload": {
+                "siteid": "34",
+                "channelid": "16198",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
-        "payload": {
-            "siteid": "34",
-            "channelid": "16760",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+        {
+            "id": "wlxy_jb",
+            "name": "物理学院-简报",
+            "type": "api",
+            "base_url": "https://physics.nju.edu.cn",
+            "list_url": "https://physics.nju.edu.cn/xwdt/jb/index.html",
+            "api_url": "https://physics.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "physics.nju.edu.cn",
+                "Origin": "https://physics.nju.edu.cn",
+                "Referer": "https://physics.nju.edu.cn/xwdt/jb/index.html"
+            },
+            "payload": {
+                "siteid": "34",
+                "channelid": "16760",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://physics.nju.edu.cn",
-        "text_selector": {
-            "item_container": ".mn-infoBox",
-            "content": "p"
-        }
+            "base_url": "https://physics.nju.edu.cn",
+            "text_selector": {
+                "item_container": ".mn-infoBox",
+                "content": "p"
+            }
         }
     ]
 }

@@ -1,94 +1,94 @@
 {
     "sources": [
         {
-        "id": "rjxy_xyxw",
-        "name": "软件学院-学院新闻",
-        "type": "api",
-        "base_url": "https://software.nju.edu.cn",
-        "list_url": "https://software.nju.edu.cn//xyxw/index.html",
-        "api_url": "https://software.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "software.nju.edu.cn",
-            "Origin": "https://software.nju.edu.cn",
-            "Referer": "https://software.nju.edu.cn//xyxw/index.html"
-        },
-        "payload": {
-            "siteid": "86",
-            "channelid": "6437",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
-        },
-        {
-        "id": "rjxy_tzgg",
-        "name": "软件学院-通知公告",
-        "type": "api",
-        "base_url": "https://software.nju.edu.cn",
-        "list_url": "https://software.nju.edu.cn//tzgg/index.html",
-        "api_url": "https://software.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "software.nju.edu.cn",
-            "Origin": "https://software.nju.edu.cn",
-            "Referer": "https://software.nju.edu.cn//tzgg/index.html"
-        },
-        "payload": {
-            "siteid": "86",
-            "channelid": "6439",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+            "id": "rjxy_xyxw",
+            "name": "软件学院-学院新闻",
+            "type": "api",
+            "base_url": "https://software.nju.edu.cn",
+            "list_url": "https://software.nju.edu.cn//xyxw/index.html",
+            "api_url": "https://software.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "software.nju.edu.cn",
+                "Origin": "https://software.nju.edu.cn",
+                "Referer": "https://software.nju.edu.cn//xyxw/index.html"
+            },
+            "payload": {
+                "siteid": "86",
+                "channelid": "6437",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
         {
-        "id": "rjxy_xgdt",
-        "name": "软件学院-学工动态",
-        "type": "api",
-        "base_url": "https://software.nju.edu.cn",
-        "list_url": "https://software.nju.edu.cn//xgdt/index.html",
-        "api_url": "https://software.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "software.nju.edu.cn",
-            "Origin": "https://software.nju.edu.cn",
-            "Referer": "https://software.nju.edu.cn//xgdt/index.html"
+            "id": "rjxy_tzgg",
+            "name": "软件学院-通知公告",
+            "type": "api",
+            "base_url": "https://software.nju.edu.cn",
+            "list_url": "https://software.nju.edu.cn//tzgg/index.html",
+            "api_url": "https://software.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "software.nju.edu.cn",
+                "Origin": "https://software.nju.edu.cn",
+                "Referer": "https://software.nju.edu.cn//tzgg/index.html"
+            },
+            "payload": {
+                "siteid": "86",
+                "channelid": "6439",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
-        "payload": {
-            "siteid": "86",
-            "channelid": "6438",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+        {
+            "id": "rjxy_xgdt",
+            "name": "软件学院-学工动态",
+            "type": "api",
+            "base_url": "https://software.nju.edu.cn",
+            "list_url": "https://software.nju.edu.cn//xgdt/index.html",
+            "api_url": "https://software.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "software.nju.edu.cn",
+                "Origin": "https://software.nju.edu.cn",
+                "Referer": "https://software.nju.edu.cn//xgdt/index.html"
+            },
+            "payload": {
+                "siteid": "86",
+                "channelid": "6438",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://software.nju.edu.cn",
-        "text_selector": {
-            "item_container": ".content",
-            "content": "p"
-        }
+            "base_url": "https://software.nju.edu.cn",
+            "text_selector": {
+                "item_container": ".content",
+                "content": "p"
+            }
         }
     ]
 }

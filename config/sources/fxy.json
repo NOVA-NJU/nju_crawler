@@ -5,7 +5,7 @@
             "name": "法学院-学院新闻",
             "base_url": "https://law.nju.edu.cn",
             "list_url": "https://law.nju.edu.cn/index/xyxw.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "pagination_mode": "reverse",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
@@ -26,7 +26,7 @@
             "pagination_mode": "reverse",
             "base_url": "https://law.nju.edu.cn",
             "list_url": "https://law.nju.edu.cn/index/zyhd.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "law.nju.edu.cn"
@@ -46,7 +46,7 @@
             "pagination_mode": "reverse",
             "base_url": "https://law.nju.edu.cn",
             "list_url": "https://law.nju.edu.cn/index/tzgg.htm",
-            "max_pages": 1,
+            "max_pages": 3,
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "law.nju.edu.cn"

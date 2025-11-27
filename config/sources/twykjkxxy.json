@@ -1,94 +1,94 @@
 {
     "sources": [
         {
-        "id": "twykjkxxy_xshd",
-        "name": "天文与空间科学学院-学术活动",
-        "type": "api",
-        "base_url": "https://astronomy.nju.edu.cn",
-        "list_url": "https://astronomy.nju.edu.cn/twdt/tzgg/index.html",
-        "api_url": "https://astronomy.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "astronomy.nju.edu.cn",
-            "Origin": "https://astronomy.nju.edu.cn",
-            "Referer": "https://astronomy.nju.edu.cn/twdt/tzgg/index.html"
-        },
-        "payload": {
-            "siteid": "16",
-            "channelid": "873",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
-        },
-        {
-        "id": "twykjkxxy_xwdt",
-        "name": "天文与空间科学学院-新闻动态",
-        "type": "api",
-        "base_url": "https://astronomy.nju.edu.cn",
-        "list_url": "https://astronomy.nju.edu.cn/twdt/xwdt/index.html",
-        "api_url": "https://astronomy.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "astronomy.nju.edu.cn",
-            "Origin": "https://astronomy.nju.edu.cn",
-            "Referer": "https://astronomy.nju.edu.cn/twdt/xwdt/index.html"
-        },
-        "payload": {
-            "siteid": "16",
-            "channelid": "873",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+            "id": "twykjkxxy_xshd",
+            "name": "天文与空间科学学院-学术活动",
+            "type": "api",
+            "base_url": "https://astronomy.nju.edu.cn",
+            "list_url": "https://astronomy.nju.edu.cn/twdt/tzgg/index.html",
+            "api_url": "https://astronomy.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "astronomy.nju.edu.cn",
+                "Origin": "https://astronomy.nju.edu.cn",
+                "Referer": "https://astronomy.nju.edu.cn/twdt/tzgg/index.html"
+            },
+            "payload": {
+                "siteid": "16",
+                "channelid": "873",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
         {
-        "id": "twykjxxy_kpxc",
-        "name": "天文与空间科学学院-科普宣传",
-        "type": "api",
-        "base_url": "https://astronomy.nju.edu.cn",
-        "list_url": "https://astronomy.nju.edu.cn/twdt/cggs/index.html",
-        "api_url": "https://astronomy.nju.edu.cn/njdx/openapi/t/info/list.do",
-        "max_pages": 5,
-        "pagination_mode": "api",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "astronomy.nju.edu.cn",
-            "Origin": "https://astronomy.nju.edu.cn",
-            "Referer": "https://astronomy.nju.edu.cn/twdt/cggs/index.html"
+            "id": "twykjkxxy_xwdt",
+            "name": "天文与空间科学学院-新闻动态",
+            "type": "api",
+            "base_url": "https://astronomy.nju.edu.cn",
+            "list_url": "https://astronomy.nju.edu.cn/twdt/xwdt/index.html",
+            "api_url": "https://astronomy.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "astronomy.nju.edu.cn",
+                "Origin": "https://astronomy.nju.edu.cn",
+                "Referer": "https://astronomy.nju.edu.cn/twdt/xwdt/index.html"
+            },
+            "payload": {
+                "siteid": "16",
+                "channelid": "873",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         },
-        "payload": {
-            "siteid": "16",
-            "channelid": "2012",
-            "pagesize": "15"
-        },
-        "selectors": {
-            "item_container": "infolist",
-            "title": "title",
-            "date": "daytime",
-            "url": "url"
-        }
+        {
+            "id": "twykjxxy_kpxc",
+            "name": "天文与空间科学学院-科普宣传",
+            "type": "api",
+            "base_url": "https://astronomy.nju.edu.cn",
+            "list_url": "https://astronomy.nju.edu.cn/twdt/cggs/index.html",
+            "api_url": "https://astronomy.nju.edu.cn/njdx/openapi/t/info/list.do",
+            "max_pages": 3,
+            "pagination_mode": "api",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "astronomy.nju.edu.cn",
+                "Origin": "https://astronomy.nju.edu.cn",
+                "Referer": "https://astronomy.nju.edu.cn/twdt/cggs/index.html"
+            },
+            "payload": {
+                "siteid": "16",
+                "channelid": "2012",
+                "pagesize": "15"
+            },
+            "selectors": {
+                "item_container": "infolist",
+                "title": "title",
+                "date": "daytime",
+                "url": "url"
+            }
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "https://astronomy.nju.edu.cn",
-        "text_selector": {
-            "item_container": ".m-con",
-            "content": "p"
-        }
+            "base_url": "https://astronomy.nju.edu.cn",
+            "text_selector": {
+                "item_container": ".m-con",
+                "content": "p"
+            }
         }
     ]
 }

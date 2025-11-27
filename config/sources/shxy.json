@@ -1,37 +1,37 @@
 {
     "sources": [
         {
-        "id": "shxy_dtxw",
-        "name": "社会学院-动态新闻",
-        "base_url": "https://sociology.nju.edu.cn",
-        "list_url": "https://sociology.nju.edu.cn/17646/list1.htm",
-        "max_pages": 5,
-        "pagination_mode": "forward",
-        "headers": {
-            "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-            "host": "sociology.nju.edu.cn"
-        },
-        "selectors": {
-            "item_container": "#l-container li.news",
-            "date": ".news_meta",
-            "title": ".news_title a",
-            "url": ".news_title a"
-        },
-        "detail_selector": "#js_content #js_content section p"
+            "id": "shxy_dtxw",
+            "name": "社会学院-动态新闻",
+            "base_url": "https://sociology.nju.edu.cn",
+            "list_url": "https://sociology.nju.edu.cn/17646/list1.htm",
+            "max_pages": 3,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+                "host": "sociology.nju.edu.cn"
+            },
+            "selectors": {
+                "item_container": "#l-container li.news",
+                "date": ".news_meta",
+                "title": ".news_title a",
+                "url": ".news_title a"
+            },
+            "detail_selector": "#js_content #js_content section p"
         }
     ],
     "detail_selectors": [
         {
-        "base_url": "mp.weixin.qq.com",            
-        "meta_selector": {
-            "item_container": "#js_content",
-            "publisher": "#profileBt a", 
-            "views": null 
-        },
-        "text_selector": {
-            "item_container": "#js_content",
-            "content": "#js_content section"
-        }
+            "base_url": "mp.weixin.qq.com",
+            "meta_selector": {
+                "item_container": "#js_content",
+                "publisher": "#profileBt a",
+                "views": null
+            },
+            "text_selector": {
+                "item_container": "#js_content",
+                "content": "#js_content section"
+            }
         }
     ]
 }
