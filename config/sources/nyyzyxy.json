@@ -1,0 +1,69 @@
+{
+  "sources": [
+    {
+      "id": "nyyzyxy_tzgg",
+      "name": "能源与资源学院-通知公告",
+      "base_url": "https://sser.nju.edu.cn",
+      "list_url": "https://sser.nju.edu.cn/tzgg.htm",
+      "pagination_mode": "reverse",
+      "max_pages": 5,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "sser.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": ".ej_list",
+        "date": "li .p1",
+        "title": "li a",
+        "url": "li a"
+      },
+      "detail_selector": ".v_news_content p"
+    },
+    {
+      "id": "nyyzyxy_xwdt",
+      "name": "能源与资源学院-新闻动态",
+      "base_url": "https://sser.nju.edu.cn",
+      "list_url": "https://sser.nju.edu.cn/xwdt.htm",
+      "pagination_mode": "reverse",
+      "max_pages": 5,
+      "headers": {
+        "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
+        "host": "sser.nju.edu.cn"
+      },
+      "selectors": {
+        "item_container": ".ej_list_tt",
+        "date": "li .sj",
+        "title": "li .bt",
+        "url": "li a"
+      },
+      "detail_selector": ".v_news_content p"
+    }
+  ],
+  "detail_selectors": [
+    {
+      "base_url": "https://sser.nju.edu.cn",
+      "meta_selector": {
+        "item_container": ".ej_nry",
+        "views": ".xx span"
+      },
+      "text_selector": {
+        "item_container": ".ej_nry",
+        "content": "span"
+      },
+      "img_selector": {
+        "item_container": ".ej_nry",
+        "images": "p img[src]"
+      },
+      "doc_selector": {
+        "item_container": ".ej_nry",
+        "files": ".cont ul li a[href]",
+        "name": ".cont ul li a[href]"
+      },
+      "embedded_pdf_selector": {
+        "item_container": ".ej_nry",
+        "viewer": "#vsb_content .v_news_content script",
+        "download_link": "#vsb_content .v_news_content script"
+      }
+    }
+  ]
+}

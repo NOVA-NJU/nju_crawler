@@ -6,6 +6,7 @@
       "base_url": "https://ic.nju.edu.cn/",
       "list_url": "https://ic.nju.edu.cn/63085/list1.htm",
       "max_pages": 5,
+      "pagination_mode": "forward",
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "ic.nju.edu.cn"
@@ -24,6 +25,7 @@
       "base_url": "https://ic.nju.edu.cn/",
       "list_url": "https://ic.nju.edu.cn/56616/list.htm",
       "max_pages": 5,
+      "pagination_mode": "forward",
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "ic.nju.edu.cn"
@@ -42,6 +44,7 @@
       "base_url": "https://ic.nju.edu.cn/",
       "list_url": "https://ic.nju.edu.cn/tpxw/list1.psp",
       "max_pages": 5,
+      "pagination_mode": "forward",
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
         "host": "ic.nju.edu.cn"

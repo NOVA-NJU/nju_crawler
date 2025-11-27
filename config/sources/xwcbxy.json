@@ -6,6 +6,7 @@
             "base_url": "https://jc.nju.edu.cn",
             "list_url": "https://jc.nju.edu.cn/xwgg/xwdt.htm",
             "max_pages": 1,
+            "pagination_mode": "reverse",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "jc.nju.edu.cn"
@@ -23,6 +24,7 @@
             "base_url": "https://jc.nju.edu.cn",
             "list_url": "https://jc.nju.edu.cn/xwgg/tzgg.htm",
             "max_pages": 1,
+            "pagination_mode": "reverse",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "jc.nju.edu.cn"

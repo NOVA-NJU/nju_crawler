@@ -6,6 +6,7 @@
             "base_url": "https://law.nju.edu.cn",
             "list_url": "https://law.nju.edu.cn/index/xyxw.htm",
             "max_pages": 1,
+            "pagination_mode": "reverse",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
                 "host": "law.nju.edu.cn"
@@ -22,6 +23,7 @@
         {
             "id": "fxy_zyhd",
             "name": "法学院-重要活动",
+            "pagination_mode": "reverse",
             "base_url": "https://law.nju.edu.cn",
             "list_url": "https://law.nju.edu.cn/index/zyhd.htm",
             "max_pages": 1,
@@ -41,6 +43,7 @@
         {
             "id": "fxy_tzgg",
             "name": "法学院-通知公告",
+            "pagination_mode": "reverse",
             "base_url": "https://law.nju.edu.cn",
             "list_url": "https://law.nju.edu.cn/index/tzgg.htm",
             "max_pages": 1,

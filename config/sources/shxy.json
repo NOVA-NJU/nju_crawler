@@ -6,6 +6,7 @@
         "base_url": "https://sociology.nju.edu.cn",
         "list_url": "https://sociology.nju.edu.cn/17646/list1.htm",
         "max_pages": 5,
+        "pagination_mode": "forward",
         "headers": {
             "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
             "host": "sociology.nju.edu.cn"

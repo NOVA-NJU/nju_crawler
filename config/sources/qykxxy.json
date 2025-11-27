@@ -1,47 +1,47 @@
 {
   "sources": [
     {
-      "id": "szjjyglxy_tzgg",
-      "name": "数字经济与管理学院-通知公告",
-      "base_url": "https://sdem.nju.edu.cn/",
-      "list_url": "https://sdem.nju.edu.cn/56988/list1.htm",
-      "max_pages": 5,
+      "id": "qykxxy_tzgg",
+      "name": "前沿科学学院-通知公告",
+      "base_url": "https://frontier.nju.edu.cn/",
+      "list_url": "https://frontier.nju.edu.cn/tzgg/list1.htm",
       "pagination_mode": "forward",
+      "max_pages": 5,
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-        "host": "sdem.nju.edu.cn"
+        "host": "frontier.nju.edu.cn"
       },
       "selectors": {
-        "item_container": ".col_news_list .news_list .jzlb",
-        "date": ".xyssj",
-        "title": ".xysbt a",
-        "url": ".xysbt a"
+        "item_container": ".col_news_con li.news",
+        "date": ".news_date",
+        "title": ".news_title a",
+        "url": ".news_title a"
       },
       "detail_selector": "#d-container .wp_articlecontent p"
     },
     {
-      "id": "szjjyglxy_xyxw",
-      "name": "数字经济与管理学院-学院新闻",
-      "base_url": "https://sdem.nju.edu.cn/",
-      "list_url": "https://sdem.nju.edu.cn/56973/list1.htm",
-      "max_pages": 5,
+      "id": "qykxxy_xwdt",
+      "name": "前沿科学学院-新闻动态",
+      "base_url": "https://frontier.nju.edu.cn/",
+      "list_url": "https://frontier.nju.edu.cn/xwdt_59222/list1.htm",
       "pagination_mode": "forward",
+      "max_pages": 5,
       "headers": {
         "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0",
-        "host": "sdem.nju.edu.cn"
+        "host": "frontier.nju.edu.cn"
       },
       "selectors": {
-        "item_container": ".col_news_list .news_list .jzlb",
-        "date": ".xyssj",
-        "title": ".xysbt a",
-        "url": ".xysbt a"
+        "item_container": ".col_news_con li.news",
+        "date": ".news_date",
+        "title": ".news_title a",
+        "url": ".news_title a"
       },
       "detail_selector": "#d-container .wp_articlecontent p"
     }
   ],
   "detail_selectors": [
     {
-      "base_url": "https://sdem.nju.edu.cn",
+      "base_url": "https://frontier.nju.edu.cn/",
       "meta_selector": {
         "item_container": "#d-container",
         "publisher": ".arti_publisher",
@@ -58,7 +58,7 @@
       "pdf_selector": {
         "item_container": "#d-container",
         "files": ".wp_articlecontent a[href$=\".pdf\"]",
-        "name": ".wp_articlecontent a[href$=\".pdf\"] span"
+        "name": ".wp_articlecontent a[href$=\".pdf\"]"
       },
       "doc_selector": {
         "item_container": "#d-container",
@@ -68,7 +68,7 @@
       "embedded_pdf_selector": {
         "item_container": "#d-container",
         "viewer": ".wp_articlecontent iframe.wp_pdf_player",
-        "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a"
+        "download_link": ".wp_articlecontent a[href$=\".pdf\"]"
       }
     }
   ]

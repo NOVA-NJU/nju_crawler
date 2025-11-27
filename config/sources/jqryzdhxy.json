@@ -1,22 +1,22 @@
 {
     "sources": [
         {
-        "id": "hwjyxy_xw",
-        "name": "海外教育学院-新闻",
+        "id": "jqryzdhxy_xwdt",
+        "name": "机器人与自动化学院-新闻动态",
         "type": "api",
-        "base_url": "https://hwxy.nju.edu.cn",
-        "list_url": "https://hwxy.nju.edu.cn/syxx/xw/index.html",
+        "base_url": "https://ra.nju.edu.cn",
+        "list_url": "https://ra.nju.edu.cn/xydt/xwdt/index.html",
         "pagination_mode": "api",
-        "api_url": "https://hwxy.nju.edu.cn/njdx/openapi/t/info/list.do",
+        "api_url": "https://ra.nju.edu.cn/njdx/openapi/t/info/list.do",
         "max_pages": 5,
         "headers": {
             "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "hwxy.nju.edu.cn",
-            "Origin": "https://hwxy.nju.edu.cn",
-            "Referer": "https://hwxy.nju.edu.cn/syxx/xw/index.html"
+            "host": "ra.nju.edu.cn",
+            "Origin": "https://ra.nju.edu.cn",
+            "Referer": "https://ra.nju.edu.cn/xydt/xwdt/index.html"
         },
         "payload": {
-			"channelid":12705,
+			"channelid":17159,
 			"pagesize":15
         },
         "selectors": {
@@ -27,22 +27,22 @@
         }
         },
         {
-        "id": "hwjyxy_gg",
-        "name": "海外教育学院-公告",
+        "id": "jqryzdhxy_tzgg",
+        "name": "机器人与自动化学院-通知公告",
         "type": "api",
-        "base_url": "https://hwxy.nju.edu.cn",
-        "list_url": "https://hwxy.nju.edu.cn/syxx/gg/index.html",
+        "base_url": "https://ra.nju.edu.cn",
+        "list_url": "https://ra.nju.edu.cn/xydt/tzgg/index.html",
         "pagination_mode": "api",
-        "api_url": "https://hwxy.nju.edu.cn/njdx/openapi/t/info/list.do",
+        "api_url": "https://ra.nju.edu.cn/njdx/openapi/t/info/list.do",
         "max_pages": 5,
         "headers": {
             "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "host": "hwxy.nju.edu.cn",
-            "Origin": "https://hwxy.nju.edu.cn",
-            "Referer": "https://hwxy.nju.edu.cn/syxx/xw/index.html"
+            "host": "ra.nju.edu.cn",
+            "Origin": "https://ra.nju.edu.cn",
+            "Referer": "https://ra.nju.edu.cn/xydt/tzgg/index.html"
         },
         "payload": {
-			"channelid":12706,
+			"channelid":17160,
 			"pagesize":15
         },
         "selectors": {
@@ -55,18 +55,18 @@
     ],
     "detail_selectors": [
         {
-        "base_url": "https://hwxy.nju.edu.cn",
+        "base_url": "https://ra.nju.edu.cn",
         "meta_selector": {
-            "item_container": ".wenzhang_1",
-            "views": ".visit"
+            "item_container": ".info",
+            "publisher": ".item"
         },
         "text_selector": {
-            "item_container": ".wenzhang_1",
-            "content": ".words"
+            "item_container": ".info",
+            "content": ".zw p"
         },
         "img_selector": {
-            "item_container": ".wenzhang_1",
-            "images": ".words img[src]"
+            "item_container": ".info",
+            "images": ".zw p img[src]"
         }
         }
     ]

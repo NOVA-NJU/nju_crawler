@@ -8,6 +8,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/fmxw/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -34,6 +35,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/tzgg/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -60,6 +62,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/ynxw/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -86,6 +89,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/xyld/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -112,6 +116,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/dss/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -138,6 +143,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/xss/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -164,6 +170,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/syfc/bwsy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -190,6 +197,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/syfc/kjsy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -216,6 +224,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/syfc/xzsy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -242,6 +251,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/syfc/yxsy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -268,6 +278,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/syfc/absy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -294,6 +305,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/syfc/yxsy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -320,6 +332,7 @@
             "list_url": "https://xsxy.nju.edu.cn/sylm/syfc/jxsy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",
             "max_pages": 5,
+            "pagination_mode": "api",
             "headers": {
                 "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 "host": "xsxy.nju.edu.cn",
@@ -342,6 +355,7 @@
             "id": "xsxy_xsyx",
             "name": "新生学院-新生映象",
             "type": "api",
+            "pagination_mode": "api",
             "base_url": "https://xsxy.nju.edu.cn/sylm",
             "list_url": "https://xsxy.nju.edu.cn/sylm/wdxsy/index.html",
             "api_url": "https://xsxy.nju.edu.cn/njdx/openapi/t/info/list.do",

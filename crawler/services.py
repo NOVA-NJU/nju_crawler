@@ -268,7 +268,7 @@ def parse_publish_time(date_str: Optional[str]) -> datetime:
         date_str = f"{year}-{p2.zfill(2)}-{p1.zfill(2)}"
 
     # 特殊格式处理：Month-Day/ Year (e.g., "11-13/ 2025" -> "2025-11-13")
-    # 这种格式出现在信息管理学院等网站
+    # 这种格式出现在马克思主义学院等网站
     mdy_ws_year = re.match(r"^(\d{1,2})[-/.](\d{1,2})\s*/\s*(\d{4})$", date_str)
     if mdy_ws_year:
         month = int(mdy_ws_year.group(1))

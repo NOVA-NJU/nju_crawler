@@ -8,6 +8,7 @@
         "list_url": "https://math.nju.edu.cn/sy/yxgg/index.html",
         "api_url": "https://math.nju.edu.cn/njdx/openapi/t/info/list.do",
         "max_pages": 5,
+        "pagination_mode": "api",
         "headers": {
             "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "host": "math.nju.edu.cn",
