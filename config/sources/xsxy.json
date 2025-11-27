@@ -384,12 +384,12 @@
             "base_url": "https://xsxy.nju.edu.cn",
             "meta_selector": {
                 "item_container": ".m-ctx",
-                "title": ".m-ctx .title",
-                "publish_time": ".m-ctx .fbsj"
+                "title": ".title",
+                "publish_time": ".fbsj"
             },
             "text_selector": {
                 "item_container": ".m-ctx .content",
-                "content": ".m-ctx .content p, .m-ctx .content span, .m-ctx .content div",
+                "content": "p, span, div",
                 "images": ".m-ctx .content img"
             }
         }
