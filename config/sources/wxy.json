@@ -1,0 +1,78 @@
+{
+    "sources": [
+        {
+            "id": "wxy_xyxw",
+            "name": "文学院-学院新闻",
+            "base_url": "https://chin.nju.edu.cn",
+            "list_url": "https://chin.nju.edu.cn/njdx/front/datacall/channel/info.do?iid=28&siteid=37&ctype=1&pagesize=30&cid=1954",
+            "max_pages": 1,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "chin.nju.edu.cn",
+                "Origin": "https://chin.nju.edu.cn",
+                "Referer": "https://chin.nju.edu.cn//xyxw/index.html"
+            },
+            "selectors": {
+                "item_container": "li.xyhdnewsli",
+                "url": "a[href]",
+                "title": "p.text_one",
+                "date": ".time.date_k"
+            }
+        },
+        {
+            "id": "wxy_tzgg",
+            "name": "文学院-通知公告",
+            "base_url": "https://chin.nju.edu.cn",
+            "list_url": "https://chin.nju.edu.cn/njdx/front/datacall/channel/info.do?iid=28&siteid=37&ctype=1&pagesize=30&cid=1996",
+            "max_pages": 1,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "chin.nju.edu.cn",
+                "Origin": "https://chin.nju.edu.cn",
+                "Referer": "https://chin.nju.edu.cn//xyxw/index.html"
+            },
+            "selectors": {
+                "item_container": "li.xyhdnewsli",
+                "url": "a[href]",
+                "title": "p.text_one",
+                "date": ".time.date_k"
+            }
+        },
+        {
+            "id": "wxy_xyhd",
+            "name": "文学院-学院活动",
+            "base_url": "https://chin.nju.edu.cn",
+            "list_url": "https://chin.nju.edu.cn/njdx/front/datacall/channel/info.do?iid=28&siteid=37&ctype=1&pagesize=30&cid=2005",
+            "max_pages": 1,
+            "pagination_mode": "forward",
+            "headers": {
+                "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "host": "chin.nju.edu.cn",
+                "Origin": "https://chin.nju.edu.cn",
+                "Referer": "https://chin.nju.edu.cn//xyxw/index.html"
+            },
+            "selectors": {
+                "item_container": "li.xyhdnewsli",
+                "url": "a[href]",
+                "title": "p.text_one",
+                "date": ".time.date_k"
+            }
+        }
+    ],
+    "detail_selectors": [
+        {
+            "base_url": "https://chin.nju.edu.cn",
+            "meta_selector": {
+                "item_container": ".count.w_1200",
+                "title": "h3",
+                "publish_time": ".ppp p:contains('日期：')"
+            },
+            "text_selector": {
+                "item_container": ".ppp",
+                "content": "p.vsbcontent_start, p.vsbcontent_end, p:not([class])"
+            }
+        }
+    ]
+}
