@@ -1,7 +1,7 @@
 {
     "sources": [
         {
-        "id": "twykjxxy_xshd",
+        "id": "twykjkxxy_xshd",
         "name": "天文与空间科学学院-学术活动",
         "type": "api",
         "base_url": "https://astronomy.nju.edu.cn",
@@ -28,7 +28,7 @@
         }
         },
         {
-        "id": "twykjxxy_xwdt",
+        "id": "twykjkxxy_xwdt",
         "name": "天文与空间科学学院-新闻动态",
         "type": "api",
         "base_url": "https://astronomy.nju.edu.cn",

@@ -1,7 +1,7 @@
 {
   "sources": [
     {
-      "id": "med_xyxw",
+      "id": "yxy_xyxw",
       "name": "医学院-学院新闻",
       "base_url": "https://med.nju.edu.cn",
       "list_url": "https://med.nju.edu.cn/10653/list.htm",
@@ -19,7 +19,7 @@
       }
     },
     {
-      "id": "med_xygg",
+      "id": "yxy_xygg",
       "name": "医学院-学院公告",
       "base_url": "https://med.nju.edu.cn",
       "list_url": "https://med.nju.edu.cn/10654/list.htm",

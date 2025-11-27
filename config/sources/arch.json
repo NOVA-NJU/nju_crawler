@@ -1,7 +1,7 @@
 {
     "sources": [
         {
-        "id": "jzycsghxy_xwdt",
+        "id": "arch_xwdt",
         "name": "建筑与城市规划学院-新闻动态",
         "type": "api",
         "base_url": "https://arch.nju.edu.cn",
@@ -27,7 +27,7 @@
         }
         },
         {
-        "id": "jzycsghxy_xwdt_jzg",
+        "id": "arch_xwdt_jzg",
         "name": "建筑与城市规划学院-新闻动态-教职工",
         "type": "api",
         "base_url": "https://arch.nju.edu.cn",
@@ -53,7 +53,7 @@
         }
         },
                 {
-        "id": "jzycsghxy_xwdt_xs",
+        "id": "arch_xwdt_xs",
         "name": "建筑与城市规划学院-新闻动态-学生",
         "type": "api",
         "base_url": "https://arch.nju.edu.cn",
