@@ -4,15 +4,25 @@
 本文件将 crawler 作为主应用运行，支持直接启动。
 """
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
-import os
+from contextlib import asynccontextmanager
 from crawler.router import router as crawler_router
 from crawler.lifecycle import crawler_lifespan
+from wechat.router import router as wechat_router
+from wechat.lifecycle import wechat_lifespan
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(lifespan=crawler_lifespan)
+@asynccontextmanager
+async def _combined_lifespan(app: FastAPI):
+    # compose crawler and wechat lifespans so both background tasks run
+    async with crawler_lifespan(app):
+        async with wechat_lifespan(app):
+            yield
+
+
+app = FastAPI(lifespan=_combined_lifespan)
+# Both crawler and wechat lifespans are now composed; routers mounted below
 app.include_router(crawler_router)
+app.include_router(wechat_router)
 
 origins = [
     "*" 
