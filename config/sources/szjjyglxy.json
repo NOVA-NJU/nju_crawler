@@ -38,38 +38,38 @@
       },
       "detail_selector": "#d-container .wp_articlecontent p"
     }
-      "max_pages": 3,
-    "detail_selectors": [
-      {
-        "base_url": "https://sdem.nju.edu.cn",
-        "meta_selector": {
-          "item_container": "#d-container",
-          "publisher": ".arti_publisher",
-          "views": ".arti_views"
-        },
-        "text_selector": {
-          "item_container": "#d-container",
-          "content": ".wp_articlecontent"
-        },
-        "img_selector": {
-          "item_container": "#d-container",
-          "images": ".wp_articlecontent img[src]"
-        },
-        "pdf_selector": {
-          "item_container": "#d-container",
-          "files": ".wp_articlecontent a[href$=\".pdf\"]",
-          "name": ".wp_articlecontent a[href$=\".pdf\"] span"
-        },
-        "doc_selector": {
-          "item_container": "#d-container",
-          "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
-          "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]"
-        },
-        "embedded_pdf_selector": {
-          "item_container": "#d-container",
-          "viewer": ".wp_articlecontent iframe.wp_pdf_player",
-          "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a"
-        }
+  ],
+  "detail_selectors": [
+    {
+      "base_url": "https://sdem.nju.edu.cn",
+      "meta_selector": {
+        "item_container": "#d-container",
+        "publisher": ".arti_publisher",
+        "views": ".arti_views"
+      },
+      "text_selector": {
+        "item_container": "#d-container",
+        "content": ".wp_articlecontent"
+      },
+      "img_selector": {
+        "item_container": "#d-container",
+        "images": ".wp_articlecontent img[src]"
+      },
+      "pdf_selector": {
+        "item_container": "#d-container",
+        "files": ".wp_articlecontent a[href$=\".pdf\"]",
+        "name": ".wp_articlecontent a[href$=\".pdf\"] span"
+      },
+      "doc_selector": {
+        "item_container": "#d-container",
+        "files": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]",
+        "name": ".wp_articlecontent a[href$=\".doc\"], .wp_articlecontent a[href$=\".docx\"]"
+      },
+      "embedded_pdf_selector": {
+        "item_container": "#d-container",
+        "viewer": ".wp_articlecontent iframe.wp_pdf_player",
+        "download_link": ".wp_articlecontent img[src$=\"icon_pdf.gif\"] + a"
       }
-    ]
-  }
+    }
+  ]
+}
