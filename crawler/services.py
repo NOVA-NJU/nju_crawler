@@ -321,17 +321,30 @@ def extract_text_content(soup: BeautifulSoup, selector_cfg: Optional[dict]) -> s
     container = soup.select_one(selector_cfg.get("item_container", ""))
     if not container:
         return ""
+
+    # 移除 script 和 style 标签，防止提取到代码
+    for script in container(["script", "style"]):
+        script.decompose()
+
     content_selector = selector_cfg.get("content")
     if content_selector:
-        # 优先处理 <p> 标签分段
-        p_nodes = container.select("p")
-        if p_nodes:
-            text_chunks = [p.get_text(" ", strip=True) for p in p_nodes if p]
+        # content_selector 可能选中多个区域 (返回 ResultSet)
+        content_nodes = container.select(content_selector)
+        
+        # 收集所有区域内的 <p> 标签
+        all_p_nodes = []
+        for node in content_nodes:
+            all_p_nodes.extend(node.select("p"))
+            
+        if all_p_nodes:
+            text_chunks = [p.get_text(" ", strip=True) for p in all_p_nodes if p]
         else:
-            nodes = container.select(content_selector)
-            text_chunks = [node.get_text(" ", strip=True) for node in nodes if node]
+            # 如果没有 <p> 标签，直接使用 content_nodes 的文本
+            text_chunks = [node.get_text(" ", strip=True) for node in content_nodes if node]
     else:
+        # 如果没有配置 content_selector，直接使用 container 的文本
         text_chunks = [container.get_text(" ", strip=True)]
+        
     return "\n".join(filter(None, text_chunks))
 
 

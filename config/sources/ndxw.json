@@ -66,8 +66,8 @@
                 "views": ".cont-titl .arhots"
             },
             "text_selector": {
-                "item_container": ".article .v_news_content",
-                "content": ".article .v_news_content",
+                "item_container": ".articlet",
+                "content": ".v_news_content",
                 "title": ".new-cont h2"
             },
             "img_selector": {
