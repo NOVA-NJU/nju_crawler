@@ -125,19 +125,19 @@
             <!-- 规则列表 -->
             <div v-if="rules.length > 0" class="space-y-3">
                 <div v-for="(rule, index) in rules" :key="index" class="bg-purple-50 border border-purple-100 rounded-lg p-4 flex items-center justify-between gap-4 relative group">
-                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                        <div class="flex items-center gap-2 text-base text-gray-800">
-                            <span class="font-bold text-purple-900">时间:</span>
-                            <span>{{ rule.start }} 至 {{ rule.end }}</span>
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 items-center min-w-0">
+                        <div class="flex items-center gap-2 text-base text-gray-800 min-w-0">
+                            <span class="font-bold text-purple-900 flex-shrink-0">时间:</span>
+                            <span class="truncate">{{ rule.start }} 至 {{ rule.end }}</span>
                         </div>
-                        <div class="flex items-center gap-2 text-base text-gray-800 overflow-hidden">
+                        <div class="flex items-center gap-2 text-base text-gray-800 min-w-0">
                             <span class="font-bold text-purple-900 flex-shrink-0">来源:</span>
-                            <span class="truncate" :title="getSourceNames(rule.sourceIds)">{{ getSourceNames(rule.sourceIds) }}</span>
+                            <span class="truncate block" :title="getSourceNames(rule.sourceIds)">{{ getSourceNames(rule.sourceIds) }}</span>
                         </div>
-                        <div class="flex items-center gap-2 text-base text-gray-800">
+                        <div class="flex items-center gap-2 text-base text-gray-800 min-w-0">
                             <span class="font-bold text-purple-900 flex-shrink-0">关键词:</span>
                             <div class="flex flex-wrap gap-1" v-if="rule.keywords.length > 0">
-                                <span v-for="kw in rule.keywords" :key="kw" class="bg-white border border-purple-200 text-purple-700 px-2 py-0.5 rounded text-sm">{{ kw }}</span>
+                                <span v-for="kw in rule.keywords" :key="kw" class="bg-white border border-purple-200 text-purple-700 px-2 py-0.5 rounded text-sm break-all">{{ kw }}</span>
                             </div>
                             <span v-else class="text-gray-400 text-sm italic">无</span>
                         </div>
@@ -308,10 +308,10 @@
                                 <div>
                                     <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">2. 信息源</h4>
                                     
-                                    <div class="flex flex-col md:flex-row gap-4 h-60">
+                                    <div class="flex flex-col md:flex-row gap-4 h-80 md:h-60">
                                         <!-- 官网 -->
-                                        <div class="flex-1 border rounded-md p-2 flex flex-col">
-                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded">
+                                        <div class="flex-1 border rounded-md p-2 flex flex-col min-h-0">
+                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded flex-shrink-0">
                                                 <span class="text-xs font-semibold text-gray-500">官网 / 学院网站</span>
                                                 <div class="space-x-2 text-xs">
                                                     <button @click="selectAllOfficial" class="text-purple-600 hover:underline">全选</button>
