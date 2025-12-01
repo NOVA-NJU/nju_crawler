@@ -83,48 +83,70 @@
                 </h1>
                 <button
                     @click="exportToWord"
-                    class="bg-nju-purple text-white px-4 py-2 rounded-lg shadow hover:bg-opacity-90 transition-all duration-200 text-sm md:text-base">
+                    :disabled="groupedResults.length === 0"
+                    class="bg-nju-purple text-white px-4 py-2 rounded-lg shadow hover:bg-opacity-90 transition-all duration-200 text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed">
                     导出为 Word
                 </button>
             </div>
         </header>
 
-        <!-- 搜索栏 -->
+        <!-- 规则与操作栏 -->
         <div class="container mx-auto p-4 bg-white md:rounded-b-lg shadow-md mb-6 sticky top-[80px] z-10">
-            <div class="flex flex-col md:flex-row md:items-center gap-4">
-                <!-- 日期选择 -->
-                <div class="flex-1 flex gap-2">
-                    <div class="w-1/2">
-                        <label for="start_time" class="block text-sm font-medium text-gray-700">开始日期</label>
-                        <input type="date" id="start_time" v-model="dateRange.start" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                    </div>
-                    <div class="w-1/2">
-                        <label for="end_time" class="block text-sm font-medium text-gray-700">结束日期</label>
-                        <input type="date" id="end_time" v-model="dateRange.end" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                    </div>
-                </div>
+            <div class="flex justify-between items-center gap-4 mb-4">
+                <button
+                    @click="openRuleModal"
+                    class="px-4 py-2 border border-dashed border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 transition-colors flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    添加筛选规则
+                </button>
 
-                <!-- 信息源选择 (按钮) -->
-                <div class="flex-shrink-0">
-                    <label class="block text-sm font-medium text-gray-700 invisible hidden md:block">筛选</label>
-                    <button
-                        @click="showSourceModal = true"
-                        class="mt-1 w-full md:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                        筛选信息源 ({{ selectedSourceIds.length }} / {{ sourceList.length }})
-                    </button>
-                </div>
+                <button
+                    @click="fetchData"
+                    :disabled="isLoading || rules.length === 0"
+                    class="px-6 py-2 bg-nju-purple text-white rounded-lg shadow hover:bg-opacity-90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span v-if="!isLoading">查询</span>
+                    <span v-else>查询中...</span>
+                </button>
+            </div>
 
-                <!-- 查询按钮 -->
-                <div class="flex-shrink-0">
-                    <label class="block text-sm font-medium text-gray-700 invisible hidden md:block">操作</label>
-                    <button
-                        @click="fetchData"
-                        :disabled="isLoading"
-                        class="mt-1 w-full md:w-auto px-6 py-2 bg-nju-purple text-white rounded-lg shadow hover:bg-opacity-90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700 disabled:opacity-50">
-                        <span v-if="!isLoading">查询</span>
-                        <span v-else>查询中...</span>
-                    </button>
+            <!-- 规则列表 -->
+            <div v-if="rules.length > 0" class="space-y-3">
+                <div v-for="(rule, index) in rules" :key="index" class="bg-purple-50 border border-purple-100 rounded-lg p-4 flex items-center justify-between gap-4 relative group">
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                        <div class="flex items-center gap-2 text-base text-gray-800">
+                            <span class="font-bold text-purple-900">时间:</span>
+                            <span>{{ rule.start }} 至 {{ rule.end }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-base text-gray-800 overflow-hidden">
+                            <span class="font-bold text-purple-900 flex-shrink-0">来源:</span>
+                            <span class="truncate" :title="getSourceNames(rule.sourceIds)">{{ getSourceNames(rule.sourceIds) }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-base text-gray-800">
+                            <span class="font-bold text-purple-900 flex-shrink-0">关键词:</span>
+                            <div class="flex flex-wrap gap-1" v-if="rule.keywords.length > 0">
+                                <span v-for="kw in rule.keywords" :key="kw" class="bg-white border border-purple-200 text-purple-700 px-2 py-0.5 rounded text-sm">{{ kw }}</span>
+                            </div>
+                            <span v-else class="text-gray-400 text-sm italic">无</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button @click="editRule(index)" class="text-purple-600 hover:text-purple-800 transition-colors p-1" title="修改规则">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                        <button @click="removeRule(index)" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="删除规则">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+            </div>
+            <div v-else class="text-center text-gray-400 py-2 text-sm">
+                暂无筛选规则，请点击左上角添加
             </div>
         </div>
 
@@ -146,7 +168,7 @@
 
                 <!-- 无数据状态 -->
                 <div v-if="!isLoading && !error && groupedResults.length === 0" class="text-center text-gray-500 py-10">
-                    <p>暂无数据，请尝试调整筛选条件后查询。</p>
+                    <p>暂无数据，请添加规则并查询。</p>
                 </div>
 
                 <!-- 结果列表 -->
@@ -228,7 +250,7 @@
 
         </main>
 
-        <!-- 信息源选择模态框 -->
+        <!-- 规则编辑模态框 -->
         <transition
             enter-active-class="ease-out duration-300"
             enter-from-class="opacity-0"
@@ -236,7 +258,7 @@
             leave-active-class="ease-in duration-200"
             leave-from-class="opacity-100"
             leave-to-class="opacity-0">
-            <div v-if="showSourceModal" class="fixed inset-0 z-30 overflow-y-auto bg-gray-600 bg-opacity-75 transition-opacity" @click.self="showSourceModal = false">
+            <div v-if="showRuleModal" class="fixed inset-0 z-30 overflow-y-auto bg-gray-600 bg-opacity-75 transition-opacity" @click.self="closeRuleModal">
                 <div class="flex items-center justify-center min-h-screen p-4">
                     <transition
                         enter-active-class="ease-out duration-300"
@@ -245,27 +267,96 @@
                         leave-active-class="ease-in duration-200"
                         leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                         leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                        <div class="bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:w-full sm:max-w-2xl" @click.stop>
-                            <div class="p-5 border-b border-gray-200">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">
-                                    筛选信息源
-                                </h3>
+                        <div class="bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:w-full sm:max-w-3xl flex flex-col max-h-[90vh]" @click.stop>
+                            <div class="p-5 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">{{ editingRuleIndex === -1 ? '添加筛选规则' : '修改筛选规则' }}</h3>
+                                <button @click="closeRuleModal" class="text-gray-400 hover:text-gray-500">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
                             </div>
-                            <div class="p-5">
-                                <div class="flex justify-between items-center mb-4">
-                                    <button @click="selectAllSources" class="text-sm text-purple-600 hover:text-purple-800">全选</button>
-                                    <button @click="deselectAllSources" class="text-sm text-purple-600 hover:text-purple-800">全不选</button>
-                                </div>
-                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-60 overflow-y-auto">
-                                    <div v-for="source in sourceList" :key="source.id" class="flex items-center">
-                                        <input :id="'cb-' + source.id" type="checkbox" :value="source.id" v-model="selectedSourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
-                                        <label :for="'cb-' + source.id" class="ml-2 block text-sm text-gray-900">{{ source.name }}</label>
+                            
+                            <div class="p-6 overflow-y-auto flex-1 space-y-6">
+                                <!-- 1. 时间范围 -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">1. 时间范围</h4>
+                                    <div class="flex gap-4">
+                                        <div class="flex-1">
+                                            <label class="block text-xs text-gray-500 mb-1">开始日期</label>
+                                            <input type="date" v-model="currentRule.start" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                        </div>
+                                        <div class="flex-1">
+                                            <label class="block text-xs text-gray-500 mb-1">结束日期</label>
+                                            <input type="date" v-model="currentRule.end" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- 2. 信息源 -->
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h4 class="text-sm font-bold text-gray-700 border-l-4 border-purple-600 pl-2">2. 信息源</h4>
+                                        <div class="space-x-2 text-xs">
+                                            <button @click="selectAllSources" class="text-purple-600 hover:underline">全选</button>
+                                            <button @click="deselectAllSources" class="text-purple-600 hover:underline">清空</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex flex-col md:flex-row gap-4 h-60">
+                                        <!-- 官网 -->
+                                        <div class="flex-1 border rounded-md p-2 flex flex-col">
+                                            <div class="text-xs font-semibold text-gray-500 mb-2 text-center bg-gray-50 py-1">官网 / 学院网站</div>
+                                            <div class="overflow-y-auto flex-1 space-y-1">
+                                                <div v-for="source in officialSources" :key="source.id" class="flex items-center">
+                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 公众号 -->
+                                        <div class="flex-1 border rounded-md p-2 flex flex-col">
+                                            <div class="text-xs font-semibold text-gray-500 mb-2 text-center bg-gray-50 py-1">微信公众号</div>
+                                            <div class="overflow-y-auto flex-1 space-y-1">
+                                                <div v-for="source in wechatSources" :key="source.id" class="flex items-center">
+                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
+                                                </div>
+                                                <div v-if="wechatSources.length === 0" class="text-center text-gray-400 text-xs py-4">暂无公众号源</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. 关键词 -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">3. 关键词过滤 (可选)</h4>
+                                    <div class="border border-gray-300 rounded-md p-2 bg-white focus-within:ring-1 focus-within:ring-purple-500 focus-within:border-purple-500">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span v-for="(kw, idx) in currentRule.keywords" :key="idx" class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded flex items-center">
+                                                {{ kw }}
+                                                <button @click="removeKeyword(idx)" class="ml-1 text-purple-600 hover:text-purple-900 focus:outline-none">×</button>
+                                            </span>
+                                            <input 
+                                                type="text" 
+                                                v-model="keywordInput" 
+                                                @keydown.enter.prevent="addKeyword" 
+                                                @keydown.backspace="handleBackspace"
+                                                placeholder="输入关键词后按回车..." 
+                                                class="flex-1 min-w-[120px] outline-none text-sm bg-transparent"
+                                            >
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">同时包含所有关键词的记录才会被保留。留空则不筛选。</p>
+                                </div>
                             </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg">
-                                <button type="button" @click="showSourceModal = false" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-nju-purple text-base font-medium text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                    确认
+
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg border-t border-gray-200">
+                                <button type="button" @click="saveRule" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-nju-purple text-base font-medium text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                    完成
+                                </button>
+                                <button type="button" @click="closeRuleModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                    取消
                                 </button>
                             </div>
                         </div>
@@ -342,18 +433,22 @@
                     { id: 'qykxxy', name: '前沿科学学院' },
                 ]);
 
-                // 搜索条件
-                const dateRange = ref({
-                    start: new Date(new Date().setDate(new Date().getDate() - 7)).toISOString().split('T')[0], // 默认7天前
-                    end: new Date().toISOString().split('T')[0], // 默认今天
+                // 规则相关状态
+                const rules = ref([]);
+                const showRuleModal = ref(false);
+                const editingRuleIndex = ref(-1); // -1 表示添加，>=0 表示修改
+                const keywordInput = ref("");
+                const currentRule = ref({
+                    start: "",
+                    end: "",
+                    sourceIds: [],
+                    keywords: []
                 });
-                const selectedSourceIds = ref(sourceList.value.map(s => s.id)); // 默认全选
-                const showSourceModal = ref(false);
 
                 // 异步数据
                 const isLoading = ref(false);
                 const error = ref(null);
-                const results = ref([]); // 原始 API 返回数据
+                const results = ref([]); // 最终展示的数据（已去重）
 
                 // UI 状态
                 const activeSourceIds = ref([]); // 当前展开的分类集合
@@ -367,28 +462,32 @@
 
                 // --- 计算属性 (Computed) ---
 
-                // 将原始数据按预定义列表分组和排序
+                // 模态框中的源分类
+                const officialSources = computed(() => sourceList.value.filter(s => !s.id.startsWith('wechat_')));
+                const wechatSources = computed(() => sourceList.value.filter(s => s.id.startsWith('wechat_')));
+
+                // 将结果按预定义列表分组和排序
                 const groupedResults = computed(() => {
-                    // 1. 创建一个 Map 用于快速查找原始结果
                     const resultsBySource = new Map();
                     results.value.forEach(item => {
-                        // 按 source_id 分类
                         if (!resultsBySource.has(item.source_id)) {
                             resultsBySource.set(item.source_id, []);
                         }
                         resultsBySource.get(item.source_id).push(item);
                     });
 
-                    // 2. 只显示已选中的 source
-                    return sourceList.value.filter(source => selectedSourceIds.value.includes(source.id)).map(source => {
-                        // 前缀匹配分组
+                    // 遍历所有定义的源，如果有数据则显示
+                    return sourceList.value.map(source => {
                         const items = [];
                         for (const [sid, arr] of resultsBySource.entries()) {
                             if (sid.startsWith(source.id)) {
                                 items.push(...arr);
                             }
                         }
-                        // 3. 对每个分类内部的文章按发布时间倒序排序
+                        
+                        if (items.length === 0) return null;
+
+                        // 排序
                         items.sort((a, b) => {
                             return new Date(b.publish_time) - new Date(a.publish_time);
                         });
@@ -396,34 +495,118 @@
                             ...source,
                             items: items,
                         };
-                    });
+                    }).filter(Boolean); // 过滤掉无数据的源
                 });
 
 
                 // --- 方法 (Methods) ---
 
+                // 规则模态框操作
+                const openRuleModal = () => {
+                    editingRuleIndex.value = -1;
+                    const end = new Date().toISOString().split('T')[0];
+                    const start = new Date(new Date().setDate(new Date().getDate() - 7)).toISOString().split('T')[0];
+                    
+                    currentRule.value = {
+                        start,
+                        end,
+                        sourceIds: sourceList.value.map(s => s.id), // 默认全选
+                        keywords: []
+                    };
+                    keywordInput.value = "";
+                    showRuleModal.value = true;
+                };
+
+                const editRule = (index) => {
+                    editingRuleIndex.value = index;
+                    // 深拷贝，防止直接修改原数据
+                    currentRule.value = JSON.parse(JSON.stringify(rules.value[index]));
+                    keywordInput.value = "";
+                    showRuleModal.value = true;
+                };
+
+                const closeRuleModal = () => {
+                    showRuleModal.value = false;
+                };
+
+                const addKeyword = () => {
+                    const val = keywordInput.value.trim();
+                    if (val && !currentRule.value.keywords.includes(val)) {
+                        currentRule.value.keywords.push(val);
+                    }
+                    keywordInput.value = "";
+                };
+
+                const handleBackspace = (e) => {
+                    if (keywordInput.value === "" && currentRule.value.keywords.length > 0) {
+                        currentRule.value.keywords.pop();
+                    }
+                };
+
+                const removeKeyword = (index) => {
+                    currentRule.value.keywords.splice(index, 1);
+                };
+
+                const selectAllSources = () => {
+                    currentRule.value.sourceIds = sourceList.value.map(s => s.id);
+                };
+
+                const deselectAllSources = () => {
+                    currentRule.value.sourceIds = [];
+                };
+
+                const saveRule = () => {
+                    if (keywordInput.value.trim()) {
+                        addKeyword();
+                    }
+                    
+                    if (!currentRule.value.start || !currentRule.value.end) {
+                        alert("请选择时间范围");
+                        return;
+                    }
+                    if (currentRule.value.sourceIds.length === 0) {
+                        alert("请至少选择一个信息源");
+                        return;
+                    }
+
+                    const ruleData = JSON.parse(JSON.stringify(currentRule.value));
+                    if (editingRuleIndex.value === -1) {
+                        rules.value.push(ruleData);
+                    } else {
+                        rules.value[editingRuleIndex.value] = ruleData;
+                    }
+                    closeRuleModal();
+                };
+
+                const removeRule = (index) => {
+                    rules.value.splice(index, 1);
+                };
+
+                const getSourceNames = (ids) => {
+                    if (ids.length === sourceList.value.length) return "全部来源";
+                    const names = ids.map(id => {
+                        const s = sourceList.value.find(src => src.id === id);
+                        return s ? s.name : id;
+                    });
+                    return names.join(", ");
+                };
+
                 // 格式化日期
                 const formatTime = (timeStr) => {
                     if (!timeStr) return '未知时间';
                     try {
-                        // 尝试解析为日期对象
                         const date = new Date(timeStr);
-                        // 检查是否为有效日期
-                        if (isNaN(date.getTime())) {
-                            return timeStr; // 如果解析失败, 返回原始字符串
-                        }
-                        // 格式化为 "YYYY-MM-DD HH:mm"
+                        if (isNaN(date.getTime())) return timeStr;
                         return date.toLocaleString('zh-CN', {
                             year: 'numeric',
                             month: '2-digit',
                             day: '2-digit',
                         }).replace(/\//g, '-');
                     } catch (e) {
-                        return timeStr; // 出错时返回原始字符串
+                        return timeStr;
                     }
                 };
                 
-                // 格式化导出 Word 用的日期 (e.g., 6月9日)
                 const formatExportDate = (dateStr) => {
                     if (!dateStr) return '';
                     const date = new Date(dateStr);
@@ -447,61 +630,80 @@
                     selectedItem.value = item;
                 };
 
-                // 全选/全不选
-                const selectAllSources = () => {
-                    selectedSourceIds.value = sourceList.value.map(s => s.id);
-                };
-                const deselectAllSources = () => {
-                    selectedSourceIds.value = [];
-                };
-
                 // 从后端获取数据
                 const fetchData = async () => {
                     isLoading.value = true;
                     error.value = null;
-                    selectedItem.value = null; // 清除预览
-                    
-                    // 确保结束日期包含当天
-                    let endTime = dateRange.value.end;
-                    if (endTime) {
-                         // 假设日期格式为 YYYY-MM-DD, 调整为当天的 23:59:59
-                        endTime = `${endTime}T23:59:59`;
+                    selectedItem.value = null;
+                    results.value = [];
+
+                    if (rules.value.length === 0) {
+                        isLoading.value = false;
+                        return;
                     }
 
-                    // 构造查询参数字符串
-                    const params = new URLSearchParams({
-                        source_id: selectedSourceIds.value.join(','), // 如果是数组，后端需支持
-                        start_time: dateRange.value.start,
-                        end_time: endTime,
-                    }).toString();
-
                     try {
-                        const response = await axios.get(`${API_BASE_URL}/api/records?${params}`);
+                        const allPromises = rules.value.map(async (rule) => {
+                            let endTime = rule.end;
+                            if (endTime) endTime = `${endTime}T23:59:59`;
+
+                            const params = new URLSearchParams({
+                                source_id: rule.sourceIds.join(','),
+                                start_time: rule.start,
+                                end_time: endTime,
+                            }).toString();
+
+                            const res = await axios.get(`${API_BASE_URL}/api/records?${params}`);
+                            let data = res.data || [];
+                            
+                            // 关键词过滤
+                            if (rule.keywords.length > 0) {
+                                data = data.filter(item => {
+                                    const text = ((item.title || "") + (item.content || "")).toLowerCase();
+                                    return rule.keywords.every(kw => text.includes(kw.toLowerCase()));
+                                });
+                            }
+                            return data;
+                        });
+
+                        const resultsArrays = await Promise.all(allPromises);
                         
-                        if (response.data && Array.isArray(response.data)) {
-                             results.value = response.data;
-                             // 默认展开第一个有内容的分类
+                        // 合并与去重
+                        const merged = [];
+                        const seenIds = new Set();
+                        
+                        resultsArrays.forEach(arr => {
+                            arr.forEach(item => {
+                                if (!seenIds.has(item.id)) {
+                                    seenIds.add(item.id);
+                                    merged.push(item);
+                                }
+                            });
+                        });
+
+                        results.value = merged;
+                        
+                        // 默认展开第一个有内容的分类
+                        // 需要等待 groupedResults 更新，但在 Vue 中 computed 是响应式的
+                        // 这里我们手动检查一下
+                        setTimeout(() => {
                              const firstSourceWithItems = groupedResults.value.find(g => g.items.length > 0);
                              if (firstSourceWithItems) {
                                  activeSourceIds.value = [firstSourceWithItems.id];
                              } else {
                                  activeSourceIds.value = [];
                              }
-                        } else {
-                            results.value = [];
-                            error.value = "返回数据格式不正确。";
-                        }
-                       
+                        }, 0);
+
                     } catch (err) {
                         console.error("API 请求失败:", err);
                         if (err.response) {
                             error.value = `服务器错误: ${err.response.status} ${err.response.statusText}`;
                         } else if (err.request) {
-                            error.value = "无法连接到服务器。请检查后端服务是否正在运行, 以及 API 地址是否正确。";
+                            error.value = "无法连接到服务器。请检查后端服务是否正在运行。";
                         } else {
                             error.value = `请求失败: ${err.message}`;
                         }
-                        results.value = [];
                     } finally {
                         isLoading.value = false;
                     }
@@ -509,9 +711,9 @@
 
                 // 导出为 Word
                 const exportToWord = () => {
-                    const bodyFontSize = '12pt';      // 正文字体大小
-                    const h1FontSize = '18pt';        // 主标题
-                    const h2FontSize = '12pt';        // 二级标题
+                    const bodyFontSize = '12pt';
+                    const h1FontSize = '18pt';
+                    const h2FontSize = '12pt';
                     const listFontSize = bodyFontSize;
 
                     let htmlContent = `
@@ -531,17 +733,14 @@
                             </style>
                         </head>
                         <body>
-                            <h1>南京大学教育资讯 (${dateRange.value.start} 至 ${dateRange.value.end})</h1>
+                            <h1>南京大学教育资讯</h1>
                     `;
 
-                    const dateRangeStr = `${formatExportDate(dateRange.value.start)}-${formatExportDate(dateRange.value.end)}`;
-
-                    // 必须使用 groupedResults, 因为它保证了顺序
                     groupedResults.value.forEach((source, index) => {
                         htmlContent += `<h2>${index + 1}. ${source.name}：</h2>`;
                         
                         if (source.items.length === 0) {
-                            htmlContent += `<p> ${dateRangeStr}无相关推送</p>`;
+                            htmlContent += `<p> 无相关推送</p>`;
                         } else {
                             htmlContent += `<ul>`;
                             source.items.forEach(item => {
@@ -555,10 +754,10 @@
                     htmlContent += `</body></html>`;
                     
                     const blob = new Blob([htmlContent], { type: "application/msword;charset=utf-8" });
-                    saveAs(blob, `南京大学教育资讯_${dateRange.value.start}_${dateRange.value.end}.doc`);
+                    saveAs(blob, `南京大学教育资讯_导出.doc`);
                 };
 
-                // 统一的链接精简函数：去除查询参数与锚点
+                // 统一的链接精简函数
                 const cleanUrl = (url) => {
                     if (!url) return '';
                     return url.split('?')[0].split('#')[0];
@@ -567,15 +766,19 @@
 
                 // --- 生命周期 (Lifecycle) ---
                 onMounted(() => {
-                    fetchData(); // 页面加载时自动查询一次
+                    // 初始不自动查询，因为没有规则
                 });
 
                 // --- 返回 (Return) ---
                 return {
                     sourceList,
-                    dateRange,
-                    selectedSourceIds,
-                    showSourceModal,
+                    rules,
+                    showRuleModal,
+                    currentRule,
+                    editingRuleIndex,
+                    keywordInput,
+                    officialSources,
+                    wechatSources,
                     isLoading,
                     error,
                     results,
@@ -583,13 +786,22 @@
                     selectedItem,
                     groupedResults,
                     renderedContent,
+                    openRuleModal,
+                    editRule,
+                    closeRuleModal,
+                    addKeyword,
+                    removeKeyword,
+                    handleBackspace,
+                    selectAllSources,
+                    deselectAllSources,
+                    saveRule,
+                    removeRule,
+                    getSourceNames,
                     fetchData,
                     toggleSource,
                     isSourceExpanded,
                     selectItem,
                     formatTime,
-                    selectAllSources,
-                    deselectAllSources,
                     exportToWord,
                     cleanUrl,
                 };

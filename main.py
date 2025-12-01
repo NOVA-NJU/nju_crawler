@@ -44,6 +44,11 @@ app = FastAPI(lifespan=_combined_lifespan)
 app.include_router(crawler_router)
 app.include_router(wechat_router)
 
+@app.get("/")
+async def read_root():
+    return FileResponse("index.html")
+
+
 origins = [
     "*" 
     # 将来部署时, 您应该只允许您的前端网址
