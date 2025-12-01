@@ -222,9 +222,9 @@ async def fetch_html(url: str, timeout: int = REQUEST_TIMEOUT) -> str:
 async def crawl_single_article(url: str, source_id: Optional[str] = None, source_name: Optional[str] = None) -> Optional[CrawlItem]:
 	html = await fetch_html(url)
 	meta = parse_wechat_article(html)
-	content=meta["Content"] or ""
-	title=meta["Title"]
-	create_time=meta["Time"]
+	content = meta.get("Content", "")
+	title = meta.get("Title", "")
+	create_time = meta.get("Time", datetime.now(timezone.utc))
 	item_id = compute_sha256((content or "")[:500], url)
 
 	exists = await asyncio.to_thread(database.record_exists, item_id)

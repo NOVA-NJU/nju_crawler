@@ -100,7 +100,7 @@ def verify_logged_in(driver, timeout=20) -> bool:
 
 def get_cookies():
   options = webdriver.FirefoxOptions()
-  options.add_argument("-headless")
+  # options.add_argument("-headless")  # 注释掉无头模式，允许弹出窗口
   service = Service()
   driver = webdriver.Firefox(service=service, options=options)
   driver.set_window_size(1280, 900)

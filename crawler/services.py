@@ -551,35 +551,7 @@ def parse_wechat_article(html: str) -> tuple[str, List[Attachments]]:
     content_div = soup.find("div", class_="rich_media_content")
     content = content_div.get_text("\n", strip=True) if content_div else ""
     
-    title = soup.find("h1", class_="rich_media_title")
-    title_text = title.get_text(strip=True) if title else ""
-    
-    author = soup.find("a", id="js_name")
-    author_text = author.get_text(strip=True) if author else ""
-    
-    create_time = ""
-    match = re.search(r"var createTime = '(.*?)';", html)
-    if match:
-        try:
-            ts = float(match.group(1))
-            create_time = datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
-        except Exception:
-            create_time = match.group(1)
-
-    # Biz (FakeID)
-    biz = ""
-    biz_match = re.search(r'var biz\s*=\s*"(.*?)";', html)
-    if biz_match:
-        biz = biz_match.group(1).replace('" || "', '').replace('"', '')
-
-    meta = []
-    if title_text: meta.append(f"Title: {title_text}")
-    if author_text: meta.append(f"Author: {author_text}")
-    if create_time: meta.append(f"Time: {create_time}")
-    if biz: meta.append(f"Biz: {biz}")
-    
-    full_text = "\n".join(meta) + "\n\n" + content
-    return full_text, []
+    return content, []
 
 
 def resolve_detail_selector(detail_url: str) -> Optional[dict]:
