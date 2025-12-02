@@ -115,7 +115,7 @@
 
                 <button
                     @click="fetchData"
-                    :disabled="isLoading || rules.length === 0"
+                    :disabled="isLoading"
                     class="px-6 py-2 bg-nju-purple text-white rounded-lg shadow hover:bg-opacity-90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700 disabled:opacity-50 disabled:cursor-not-allowed">
                     <span v-if="!isLoading">查询</span>
                     <span v-else>查询中...</span>
@@ -157,7 +157,7 @@
                 </div>
             </div>
             <div v-else class="text-center text-gray-400 py-2 text-sm">
-                暂无筛选规则，请点击左上角添加
+                暂无筛选规则，默认查询最近 7 天全部来源，或点击左上角添加自定义规则
             </div>
         </div>
 
@@ -668,13 +668,21 @@
                     selectedItem.value = null;
                     results.value = [];
 
-                    if (rules.value.length === 0) {
-                        isLoading.value = false;
-                        return;
-                    }
-
                     try {
-                        const allPromises = rules.value.map(async (rule) => {
+                        // 如果没有规则，则默认查询最近 7 天的所有来源
+                        let queryRules = rules.value;
+                        if (queryRules.length === 0) {
+                            const end = new Date().toISOString().split('T')[0];
+                            const start = new Date(new Date().setDate(new Date().getDate() - 7)).toISOString().split('T')[0];
+                            queryRules = [{
+                                start,
+                                end,
+                                sourceIds: sourceList.value.map(s => s.id),
+                                keywords: []
+                            }];
+                        }
+
+                        const allPromises = queryRules.map(async (rule) => {
                             let endTime = rule.end;
                             if (endTime) endTime = `${endTime}T23:59:59`;
 
@@ -788,7 +796,7 @@
 
                 // --- 生命周期 (Lifecycle) ---
                 onMounted(() => {
-                    // 初始不自动查询，因为没有规则
+                    fetchData();
                 });
 
                 // --- 返回 (Return) ---
