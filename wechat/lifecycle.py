@@ -40,8 +40,12 @@ async def _crawl_all_wechat_sources_once() -> None:
 
 
 async def _periodic_crawl_loop() -> None:
+    logger.info("Starting periodic wechat crawl loop with interval: %s seconds", CRAWL_INTERVAL)
     while True:
+        start_time = asyncio.get_running_loop().time()
         await _crawl_all_wechat_sources_once()
+        elapsed = asyncio.get_running_loop().time() - start_time
+        logger.info("WeChat crawl cycle finished in %.2f seconds. Sleeping for %s seconds...", elapsed, max(1, CRAWL_INTERVAL))
         await asyncio.sleep(max(1, CRAWL_INTERVAL))
 
 

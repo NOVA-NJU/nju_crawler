@@ -6,7 +6,7 @@ import requests
 import json
 import asyncio
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import List, Optional,Dict
 from bs4 import BeautifulSoup
 
 from .config import WECHAT_SOURCES, WECHAT_SESSION, REQUEST_TIMEOUT
@@ -68,7 +68,7 @@ def compute_sha256(*segments: Optional[str]) -> str:
 	return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
-def parse_wechat_article(html: str) -> dict:
+def parse_wechat_article(html: str) -> Dict[str, str]:
 	"""Parse a WeChat article HTML and return aggregated text content."""
 	soup = BeautifulSoup(html, "lxml")
 	if "当前环境异常" in html:
@@ -342,6 +342,9 @@ async def crawl_wechat_source(source_id: str) -> List[CrawlItem]:
 		targets = [tgt]
 
 	results: List[CrawlItem] = []
+	
+	# 限制并发数，防止被微信封禁
+	semaphore = asyncio.Semaphore(3)
 
 	for src in targets:
 		urls: List[str] = []
@@ -364,13 +367,27 @@ async def crawl_wechat_source(source_id: str) -> List[CrawlItem]:
 			print(f"[INFO] wechat source {src.get('id')} has no article urls; skip")
 			continue
 
-		for url in urls:
-			try:
-				item = await crawl_single_article(url, source_id=src.get("id"), source_name=src.get('name'))
-				if item:
-					results.append(item)
-			except Exception as exc:
-				print(f"[WARN] failed to crawl article {url}: {exc}")
-				continue
-		print(f"\n[SUCCESS] Source '公众号：{src.get('name')}' crawled successfully. {len(results)} new items added.")
+		# 定义并发任务包装器
+		async def process_url(url: str):
+			async with semaphore:
+				try:
+					return await crawl_single_article(url, source_id=src.get("id"), source_name=src.get('name'))
+				except Exception as exc:
+					print(f"[WARN] failed to crawl article {url}: {exc}")
+					return None
+
+		# 创建并执行任务
+		tasks = [process_url(url) for url in urls]
+		batch_results = await asyncio.gather(*tasks, return_exceptions=True)
+
+		# 收集结果
+		new_items_count = 0
+		for res in batch_results:
+			if isinstance(res, CrawlItem):
+				results.append(res)
+				new_items_count += 1
+			elif isinstance(res, Exception):
+				print(f"[WARN] task failed: {res}")
+
+		print(f"\n[SUCCESS] Source '公众号：{src.get('name')}' crawled successfully. {new_items_count} new items added.")
 	return results

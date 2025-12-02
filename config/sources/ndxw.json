@@ -12,7 +12,7 @@
                 "host": "www.nju.edu.cn"
             },
             "selectors": {
-                "item_container": "ul.flex > li",
+                "item_container": ".kxyj ul.flex > li",
                 "url": "a",
                 "date": ".kxdt-l p",
                 "title": ".kxdt-r h3.l2"

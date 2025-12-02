@@ -40,8 +40,12 @@ async def _periodic_crawl_loop() -> None:
     """
     后台循环任务，根据配置的间隔不断执行爬取。
     """
+    logger.info("Starting periodic crawler loop with interval: %s seconds", CRAWL_INTERVAL)
     while True:
+        start_time = asyncio.get_running_loop().time()
         await _crawl_all_sources_once()  # 执行一次全源爬取
+        elapsed = asyncio.get_running_loop().time() - start_time
+        logger.info("Crawler cycle finished in %.2f seconds. Sleeping for %s seconds...", elapsed, max(1, CRAWL_INTERVAL))
         await asyncio.sleep(max(1, CRAWL_INTERVAL))  # 间隔等待后继续下一轮
 
 
