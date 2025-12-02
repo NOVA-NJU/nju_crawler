@@ -207,7 +207,15 @@ def test_wechat_page(html: str):
     if biz_match:
         print(f"Biz: {biz_match.group(1)}")
         
-    time_match = re.search(r"var createTime = '(.*?)';", html)
+    time_match = None
+    for pattern in (
+        r"var createTime = ['\"](.*?)['\"]",
+        r"var ct = ['\"](.*?)['\"]",
+        r"var publish_time = ['\"](.*?)['\"]",
+    ):
+        time_match = re.search(pattern, html)
+        if time_match:
+            break
     if time_match:
         try:
             ts = float(time_match.group(1))
