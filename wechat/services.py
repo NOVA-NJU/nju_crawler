@@ -16,6 +16,52 @@ from storage import database
 # reuse a requests Session like the original project
 Session = requests.Session()
 
+_TIME_PATTERNS = (
+	re.compile(r"var createTime\s*=\s*['\"](.*?)['\"]"),
+	re.compile(r"var ct\s*=\s*['\"](.*?)['\"]"),
+	re.compile(r"var publish_time\s*=\s*['\"](.*?)['\"]"),
+)
+
+
+def _parse_publish_timestamp(raw_value: str) -> Optional[datetime]:
+	"""Normalize multiple publish_time formats into a UTC datetime."""
+	if not raw_value:
+		return None
+	value = raw_value.strip()
+	if not value:
+		return None
+	try:
+		if value.isdigit():
+			return datetime.fromtimestamp(int(value), tz=timezone.utc)
+		return datetime.fromtimestamp(float(value), tz=timezone.utc)
+	except (ValueError, OSError):
+		pass
+	for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%Y-%m-%d"):
+		try:
+			dt = datetime.strptime(value, fmt)
+			return dt.replace(tzinfo=timezone.utc)
+		except ValueError:
+			continue
+	try:
+		dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+		return dt.astimezone(timezone.utc) if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+	except ValueError:
+		return None
+
+
+def _extract_publish_datetime(html: str) -> tuple[Optional[datetime], Optional[str]]:
+	"""Extract publish datetime (if any) and return both parsed datetime and raw value."""
+	for pattern in _TIME_PATTERNS:
+		match = pattern.search(html)
+		if not match:
+			continue
+		raw_value = match.group(1).strip()
+		parsed = _parse_publish_timestamp(raw_value)
+		if parsed:
+			return parsed, raw_value
+		return None, raw_value
+	return None, None
+
 
 def compute_sha256(*segments: Optional[str]) -> str:
 	payload = "\n".join(segment or "" for segment in segments)
@@ -37,23 +83,17 @@ def parse_wechat_article(html: str) -> Dict[str, str]:
 	author = soup.find("a", id="js_name")
 	author_text = author.get_text(strip=True) if author else ""
 
-	create_time = ""
-	match = re.search(r"var createTime = '(.*?)';", html)
-	if match:
-		try:
-			ts = float(match.group(1))
-			# 仅保留年月日
-			create_time = datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
-		except Exception:
-			create_time = match.group(1)
+	publish_dt, raw_time = _extract_publish_datetime(html)
 
 	meta = {}
 	if title_text:
 		meta["Title"]=title_text
 	if author_text:
 		meta["Author"]=author_text
-	if create_time:
-		meta["Time"]=create_time
+	if publish_dt:
+		meta["Time"] = publish_dt
+	elif raw_time:
+		meta["Time"] = raw_time
 	if content:
 		meta["Content"]=content
 	
@@ -157,9 +197,11 @@ def fetch_article_details(url: str, timeout: int = REQUEST_TIMEOUT) -> dict:
 	if m:
 		biz = m.group(1).replace('" || "', '').replace('"', '')
 	create_time = ""
-	m2 = re.search(r"var createTime = '(.*?)';", html)
-	if m2:
-		create_time = m2.group(1)
+	publish_dt, raw_time = _extract_publish_datetime(html)
+	if publish_dt:
+		create_time = publish_dt.strftime("%Y-%m-%d")
+	elif raw_time:
+		create_time = raw_time
 
 	return {
 		"status": 1,
