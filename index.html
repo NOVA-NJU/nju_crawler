@@ -189,10 +189,10 @@
                             <div
                             @click="toggleSource(source.id)"
                             class="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-                            <div class="flex items-center gap-2">
-                                <h2 class="text-lg font-semibold nju-purple">{{ source.name }}</h2>
-                                <span v-if="source.id.startsWith('wechat_')" class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded border border-green-200">公众号</span>
-                                <span v-else class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded border border-blue-200">官网</span>
+                            <div class="flex items-center gap-2 min-w-0 flex-1 mr-2">
+                                <h2 class="text-sm md:text-lg font-semibold nju-purple truncate">{{ source.name }}</h2>
+                                <span v-if="source.id.startsWith('wechat_')" class="flex-shrink-0 bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded border border-green-200">公众号</span>
+                                <span v-else class="flex-shrink-0 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded border border-blue-200">官网</span>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ source.items.length }} 条</span>
@@ -293,65 +293,9 @@
                             </div>
                             
                             <div class="p-6 overflow-y-auto flex-1 space-y-6">
-                                <!-- 1. 时间范围 -->
+                                <!-- 1. 关键词 -->
                                 <div>
-                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">1. 时间范围</h4>
-                                    <div class="flex gap-4">
-                                        <div class="flex-1">
-                                            <label class="block text-xs text-gray-500 mb-1">开始日期</label>
-                                            <input type="date" v-model="currentRule.start" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                                        </div>
-                                        <div class="flex-1">
-                                            <label class="block text-xs text-gray-500 mb-1">结束日期</label>
-                                            <input type="date" v-model="currentRule.end" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 2. 信息源 -->
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">2. 信息源</h4>
-                                    
-                                    <div class="flex flex-col md:flex-row gap-4 h-80 md:h-60">
-                                        <!-- 官网 -->
-                                        <div class="flex-1 border rounded-md p-2 flex flex-col min-h-0">
-                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded flex-shrink-0">
-                                                <span class="text-xs font-semibold text-gray-500">官网 / 学院网站</span>
-                                                <div class="space-x-2 text-xs">
-                                                    <button @click="selectAllOfficial" class="text-purple-600 hover:underline">全选</button>
-                                                    <button @click="deselectAllOfficial" class="text-purple-600 hover:underline">清空</button>
-                                                </div>
-                                            </div>
-                                            <div class="overflow-y-auto flex-1 space-y-1">
-                                                <div v-for="source in officialSources" :key="source.id" class="flex items-center">
-                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
-                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- 公众号 -->
-                                        <div class="flex-1 border rounded-md p-2 flex flex-col">
-                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded">
-                                                <span class="text-xs font-semibold text-gray-500">微信公众号</span>
-                                                <div class="space-x-2 text-xs">
-                                                    <button @click="selectAllWechat" class="text-purple-600 hover:underline">全选</button>
-                                                    <button @click="deselectAllWechat" class="text-purple-600 hover:underline">清空</button>
-                                                </div>
-                                            </div>
-                                            <div class="overflow-y-auto flex-1 space-y-1">
-                                                <div v-for="source in wechatSources" :key="source.id" class="flex items-center">
-                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
-                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
-                                                </div>
-                                                <div v-if="wechatSources.length === 0" class="text-center text-gray-400 text-xs py-4">暂无公众号源</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 3. 关键词 -->
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">3. 关键词过滤 (可选)</h4>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">1. 关键词过滤 (可选)</h4>
                                     <div class="border border-gray-300 rounded-md p-2 bg-white focus-within:ring-1 focus-within:ring-purple-500 focus-within:border-purple-500">
                                         <div class="flex flex-wrap gap-2">
                                             <span v-for="(kw, idx) in currentRule.keywords" :key="idx" class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded flex items-center">
@@ -369,6 +313,62 @@
                                         </div>
                                     </div>
                                     <p class="text-xs text-gray-500 mt-1">同时包含所有关键词的记录才会被保留。留空则不筛选。</p>
+                                </div>
+
+                                <!-- 2. 时间范围 -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">2. 时间范围</h4>
+                                    <div class="flex gap-4">
+                                        <div class="flex-1">
+                                            <label class="block text-xs text-gray-500 mb-1">开始日期</label>
+                                            <input type="date" v-model="currentRule.start" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                        </div>
+                                        <div class="flex-1">
+                                            <label class="block text-xs text-gray-500 mb-1">结束日期</label>
+                                            <input type="date" v-model="currentRule.end" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. 信息源 -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">3. 信息源</h4>
+                                    
+                                    <div class="flex flex-col md:flex-row gap-4 md:h-60">
+                                        <!-- 官网 -->
+                                        <div class="h-56 md:h-auto md:flex-1 border rounded-md p-2 flex flex-col min-h-0">
+                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded flex-shrink-0">
+                                                <span class="text-xs font-semibold text-gray-500">官网 / 学院网站</span>
+                                                <div class="space-x-2 text-xs">
+                                                    <button @click="selectAllOfficial" class="text-purple-600 hover:underline">全选</button>
+                                                    <button @click="deselectAllOfficial" class="text-purple-600 hover:underline">清空</button>
+                                                </div>
+                                            </div>
+                                            <div class="overflow-y-auto flex-1 space-y-1">
+                                                <div v-for="source in officialSources" :key="source.id" class="flex items-center">
+                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 公众号 -->
+                                        <div class="h-56 md:h-auto md:flex-1 border rounded-md p-2 flex flex-col min-h-0">
+                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded">
+                                                <span class="text-xs font-semibold text-gray-500">微信公众号</span>
+                                                <div class="space-x-2 text-xs">
+                                                    <button @click="selectAllWechat" class="text-purple-600 hover:underline">全选</button>
+                                                    <button @click="deselectAllWechat" class="text-purple-600 hover:underline">清空</button>
+                                                </div>
+                                            </div>
+                                            <div class="overflow-y-auto flex-1 space-y-1">
+                                                <div v-for="source in wechatSources" :key="source.id" class="flex items-center">
+                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
+                                                </div>
+                                                <div v-if="wechatSources.length === 0" class="text-center text-gray-400 text-xs py-4">暂无公众号源</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -795,43 +795,47 @@
                     const listFontSize = bodyFontSize;
 
                     let htmlContent = `
-                        <!DOCTYPE html>
-                        <html lang="zh-CN">
+                        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
                         <head>
-                            <meta charset="UTF-8">
+                            <meta charset="utf-8">
                             <title>南京大学教育资讯</title>
+                            <!--[if gte mso 9]>
+                            <xml>
+                            <w:WordDocument>
+                                <w:View>Print</w:View>
+                                <w:Zoom>100</w:Zoom>
+                                <w:DoNotOptimizeForBrowser/>
+                            </w:WordDocument>
+                            </xml>
+                            <![endif]-->
                             <style>
-                                body { font-family: 'SimSun','宋体',serif; font-size: ${bodyFontSize}; }
-                                h1 { text-align: center; font-family: 'SimHei','宋体',sans-serif; font-size: ${h1FontSize}; margin: 16px 0; }
-                                h2 { font-family: 'SimHei','宋体',sans-serif; font-size: ${h2FontSize}; margin-top: 18px; margin-bottom: 8px; }
-                                ul { list-style-type: none; padding-left: 24px; font-size: ${listFontSize}; }
-                                li { margin-bottom: 6px; }
-                                p { margin-left: 24px; color: #555; font-size: ${bodyFontSize}; }
-                                a { color: #0000FF; text-decoration: none; font-size: ${bodyFontSize}; }
+                                body { font-family: 'SimSun','宋体',serif; font-size: ${bodyFontSize}; word-wrap: break-word; word-break: break-all; }
+                                p.title { text-align: center; font-family: 'SimHei','宋体',sans-serif; font-size: ${h1FontSize}; font-weight: bold; margin: 16px 0; }
+                                p.subtitle { font-family: 'SimHei','宋体',sans-serif; font-size: ${h2FontSize}; font-weight: bold; margin-top: 18px; margin-bottom: 8px; }
+                                p.content { margin-left: 24px; color: #555; font-size: ${bodyFontSize}; line-height: 1.5; word-wrap: break-word; word-break: break-all; }
+                                a { color: #0000FF; text-decoration: underline; font-size: ${bodyFontSize}; word-wrap: break-word; word-break: break-all; }
                             </style>
                         </head>
                         <body>
-                            <h1>南京大学教育资讯</h1>
+                            <p class="title"><b>南京大学教育资讯</b></p>
                     `;
 
                     groupedResults.value.forEach((source, index) => {
-                        htmlContent += `<h2>${index + 1}. ${source.name}：</h2>`;
+                        htmlContent += `<p class="subtitle"><b>${index + 1}. ${source.name}：</b></p>`;
                         
                         if (source.items.length === 0) {
-                            htmlContent += `<p> 无相关推送</p>`;
+                            htmlContent += `<p class="content">• 无相关推送</p>`;
                         } else {
-                            htmlContent += `<ul>`;
                             source.items.forEach(item => {
                                 const clean = cleanUrl(item.url);
-                                htmlContent += `<li> ${item.title} <a href="${clean}">${clean}</a></li>`;
+                                htmlContent += `<p class="content">• ${item.title}<br/><a href="${clean}">${clean}</a></p>`;
                             });
-                            htmlContent += `</ul>`;
                         }
                     });
 
                     htmlContent += `</body></html>`;
                     
-                    const blob = new Blob([htmlContent], { type: "application/msword;charset=utf-8" });
+                    const blob = new Blob(['\ufeff', htmlContent], { type: "application/msword;charset=utf-8" });
                     saveAs(blob, `南京大学教育资讯_导出.doc`);
                 };
 
