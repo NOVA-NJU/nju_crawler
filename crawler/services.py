@@ -439,7 +439,10 @@ async def extract_file_texts(
         if not file_url.lower().endswith(allowed_ext):
             continue
         filename = link.get_text(strip=True) or "attachment"
-        binary = await download_binary(file_url, headers)
+        # ensure Referer is set to the detail page (base_url) to satisfy anti-hotlink checks
+        file_headers = (headers or {}).copy()
+        file_headers.setdefault("Referer", base_url)
+        binary = await download_binary(file_url, file_headers)
         if not binary:
             continue
 
@@ -465,23 +468,60 @@ async def extract_embedded_pdf_attachment(
     viewer_selector = selector_cfg.get("viewer")
     if not viewer_selector:
         return []
-    iframe = soup.select_one(viewer_selector)
-    if not iframe:
+    viewer_el = soup.select_one(viewer_selector)
+    if not viewer_el:
         return []
-    src = iframe.get("src")
+
+    # Try several common attribute names for embedded pdf/source
+    src = (
+        viewer_el.get("src")
+        or viewer_el.get("pdfsrc")
+        or viewer_el.get("data")
+        or viewer_el.get("data-src")
+        or viewer_el.get("data-pdf")
+    )
     if not src:
         return []
-    full_src = normalize_url(base_url, src)
-    if not full_src:
-        return []
-    parsed = urlparse(full_src)
-    file_param = parse_qs(parsed.query).get("file")
-    if not file_param:
-        return []
-    pdf_url = normalize_url(base_url, file_param[0])
+
+    # If src points to a viewer page with ?file=..., extract the file param
+    if "?file=" in src or "viewer.html" in src:
+        full_src = normalize_url(base_url, src)
+        if not full_src:
+            return []
+        parsed = urlparse(full_src)
+        file_param = parse_qs(parsed.query).get("file")
+        if not file_param:
+            return []
+        pdf_url = normalize_url(base_url, file_param[0])
+    else:
+        # src is likely direct path to PDF (relative or absolute)
+        pdf_url = normalize_url(base_url, src)
+
     if not pdf_url:
         return []
-    binary = await download_binary(pdf_url, headers)
+    # 如果有 viewer 页面 URL，先访问 viewer 页面以建立会话并让服务器下发必要的 cookie/头
+    viewer_page_url = None
+    if "?file=" in src or "viewer.html" in src:
+        viewer_page_url = normalize_url(base_url, src)
+        try:
+            await fetch_html(viewer_page_url, headers)
+        except Exception:
+            # 访问 viewer 失败也不要中断，继续尝试下载 PDF
+            pass
+
+    # 构造针对 PDF 的请求头，优先把 Referer 设为 viewer 页面（若存在），否则使用 detail 页面的 URL
+    pdf_headers = (headers or {}).copy()
+    if viewer_page_url:
+        pdf_headers.setdefault("Referer", viewer_page_url)
+    else:
+        pdf_headers.setdefault("Referer", base_url)
+    try:
+        parsed_base = urlparse(base_url)
+        pdf_headers.setdefault("Origin", f"{parsed_base.scheme}://{parsed_base.netloc}")
+    except Exception:
+        pass
+
+    binary = await download_binary(pdf_url, pdf_headers)
     if not binary:
         return []
     text = await asyncio.to_thread(parse_pdf_bytes, binary)
@@ -519,7 +559,9 @@ async def extract_script_embedded_pdf_attachments(
         return []
     attachments: List[Attachments] = []
     for url in urls:
-        binary = await download_binary(url, headers)
+        link_headers = (headers or {}).copy()
+        link_headers.setdefault("Referer", base_url)
+        binary = await download_binary(url, link_headers)
         if not binary:
             attachments.append(
                 Attachments(url=url, filename=url.split("/")[-1], mime_type="application/pdf", text="")

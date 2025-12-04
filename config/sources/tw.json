@@ -83,6 +83,9 @@
             "text_selector": {
                 "item_container": "#d-container",
                 "content": ".wp_articlecontent"
+            },
+            "embedded_pdf_selector": {
+                "viewer": ".wp_pdf_player"
             }
         }
     ]
