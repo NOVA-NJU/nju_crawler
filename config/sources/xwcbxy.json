@@ -45,9 +45,8 @@
                 "publish_time": ".ej_nry .box1 .xx p"
             },
             "text_selector": {
-                "item_container": "#vsb_content .v_news_content",
-                "content": "#vsb_content .v_news_content",
-                "title": ".ej_nry .box1 .bt"
+                "item_container": ".ej_nry",
+                "content": ".v_news_content"
             }
         }
     ]

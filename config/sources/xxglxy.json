@@ -148,11 +148,8 @@
     "detail_selectors": [
         {
             "base_url": "https://im.nju.edu.cn",
-            "meta_selector": {
-                "item_container": "#vsb_content"
-            },
             "text_selector": {
-                "item_container": "#vsb_content",
+                "item_container": ".news-details",
                 "content": ".v_news_content"
             }
         }

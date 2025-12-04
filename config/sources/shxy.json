@@ -22,15 +22,15 @@
     ],
     "detail_selectors": [
         {
-            "base_url": "mp.weixin.qq.com",
+            "base_url": "https://sociology.nju.edu.cn",
             "meta_selector": {
                 "item_container": "#js_content",
                 "publisher": "#profileBt a",
                 "views": null
             },
             "text_selector": {
-                "item_container": "#js_content",
-                "content": "#js_content section"
+                "item_container": ".infobox",
+                "content": ".wp_articlecontent"
             }
         }
     ]

@@ -70,9 +70,8 @@
                 "views": ".show01 p em:last-child"
             },
             "text_selector": {
-                "item_container": "#vsb_content .v_news_content",
-                "content": "#vsb_content .v_news_content",
-                "title": ".show01 h5"
+                "item_container": ".n_container",
+                "content": ".v_news_content"
             },
             "img_selector": {
                 "item_container": "#vsb_content .v_news_content",

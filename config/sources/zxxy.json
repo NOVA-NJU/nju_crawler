@@ -65,8 +65,8 @@
                 "views": ".infobox .arti_views .WP_VisitCount"
             },
             "text_selector": {
-                "item_container": ".infobox .entry .wp_articlecontent",
-                "content": ".infobox .entry .wp_articlecontent"
+                "item_container": ".infobox",
+                "content": ".wp_articlecontent"
             },
             "img_selector": {
                 "item_container": ".infobox .entry .wp_articlecontent",
