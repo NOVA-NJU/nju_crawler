@@ -118,8 +118,8 @@
                 "publish_time": ".w-content-top .span1"
             },
             "text_selector": {
-                "item_container": ".wz-auto-center",
-                "content": ".bs-word p, .bs-word span, .bs-word div"
+                "item_container": ".w-content",
+                "content": ".wz-auto-center"
             }
         }
     ]
