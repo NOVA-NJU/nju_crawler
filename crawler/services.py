@@ -790,8 +790,8 @@ async def crawl_source(source_id: str) -> List[CrawlItem]:
         detail_url = entry.get("url")
         if not detail_url:
             return None
-        item_id = compute_sha256((entry.get("title") or "") + (detail_url or ""), detail_url)
-        exists = await asyncio.to_thread(database.record_exists, item_id)
+        item_id = compute_sha256(detail_url)
+        exists = await asyncio.to_thread(database.record_exists, item_id, detail_url)
         if exists:
             return None
         try:

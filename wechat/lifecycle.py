@@ -16,6 +16,7 @@ from .config import (
     has_valid_session,
 )
 from .services import crawl_wechat_source
+from storage.database import get_failed_wechat_records
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +38,47 @@ async def _crawl_all_wechat_sources_once() -> None:
             logger.info("Periodic wechat crawl finished for source %s", source_id)
         except Exception as exc:  # noqa: BLE001
             logger.warning("Periodic wechat crawl failed for source %s: %s", source_id, exc)
+    
+    # Check for failed records
+    failed_records = get_failed_wechat_records()
+    if failed_records:
+        logger.warning("Found %d failed WeChat records (empty title or content). Starting retry...", len(failed_records))
+        from .services import crawl_single_article
+        
+        for record in failed_records:
+            url = record['url']
+            rec_id = record['id']
+            source_id = record['source_id']
+            source_name = record['source_name']
+            
+            logger.info(f"Retrying failed record: {url}")
+            
+            # Retry loop with max attempts to avoid infinite loops
+            max_retries = 3
+            for i in range(max_retries):
+                try:
+                    # Pass override_id to ensure we update the existing record slot
+                    # Pass delete_if_invalid=True to remove record if it's permanently deleted
+                    item = await crawl_single_article(url, source_id, source_name, override_id=rec_id, delete_if_invalid=True)
+                    
+                    if item and item.content and item.title:
+                        logger.info(f"Successfully repaired record: {url}")
+                        break
+                    
+                    # If item is None, it might have been deleted (and removed from DB) or just failed
+                    # If it was deleted, crawl_single_article would have removed it, so we can stop retrying
+                    # But we don't know for sure if it was removed unless we check or change return value.
+                    # However, if it returns None, we can't do much.
+                    # Let's check if record still exists to decide whether to continue retrying?
+                    # For now, just continue the loop. If it was deleted, subsequent retries will also fail/delete (idempotent).
+                    
+                    logger.warning(f"Retry {i+1}/{max_retries} failed for {url}. Waiting 5s...")
+                    await asyncio.sleep(5)
+                except Exception as exc:
+                    logger.error(f"Exception during retry for {url}: {exc}")
+                    await asyncio.sleep(5)
+    else:
+        logger.info("No failed WeChat records found.")
 
 
 async def _periodic_crawl_loop() -> None:

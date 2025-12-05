@@ -86,6 +86,56 @@ def query_records(source_ids: list, start_time: str, end_time: str) -> list:
             results.append(dict(zip(columns, row)))
     return results
 
+def get_failed_records() -> list[dict]:
+    """
+    查询所有标题和正文都为空的记录（即抓取失败的记录）。
+    返回包含 url, source_id, source_name, date (publish_time) 的字典列表。
+    """
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        cursor = conn.execute(
+            """
+            SELECT url, source_id, source_name, publish_time, title
+            FROM crawled_records
+            WHERE (title IS NULL OR title = '') OR (content IS NULL OR content = '')
+            """
+        )
+        results = []
+        for row in cursor.fetchall():
+            results.append({
+                "url": row[0],
+                "source_id": row[1],
+                "source_name": row[2],
+                "date": row[3],
+                "title": row[4]
+            })
+        return results
+
+def get_failed_wechat_records() -> list[dict]:
+    """
+    查询所有标题或正文为空的微信公众号文章记录。
+    仅针对 source_id 以 'wechat_' 开头的记录。
+    """
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        cursor = conn.execute(
+            """
+            SELECT id, url, source_id, source_name, publish_time, title
+            FROM crawled_records
+            WHERE source_id LIKE 'wechat_%'
+              AND ((title IS NULL OR title = '') OR (content IS NULL OR content = ''))
+            """
+        )
+        results = []
+        for row in cursor.fetchall():
+            results.append({
+                "id": row[0],
+                "url": row[1],
+                "source_id": row[2],
+                "source_name": row[3],
+                "publish_time": row[4],
+                "title": row[5]
+            })
+        return results
+
 def initialize() -> None:
     """
     初始化数据库文件和表结构，确保可用。
@@ -96,14 +146,41 @@ def initialize() -> None:
     with sqlite3.connect(path) as conn:
         conn.executescript(SCHEMA)
 
-def record_exists(record_id: str) -> bool:
+def record_exists(record_id: str, url: Optional[str] = None) -> bool:
     """
-    判断指定ID的记录是否已存在。
+    判断指定ID或URL的记录是否已存在。
     用于去重，避免重复入库。
+    
+    策略A：如果记录存在，但内容为空（上次抓取失败），则视为不存在，允许覆盖。
     """
     with sqlite3.connect(DATABASE_PATH) as conn:
-        cursor = conn.execute("SELECT 1 FROM crawled_records WHERE id=?", (record_id,))
-        return cursor.fetchone() is not None
+        if url:
+            cursor = conn.execute("SELECT content, title FROM crawled_records WHERE id=? OR url=?", (record_id, url))
+        else:
+            cursor = conn.execute("SELECT content, title FROM crawled_records WHERE id=?", (record_id,))
+            
+        rows = cursor.fetchall()
+        if not rows:
+            return False
+        
+        # 检查所有匹配的记录（可能有多条，比如旧ID和新ID）
+        # 只要有一条记录内容有效，就视为存在
+        for row in rows:
+            content, title = row
+            if content and title:
+                return True
+            
+        # 所有匹配记录都为空，允许覆盖
+        return False
+
+def delete_record(record_id: str) -> None:
+    """
+    根据ID删除记录。
+    用于清理无效或已删除的文章。
+    """
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute("DELETE FROM crawled_records WHERE id=?", (record_id,))
+        conn.commit()
 
 def store_document(item_id: str, content: str, metadata: dict) -> None:
     """
@@ -115,7 +192,7 @@ def store_document(item_id: str, content: str, metadata: dict) -> None:
     with sqlite3.connect(DATABASE_PATH) as conn:
         conn.execute(
             """
-            INSERT OR IGNORE INTO crawled_records
+            INSERT OR REPLACE INTO crawled_records
             (id, title, url, publish_time, source_id, source_name, attachments, content)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,

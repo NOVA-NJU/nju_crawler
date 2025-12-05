@@ -380,12 +380,15 @@ async def fetch_html(url: str, timeout: int = REQUEST_TIMEOUT) -> str:
 	return await asyncio.to_thread(_get)
 
 
-async def crawl_single_article(url: str, source_id: Optional[str] = None, source_name: Optional[str] = None) -> Optional[CrawlItem]:
+async def crawl_single_article(url: str, source_id: Optional[str] = None, source_name: Optional[str] = None, override_id: Optional[str] = None, delete_if_invalid: bool = False) -> Optional[CrawlItem]:
 	html = await fetch_html(url)
 	meta = parse_wechat_article(html)
 
-	if meta.get("Error") == "Content deleted":
-		print(f"[INFO] Article deleted, skipping: {url}")
+	if meta.get("Error"):
+		print(f"[WARN] Article error ({meta.get('Error')}), skipping: {url}")
+		if delete_if_invalid and override_id and meta.get("Error") == "Content deleted":
+			print(f"[INFO] Deleting invalid record from DB: {override_id}")
+			await asyncio.to_thread(database.delete_record, override_id)
 		return None
 
 	content = meta.get("Content", "")
@@ -410,9 +413,9 @@ async def crawl_single_article(url: str, source_id: Optional[str] = None, source
 	else:
 		create_time = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
 
-	item_id = compute_sha256((content or "")[:500], url)
+	item_id = override_id or compute_sha256(url)
 
-	exists = await asyncio.to_thread(database.record_exists, item_id)
+	exists = await asyncio.to_thread(database.record_exists, item_id, url)
 	if exists:
 		# Still return existing record shape but don't duplicate storage
 		return None
