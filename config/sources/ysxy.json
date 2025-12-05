@@ -62,7 +62,7 @@
       },
       "embedded_pdf_selector": {
         "item_container": "#d-container",
-        "viewer": ".wp_articlecontent iframe.wp_pdf_player",
+        "viewer": ".wp_articlecontent .wp_pdf_player",
         "download_link": ".wp_articlecontent a[href$=\".pdf\"]"
       }
     }
