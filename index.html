@@ -247,7 +247,7 @@
                         <h3 class="text-lg font-semibold text-gray-800">内容预览</h3>
                     </div>
                     
-                    <div v-if="selectedItem" class="flex-1 p-5 overflow-y-auto custom-scrollbar preview-content" v-html="renderedContent">
+                    <div v-if="selectedItem" class="flex-1 p-5 overflow-y-auto custom-scrollbar preview-content" v-html="renderedContent" @click="handleContentClick">
                         <!-- 内容通过 v-html 渲染 -->
                     </div>
 
@@ -386,6 +386,27 @@
             </div>
         </transition>
 
+        <!-- 图片预览模态框 -->
+        <transition
+            enter-active-class="ease-out duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="ease-in duration-200"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0">
+            <div v-if="showImageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90" @click="closeImageModal">
+                <div class="relative max-w-full max-h-full p-4 flex flex-col items-center">
+                    <img :src="previewImageUrl" referrerpolicy="no-referrer" class="max-w-full max-h-[85vh] object-contain rounded shadow-lg" @click.stop />
+                    <button @click="closeImageModal" class="mt-4 text-white hover:text-gray-300 bg-gray-800 bg-opacity-50 rounded-full px-4 py-2 flex items-center gap-2 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        关闭预览
+                    </button>
+                </div>
+            </div>
+        </transition>
+
     </div>
 
     <script type="module">
@@ -518,11 +539,48 @@
                 // UI 状态
                 const activeSourceIds = ref([]); // 当前展开的分类集合
                 const selectedItem = ref(null); // 当前预览的文章
+
+                // 图片预览相关
+                const showImageModal = ref(false);
+                const previewImageUrl = ref('');
+
+                const closeImageModal = () => {
+                    showImageModal.value = false;
+                    setTimeout(() => { previewImageUrl.value = ''; }, 200);
+                };
+
+                const handleContentClick = (event) => {
+                    const target = event.target.closest('.img-placeholder-trigger');
+                    if (target) {
+                        const src = target.getAttribute('data-src');
+                        if (src) {
+                            previewImageUrl.value = src;
+                            showImageModal.value = true;
+                        }
+                    }
+                };
+
+                const createPlaceholderHtml = (url, alt) => {
+                    return `<span class="text-base text-purple-500 cursor-pointer hover:text-purple-700 border-b border-dotted border-purple-300 img-placeholder-trigger select-none mx-0.5 align-baseline" data-src="${url}" title="点击查看图片${alt ? ': ' + alt : ''}">图片</span>`;
+                };
+
                 const renderedContent = computed(() => {
                     if (!selectedItem.value || !selectedItem.value.content) {
                         return '';
                     }
-                    return selectedItem.value.content.replace(/\n/g, '<br><br>');
+                    let content = selectedItem.value.content;
+
+                    // 1. 替换 Markdown 图片 ![alt](url)
+                    content = content.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, url) => {
+                        return createPlaceholderHtml(url, alt);
+                    });
+
+                    // 2. 替换 HTML 图片 <img src="url" ...>
+                    content = content.replace(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi, (match, url) => {
+                        return createPlaceholderHtml(url, '图片');
+                    });
+
+                    return content.replace(/\n/g, '<br><br>');
                 });
 
                 // --- 计算属性 (Computed) ---
@@ -890,6 +948,10 @@
                     formatTime,
                     exportToWord,
                     cleanUrl,
+                    showImageModal,
+                    previewImageUrl,
+                    closeImageModal,
+                    handleContentClick,
                 };
             }
         }).mount('#app');
