@@ -416,12 +416,9 @@
             setup() {
                 // --- 状态 (State) ---
 
-                // 后端 API 地址
-                // !! 重要提示: 浏览器出于安全原因, 无法访问 0.0.0.0。
-                // !! 请确保您的后端服务监听 0.0.0.0:8000
-                // !! 但在前端请使用 localhost 或 127.0.0.1 访问。
-                // 与后端同端口部署时，使用同源地址避免跨域
-                const API_BASE_URL = window.location.origin; 
+               // 后端 API 地址自动适配一级路径（如 /uaic 或 /nen）
+                const prefix = window.location.pathname.split('/')[1];
+                const API_BASE_URL = window.location.origin + (prefix ? '/' + prefix : '');
                 
                 // 预定义的信息源列表 (!!! 顺序和 ID 必须与后端匹配 !!!)
                 // 这里的 ID (如 'xsxy') 是一个示例, 您需要替换为后端实际使用的 source_id
