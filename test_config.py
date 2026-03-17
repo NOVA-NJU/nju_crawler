@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse, parse_qs
 
 # 默认测试配置
-DEFAULT_CONFIG_FILE = "config/sources/sxxy.json"
+DEFAULT_CONFIG_FILE = "config/sources/fxy.json"
 
 def base64_encode(s):
     return base64.b64encode(str(s).encode('utf-8')).decode('utf-8')

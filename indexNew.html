@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大学招生资讯</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Vue 3 -->
+    <script src="https://unpkg.com/vue@3.4.27/dist/vue.global.prod.js"></script>
+    <!-- 引入 Axios (用于 API 请求) -->
+    <script src="https://unpkg.com/axios@1.7.2/dist/axios.min.js"></script>
+    <!-- 引入 FileSaver.js (用于导出 Word) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <style>
+        /* 定义南大紫 */
+        :root {
+            --nju-purple: #531c69;
+        }
+        .nju-purple {
+            color: var(--nju-purple);
+        }
+        .bg-nju-purple {
+            background-color: var(--nju-purple);
+        }
+        /* 简单的加载动画 */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--nju-purple);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* 预览窗口内容样式 */
+        .preview-content {
+            overflow-y: auto;
+        }
+        .preview-content h1, .preview-content h2, .preview-content h3 {
+            color: var(--nju-purple);
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .preview-content p {
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .preview-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .preview-content a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        /* 隐藏滚动条但保留滚动功能 */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        /* 自定义滚动条 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #d1d5db;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <div id="app" class="h-screen flex flex-col overflow-hidden">
+        
+        <!-- 头部 -->
+        <header class="bg-white shadow-sm flex-shrink-0">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-2xl md:text-3xl font-bold nju-purple">
+                    大学招生资讯
+                </h1>
+                <button
+                    @click="exportToWord"
+                    :disabled="groupedResults.length === 0"
+                    class="bg-nju-purple text-white px-4 py-2 rounded-lg shadow hover:bg-opacity-90 transition-all duration-200 text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed">
+                    导出为 Word
+                </button>
+            </div>
+        </header>
+
+        <!-- 规则与操作栏 -->
+        <div class="container mx-auto p-4 bg-white md:rounded-b-lg shadow-md my-4 flex-shrink-0">
+            <div class="flex justify-between items-center gap-4 mb-4">
+                <button
+                    @click="openRuleModal"
+                    class="px-4 py-2 border border-dashed border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 transition-colors flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    添加筛选规则
+                </button>
+
+                <button
+                    @click="fetchData"
+                    :disabled="isLoading"
+                    class="px-6 py-2 bg-nju-purple text-white rounded-lg shadow hover:bg-opacity-90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span v-if="!isLoading">查询</span>
+                    <span v-else>查询中...</span>
+                </button>
+            </div>
+
+            <!-- 规则列表 -->
+            <div v-if="rules.length > 0" class="space-y-3">
+                <div v-for="(rule, index) in rules" :key="index" class="bg-purple-50 border border-purple-100 rounded-lg p-4 flex items-center justify-between gap-4 relative group">
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 items-center min-w-0">
+                        <div class="flex items-center gap-2 text-base text-gray-800 min-w-0">
+                            <span class="font-bold text-purple-900 flex-shrink-0">时间:</span>
+                            <span class="truncate">{{ rule.start }} 至 {{ rule.end }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-base text-gray-800 min-w-0">
+                            <span class="font-bold text-purple-900 flex-shrink-0">来源:</span>
+                            <span class="truncate block" :title="getSourceNames(rule.sourceIds)">{{ getSourceNames(rule.sourceIds) }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-base text-gray-800 min-w-0">
+                            <span class="font-bold text-purple-900 flex-shrink-0">关键词:</span>
+                            <div class="flex flex-wrap gap-1" v-if="rule.keywords.length > 0">
+                                <span v-for="kw in rule.keywords" :key="kw" class="bg-white border border-purple-200 text-purple-700 px-2 py-0.5 rounded text-sm break-all">{{ kw }}</span>
+                            </div>
+                            <span v-else class="text-gray-400 text-sm italic">无</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button @click="editRule(index)" class="text-purple-600 hover:text-purple-800 transition-colors p-1" title="修改规则">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                        <button @click="removeRule(index)" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="删除规则">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div v-else class="text-center text-gray-400 py-2 text-sm">
+                暂无筛选规则，默认查询最近 7 天全部来源，或点击左上角添加自定义规则
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <main class="container mx-auto p-4 flex-1 min-h-0 flex flex-col md:flex-row gap-6 overflow-hidden">
+            
+            <!-- 左侧内容列表 (手机端全宽) -->
+            <div class="w-full md:w-2/5 lg:w-1/3 h-full overflow-y-auto pr-1 custom-scrollbar">
+                <!-- 加载状态 -->
+                <div v-if="isLoading" class="flex justify-center items-center h-64">
+                    <div class="loader"></div>
+                </div>
+
+                <!-- 错误状态 -->
+                <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    <strong class="font-bold">查询失败：</strong>
+                    <span class="block sm:inline">{{ error }}</span>
+                </div>
+
+                <!-- 无数据状态 -->
+                <div v-if="!isLoading && !error && groupedResults.length === 0" class="text-center text-gray-500 py-10">
+                    <p>暂无数据，请添加规则并查询。</p>
+                </div>
+
+                <!-- 结果列表 -->
+                <div v-if="!isLoading && !error && groupedResults.length > 0" class="space-y-3">
+                    <div v-for="source in groupedResults" :key="source.id" class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+                        <!-- 信息源卡片 (可点击展开) -->
+                            <div
+                            @click="toggleSource(source.id)"
+                            class="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+                            <div class="flex items-center gap-2 min-w-0 flex-1 mr-2">
+                                <h2 class="text-sm md:text-lg font-semibold nju-purple truncate">{{ source.name }}</h2>
+                                <span v-if="source.id.startsWith('wechat_')" class="flex-shrink-0 bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded border border-green-200">公众号</span>
+                                <span v-else class="flex-shrink-0 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded border border-blue-200">官网</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ source.items.length }} 条</span>
+                                <svg class="w-6 h-6 text-gray-500 transition-transform duration-300"
+                                     :class="{'rotate-180': isSourceExpanded(source.id)}"
+                                     fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- 展开的子卡片列表 -->
+                        <transition
+                            enter-active-class="transition ease-out duration-300"
+                            enter-from-class="opacity-0 -translate-y-4"
+                            enter-to-class="opacity-100 translate-y-0"
+                            leave-active-class="transition ease-in duration-200"
+                            leave-from-class="opacity-100 translate-y-0"
+                            leave-to-class="opacity-0 -translate-y-4">
+                            <div v-if="isSourceExpanded(source.id)" class="border-t border-gray-200">
+                                <div v-if="source.items.length > 0" class="divide-y divide-gray-100">
+                                    <div v-for="item in source.items" :key="item.id"
+                                        @click="selectItem(item)"
+                                        class="p-3 cursor-pointer hover:bg-purple-50 flex justify-between items-center"
+                                        :class="{'bg-purple-100': selectedItem && selectedItem.id === item.id}">
+                                        
+                                        <div class="flex-1 pr-3">
+                                            <p class="text-sm font-medium text-gray-900">{{ item.title }}</p>
+                                            <p class="text-xs text-gray-500 mt-1">{{ formatTime(item.publish_time) }}</p>
+                                        </div>
+                                        <a :href="item.url"
+                                            target="_blank"
+                                            @click.stop
+                                            class="flex-shrink-0 text-sm bg-nju-purple text-white px-3 py-1 rounded-full shadow-sm hover:bg-opacity-80 transition-all">
+                                            跳转
+                                        </a>
+                                    </div>
+                                </div>
+                                <div v-else class="p-3 text-sm text-gray-500 text-center">
+                                    此分类下无内容
+                                </div>
+                            </div>
+                        </transition>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧预览窗口 (手机端隐藏) -->
+            <div class="w-full md:w-3/5 lg:w-2/3 hidden md:block h-full">
+                <div class="bg-white rounded-lg shadow-lg h-full flex flex-col">
+                    <div class="p-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800">内容预览</h3>
+                    </div>
+                    
+                    <div v-if="selectedItem" class="flex-1 p-5 overflow-y-auto custom-scrollbar preview-content" v-html="renderedContent" @click="handleContentClick">
+                        <!-- 内容通过 v-html 渲染 -->
+                    </div>
+
+                    <div v-else class="flex-1 flex justify-center items-center text-gray-400">
+                        <p>请点击左侧文章标题进行预览</p>
+                    </div>
+
+                    <div v-if="selectedItem" class="p-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+                        <a :href="cleanUrl(selectedItem.url)" target="_blank" class="text-sm font-medium text-purple-700 hover:text-purple-900">
+                            查看原文链接：{{ cleanUrl(selectedItem.url) }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- 规则编辑模态框 -->
+        <transition
+            enter-active-class="ease-out duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="ease-in duration-200"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0">
+            <div v-if="showRuleModal" class="fixed inset-0 z-30 overflow-y-auto bg-gray-600 bg-opacity-75 transition-opacity" @click.self="closeRuleModal">
+                <div class="flex items-center justify-center min-h-screen p-4">
+                    <transition
+                        enter-active-class="ease-out duration-300"
+                        enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enter-to-class="opacity-100 translate-y-0 sm:scale-100"
+                        leave-active-class="ease-in duration-200"
+                        leave-from-class="opacity-100 translate-y-0 sm:scale-100"
+                        leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                        <div class="bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:w-full sm:max-w-3xl flex flex-col max-h-[90vh]" @click.stop>
+                            <div class="p-5 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">{{ editingRuleIndex === -1 ? '添加筛选规则' : '修改筛选规则' }}</h3>
+                                <button @click="closeRuleModal" class="text-gray-400 hover:text-gray-500">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="p-6 overflow-y-auto flex-1 space-y-6">
+                                <!-- 1. 关键词 -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">1. 关键词过滤 (可选)</h4>
+                                    <div class="border border-gray-300 rounded-md p-2 bg-white focus-within:ring-1 focus-within:ring-purple-500 focus-within:border-purple-500">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span v-for="(kw, idx) in currentRule.keywords" :key="idx" class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded flex items-center">
+                                                {{ kw }}
+                                                <button @click="removeKeyword(idx)" class="ml-1 text-purple-600 hover:text-purple-900 focus:outline-none">×</button>
+                                            </span>
+                                            <input 
+                                                type="text" 
+                                                v-model="keywordInput" 
+                                                @keydown.enter.prevent="addKeyword" 
+                                                @keydown.backspace="handleBackspace"
+                                                placeholder="输入关键词后按回车..." 
+                                                class="flex-1 min-w-[120px] outline-none text-sm bg-transparent"
+                                            >
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">同时包含所有关键词的记录才会被保留。留空则不筛选。</p>
+                                </div>
+
+                                <!-- 2. 时间范围 -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">2. 时间范围</h4>
+                                    <div class="flex gap-4">
+                                        <div class="flex-1">
+                                            <label class="block text-xs text-gray-500 mb-1">开始日期</label>
+                                            <input type="date" v-model="currentRule.start" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                        </div>
+                                        <div class="flex-1">
+                                            <label class="block text-xs text-gray-500 mb-1">结束日期</label>
+                                            <input type="date" v-model="currentRule.end" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. 信息源 -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2 border-l-4 border-purple-600 pl-2">3. 信息源</h4>
+                                    
+                                    <div class="flex flex-col md:flex-row gap-4 md:h-60">
+                                        <!-- 官网 -->
+                                        <div class="h-56 md:h-auto md:flex-1 border rounded-md p-2 flex flex-col min-h-0">
+                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded flex-shrink-0">
+                                                <span class="text-xs font-semibold text-gray-500">官网 / 学院网站</span>
+                                                <div class="space-x-2 text-xs">
+                                                    <button @click="selectAllOfficial" class="text-purple-600 hover:underline">全选</button>
+                                                    <button @click="deselectAllOfficial" class="text-purple-600 hover:underline">清空</button>
+                                                </div>
+                                            </div>
+                                            <div class="overflow-y-auto flex-1 space-y-1">
+                                                <div v-for="source in officialSources" :key="source.id" class="flex items-center">
+                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 公众号 -->
+                                        <div class="h-56 md:h-auto md:flex-1 border rounded-md p-2 flex flex-col min-h-0">
+                                            <div class="flex justify-between items-center mb-2 bg-gray-50 px-2 py-1 rounded">
+                                                <span class="text-xs font-semibold text-gray-500">微信公众号</span>
+                                                <div class="space-x-2 text-xs">
+                                                    <button @click="selectAllWechat" class="text-purple-600 hover:underline">全选</button>
+                                                    <button @click="deselectAllWechat" class="text-purple-600 hover:underline">清空</button>
+                                                </div>
+                                            </div>
+                                            <div class="overflow-y-auto flex-1 space-y-1">
+                                                <div v-for="source in wechatSources" :key="source.id" class="flex items-center">
+                                                    <input :id="'rule-cb-' + source.id" type="checkbox" :value="source.id" v-model="currentRule.sourceIds" class="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                                    <label :for="'rule-cb-' + source.id" class="ml-2 block text-sm text-gray-900 truncate" :title="source.name">{{ source.name }}</label>
+                                                </div>
+                                                <div v-if="wechatSources.length === 0" class="text-center text-gray-400 text-xs py-4">暂无公众号源</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg border-t border-gray-200">
+                                <button type="button" @click="saveRule" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-nju-purple text-base font-medium text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                    完成
+                                </button>
+                                <button type="button" @click="closeRuleModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                    取消
+                                </button>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
+            </div>
+        </transition>
+
+        <!-- 图片预览模态框 -->
+        <transition
+            enter-active-class="ease-out duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="ease-in duration-200"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0">
+            <div v-if="showImageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90" @click="closeImageModal">
+                <div class="relative max-w-full max-h-full p-4 flex flex-col items-center">
+                    <img :src="previewImageUrl" referrerpolicy="no-referrer" class="max-w-full max-h-[85vh] object-contain rounded shadow-lg" @click.stop />
+                    <button @click="closeImageModal" class="mt-4 text-white hover:text-gray-300 bg-gray-800 bg-opacity-50 rounded-full px-4 py-2 flex items-center gap-2 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        关闭预览
+                    </button>
+                </div>
+            </div>
+        </transition>
+
+    </div>
+
+    <script type="module">
+        const { createApp, ref, computed, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                // --- 状态 (State) ---
+
+                // 后端 API 地址
+                // !! 重要提示: 浏览器出于安全原因, 无法访问 0.0.0.0。
+                // !! 请确保您的后端服务监听 0.0.0.0:8000
+                // !! 但在前端请使用 localhost 或 127.0.0.1 访问。
+                // 与后端同端口部署时，使用同源地址避免跨域
+                const API_BASE_URL = window.location.origin; 
+                
+                // 预定义的信息源列表 (!!! 顺序和 ID 必须与后端匹配 !!!)
+                // 这里的 ID (如 'xsxy') 是一个示例, 您需要替换为后端实际使用的 source_id
+                const sourceList = ref([
+                    { id: 'wechat_MzA4NjEzNDYxMQ==', name: '北京大学招生办' },
+                    { id: 'wechat_MzA4MzQ1MTkyMQ==', name: '人大阳光招生' },
+                    { id: 'wechat_MjM5MDgxNDQ0NQ==', name: '清华招生' },
+                    { id: 'wechat_MzI0NDI3MDA0OQ==', name: '北航招生' },
+                    { id: 'wechat_MzA3NzU0NTIyMQ==', name: '北京理工大学招生办公室' },
+                    { id: 'wechat_MzAwMzQ5MzY0OA==', name: '中国农业大学招办' },
+                    { id: 'wechat_MzAwNjUzNDA5OA==', name: '北京师范大学本科招生办' },
+                    { id: 'wechat_MzA4NDUzMTEzOQ==', name: '中央民族大学本科招生' },
+                    { id: 'wechat_MzA4MjEwMzEzMA==', name: '南开大学本科招生' },
+                    { id: 'wechat_MzA5NTQwOTgzMg==', name: '天津大学招生办' },
+                    { id: 'wechat_MjM5NDI1NTU5MA==', name: '大工招生' },
+                    { id: 'wechat_MzUzODA1NjcyMA==', name: '吉大招生' },
+                    { id: 'wechat_MzA3NTc0NzgxMg==', name: '哈工大招生办' },
+                    { id: 'wechat_MjM5MzQwNzYyMA==', name: '复旦招生' },
+                    { id: 'wechat_MzA4NzIwNjM5Mw==', name: '同济招生' },
+                    { id: 'wechat_MzA3OTIxMDg5OA==', name: '上交大' },
+                    { id: 'wechat_MzA4NzA4MDg5Mg==', name: '华东师大本科招生' },
+                    { id: 'wechat_MzA3NzQ2ODEwNQ==', name: '南大招生小蓝鲸' },
+                    { id: 'wechat_MzA5MzgyNTIwMw==', name: '东南大学本科招生' },
+                    { id: 'wechat_MzI2NzIxNDE4Ng==', name: '浙江大学本科招生' },
+                    { id: 'wechat_MzA4NzA0OTYyNA==', name: '中国科大本科招生' },
+                    { id: 'wechat_MzA4NTQwMjcwNw==', name: '山东大学本科招生办公室' },
+                    { id: 'wechat_MzI5MDU0MjMzOQ==', name: '中国海洋大学本科招生' },
+                    { id: 'wechat_MzA4MjY2MjgzOQ==', name: '武大招办' },
+                    { id: 'wechat_MjM5MTEyOTk4Mg==', name: '华中科技大学招生办公室' },
+                    { id: 'wechat_MzAwNzUyMDQ3NA==', name: '中南大学本科生招生办公室' },
+                    { id: 'wechat_MzA4NzYxOTkxNg==', name: '中大招生' },
+                    { id: 'wechat_MzA5NDY2ODUzMQ==', name: '华南理工大学招生办' },
+                    { id: 'wechat_MjM5NDE4NTQ5Nw==', name: '四川大学本科招生' },
+                    { id: 'wechat_MzIyOTkwNzcyMQ==', name: '重庆大学本科招生' },
+                    { id: 'wechat_MjM5Njk4ODIwMg==', name: '电子科大本科招生' },
+                    { id: 'wechat_MjM5NzI4NDY0Mg==', name: '西安交通大学招生办' },
+                    { id: 'wechat_MzA5ODM4MzkzMg==', name: '西工大招办' },
+                    { id: 'wechat_MzI0NDM5NDM5NA==', name: '兰州大学本科招生' },
+                    { id: 'wechat_MzAxNzM2MTg1Mw==', name: '国防科技大学招生办公室' },
+                    { id: 'wechat_MzIwODMzNTMwMg==', name: '东北大学招生办' },
+                    { id: 'wechat_MzA3MzI2MDA2NA==', name: '湖南大学本科招生' },
+                    { id: 'wechat_MjM5Njk3NTgzMg==', name: '西北农林科技大学招生办' },
+                ]);
+
+                // 规则相关状态
+                const rules = ref([]);
+                const showRuleModal = ref(false);
+                const editingRuleIndex = ref(-1); // -1 表示添加，>=0 表示修改
+                const keywordInput = ref("");
+                const currentRule = ref({
+                    start: "",
+                    end: "",
+                    sourceIds: [],
+                    keywords: []
+                });
+
+                // 异步数据
+                const isLoading = ref(false);
+                const error = ref(null);
+                const results = ref([]); // 最终展示的数据（已去重）
+
+                // UI 状态
+                const activeSourceIds = ref([]); // 当前展开的分类集合
+                const selectedItem = ref(null); // 当前预览的文章
+
+                // 图片预览相关
+                const showImageModal = ref(false);
+                const previewImageUrl = ref('');
+
+                const closeImageModal = () => {
+                    showImageModal.value = false;
+                    setTimeout(() => { previewImageUrl.value = ''; }, 200);
+                };
+
+                const handleContentClick = (event) => {
+                    const target = event.target.closest('.img-placeholder-trigger');
+                    if (target) {
+                        const src = target.getAttribute('data-src');
+                        if (src) {
+                            previewImageUrl.value = src;
+                            showImageModal.value = true;
+                        }
+                    }
+                };
+
+                const createPlaceholderHtml = (url, alt) => {
+                    return `<span class="text-base text-purple-500 cursor-pointer hover:text-purple-700 border-b border-dotted border-purple-300 img-placeholder-trigger select-none mx-0.5 align-baseline" data-src="${url}" title="点击查看图片${alt ? ': ' + alt : ''}">图片</span>`;
+                };
+
+                const renderedContent = computed(() => {
+                    if (!selectedItem.value || !selectedItem.value.content) {
+                        return '';
+                    }
+                    let content = selectedItem.value.content;
+
+                    // 1. 替换 Markdown 图片 ![alt](url)
+                    content = content.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, url) => {
+                        return createPlaceholderHtml(url, alt);
+                    });
+
+                    // 2. 替换 HTML 图片 <img src="url" ...>
+                    content = content.replace(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi, (match, url) => {
+                        return createPlaceholderHtml(url, '图片');
+                    });
+
+                    return content.replace(/\n/g, '<br><br>');
+                });
+
+                // --- 计算属性 (Computed) ---
+
+                // 模态框中的源分类
+                const officialSources = computed(() => sourceList.value.filter(s => !s.id.startsWith('wechat_')));
+                const wechatSources = computed(() => sourceList.value.filter(s => s.id.startsWith('wechat_')));
+
+                // 将结果按预定义列表分组和排序
+                const groupedResults = computed(() => {
+                    const resultsBySource = new Map();
+                    results.value.forEach(item => {
+                        if (!resultsBySource.has(item.source_id)) {
+                            resultsBySource.set(item.source_id, []);
+                        }
+                        resultsBySource.get(item.source_id).push(item);
+                    });
+
+                    // 遍历所有定义的源，如果有数据则显示
+                    return sourceList.value.map(source => {
+                        const items = [];
+                        for (const [sid, arr] of resultsBySource.entries()) {
+                            if (sid.startsWith(source.id)) {
+                                items.push(...arr);
+                            }
+                        }
+                        
+                        if (items.length === 0) return null;
+
+                        // 排序
+                        items.sort((a, b) => {
+                            return new Date(b.publish_time) - new Date(a.publish_time);
+                        });
+                        return {
+                            ...source,
+                            items: items,
+                        };
+                    }).filter(Boolean); // 过滤掉无数据的源
+                });
+
+
+                // --- 方法 (Methods) ---
+
+                // 规则模态框操作
+                const openRuleModal = () => {
+                    editingRuleIndex.value = -1;
+                    const end = new Date().toISOString().split('T')[0];
+                    const start = new Date(new Date().setDate(new Date().getDate() - 7)).toISOString().split('T')[0];
+                    
+                    currentRule.value = {
+                        start,
+                        end,
+                        sourceIds: sourceList.value.map(s => s.id), // 默认全选
+                        keywords: []
+                    };
+                    keywordInput.value = "";
+                    showRuleModal.value = true;
+                };
+
+                const editRule = (index) => {
+                    editingRuleIndex.value = index;
+                    // 深拷贝，防止直接修改原数据
+                    currentRule.value = JSON.parse(JSON.stringify(rules.value[index]));
+                    keywordInput.value = "";
+                    showRuleModal.value = true;
+                };
+
+                const closeRuleModal = () => {
+                    showRuleModal.value = false;
+                };
+
+                const addKeyword = () => {
+                    const val = keywordInput.value.trim();
+                    if (val && !currentRule.value.keywords.includes(val)) {
+                        currentRule.value.keywords.push(val);
+                    }
+                    keywordInput.value = "";
+                };
+
+                const handleBackspace = (e) => {
+                    if (keywordInput.value === "" && currentRule.value.keywords.length > 0) {
+                        currentRule.value.keywords.pop();
+                    }
+                };
+
+                const removeKeyword = (index) => {
+                    currentRule.value.keywords.splice(index, 1);
+                };
+
+                const selectAllOfficial = () => {
+                    const officialIds = officialSources.value.map(s => s.id);
+                    const newIds = [...new Set([...currentRule.value.sourceIds, ...officialIds])];
+                    currentRule.value.sourceIds = newIds;
+                };
+
+                const deselectAllOfficial = () => {
+                    const officialIds = new Set(officialSources.value.map(s => s.id));
+                    currentRule.value.sourceIds = currentRule.value.sourceIds.filter(id => !officialIds.has(id));
+                };
+
+                const selectAllWechat = () => {
+                    const wechatIds = wechatSources.value.map(s => s.id);
+                    const newIds = [...new Set([...currentRule.value.sourceIds, ...wechatIds])];
+                    currentRule.value.sourceIds = newIds;
+                };
+
+                const deselectAllWechat = () => {
+                    const wechatIds = new Set(wechatSources.value.map(s => s.id));
+                    currentRule.value.sourceIds = currentRule.value.sourceIds.filter(id => !wechatIds.has(id));
+                };
+
+                const saveRule = () => {
+                    if (keywordInput.value.trim()) {
+                        addKeyword();
+                    }
+                    
+                    if (!currentRule.value.start || !currentRule.value.end) {
+                        alert("请选择时间范围");
+                        return;
+                    }
+                    if (currentRule.value.sourceIds.length === 0) {
+                        alert("请至少选择一个信息源");
+                        return;
+                    }
+
+                    const ruleData = JSON.parse(JSON.stringify(currentRule.value));
+                    if (editingRuleIndex.value === -1) {
+                        rules.value.push(ruleData);
+                    } else {
+                        rules.value[editingRuleIndex.value] = ruleData;
+                    }
+                    closeRuleModal();
+                    fetchData();
+                };
+
+                const removeRule = (index) => {
+                    rules.value.splice(index, 1);
+                    fetchData();
+                };
+
+                const getSourceNames = (ids) => {
+                    if (ids.length === sourceList.value.length) return "全部来源";
+                    const names = ids.map(id => {
+                        const s = sourceList.value.find(src => src.id === id);
+                        return s ? s.name : id;
+                    });
+                    return names.join(", ");
+                };
+
+                // 格式化日期
+                const formatTime = (timeStr) => {
+                    if (!timeStr) return '未知时间';
+                    try {
+                        const date = new Date(timeStr);
+                        if (isNaN(date.getTime())) return timeStr;
+                        return date.toLocaleString('zh-CN', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                        }).replace(/\//g, '-');
+                    } catch (e) {
+                        return timeStr;
+                    }
+                };
+                
+                const formatExportDate = (dateStr) => {
+                    if (!dateStr) return '';
+                    const date = new Date(dateStr);
+                    return `${date.getMonth() + 1}月${date.getDate()}日`;
+                };
+
+                // 切换分类展开
+                const toggleSource = (id) => {
+                    const idx = activeSourceIds.value.indexOf(id);
+                    if (idx >= 0) {
+                        activeSourceIds.value.splice(idx, 1);
+                    } else {
+                        activeSourceIds.value.push(id);
+                    }
+                };
+
+                const isSourceExpanded = (id) => activeSourceIds.value.includes(id);
+
+                // 选择预览文章
+                const selectItem = (item) => {
+                    selectedItem.value = item;
+                };
+
+                // 从后端获取数据
+                const fetchData = async () => {
+                    isLoading.value = true;
+                    error.value = null;
+                    selectedItem.value = null;
+                    results.value = [];
+
+                    try {
+                        // 如果没有规则，则默认查询最近 7 天的所有来源
+                        let queryRules = rules.value;
+                        if (queryRules.length === 0) {
+                            const end = new Date().toISOString().split('T')[0];
+                            const start = new Date(new Date().setDate(new Date().getDate() - 7)).toISOString().split('T')[0];
+                            queryRules = [{
+                                start,
+                                end,
+                                sourceIds: sourceList.value.map(s => s.id),
+                                keywords: []
+                            }];
+                        }
+
+                        const allPromises = queryRules.map(async (rule) => {
+                            let endTime = rule.end;
+                            if (endTime) endTime = `${endTime}T23:59:59`;
+
+                            const params = new URLSearchParams({
+                                source_id: rule.sourceIds.join(','),
+                                start_time: rule.start,
+                                end_time: endTime,
+                            }).toString();
+
+                            const res = await axios.get(`${API_BASE_URL}/api/records?${params}`);
+                            let data = res.data || [];
+                            
+                            // 关键词过滤
+                            if (rule.keywords.length > 0) {
+                                data = data.filter(item => {
+                                    const text = ((item.title || "") + (item.content || "")).toLowerCase();
+                                    return rule.keywords.every(kw => text.includes(kw.toLowerCase()));
+                                });
+                            }
+                            return data;
+                        });
+
+                        const resultsArrays = await Promise.all(allPromises);
+                        
+                        // 合并与去重
+                        const merged = [];
+                        const seenIds = new Set();
+                        
+                        resultsArrays.forEach(arr => {
+                            arr.forEach(item => {
+                                if (!seenIds.has(item.id)) {
+                                    seenIds.add(item.id);
+                                    merged.push(item);
+                                }
+                            });
+                        });
+
+                        results.value = merged;
+                        
+                        // 默认不展开任何分类
+                        activeSourceIds.value = [];
+
+                    } catch (err) {
+                        console.error("API 请求失败:", err);
+                        if (err.response) {
+                            error.value = `服务器错误: ${err.response.status} ${err.response.statusText}`;
+                        } else if (err.request) {
+                            error.value = "无法连接到服务器。请检查后端服务是否正在运行。";
+                        } else {
+                            error.value = `请求失败: ${err.message}`;
+                        }
+                    } finally {
+                        isLoading.value = false;
+                    }
+                };
+
+                // 导出为 Word
+                const exportToWord = () => {
+                    const bodyFontSize = '12pt';
+                    const h1FontSize = '18pt';
+                    const h2FontSize = '12pt';
+                    const listFontSize = bodyFontSize;
+
+                    let htmlContent = `
+                        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                        <head>
+                            <meta charset="utf-8">
+                            <title>大学招生资讯</title>
+                            <!--[if gte mso 9]>
+                            <xml>
+                            <w:WordDocument>
+                                <w:View>Print</w:View>
+                                <w:Zoom>100</w:Zoom>
+                                <w:DoNotOptimizeForBrowser/>
+                            </w:WordDocument>
+                            </xml>
+                            <![endif]-->
+                            <style>
+                                body { font-family: 'SimSun','宋体',serif; font-size: ${bodyFontSize}; word-wrap: break-word; word-break: break-all; }
+                                p.title { text-align: center; font-family: 'SimHei','宋体',sans-serif; font-size: ${h1FontSize}; font-weight: bold; margin: 16px 0; }
+                                p.subtitle { font-family: 'SimHei','宋体',sans-serif; font-size: ${h2FontSize}; font-weight: bold; margin-top: 18px; margin-bottom: 8px; }
+                                p.content { margin-left: 24px; color: #000; font-size: ${bodyFontSize}; line-height: 1.5; word-wrap: break-word; word-break: break-all; }
+                                a { color: #0000FF; text-decoration: underline; font-size: ${bodyFontSize}; word-wrap: break-word; word-break: break-all; }
+                            </style>
+                        </head>
+                        <body>
+                            <p class="title"><b>大学招生资讯</b></p>
+                    `;
+
+                    groupedResults.value.forEach((source, index) => {
+                        htmlContent += `<p class="subtitle"><b>${index + 1}. ${source.name}：</b></p>`;
+                        
+                        if (source.items.length === 0) {
+                            htmlContent += `<p class="content">• 无相关推送</p>`;
+                        } else {
+                            source.items.forEach(item => {
+                                const clean = cleanUrl(item.url);
+                                htmlContent += `<p class="content">• ${item.title}<br/><a href="${clean}">${clean}</a></p>`;
+                            });
+                        }
+                    });
+
+                    htmlContent += `</body></html>`;
+                    
+                    const blob = new Blob(['\ufeff', htmlContent], { type: "application/msword;charset=utf-8" });
+                    saveAs(blob, `大学招生资讯_导出.doc`);
+                };
+
+                // 统一的链接精简函数
+                const cleanUrl = (url) => {
+                    if (!url) return '';
+                    return url.split('?')[0].split('#')[0];
+                };
+
+
+                // --- 生命周期 (Lifecycle) ---
+                onMounted(() => {
+                    fetchData();
+                });
+
+                // --- 返回 (Return) ---
+                return {
+                    sourceList,
+                    rules,
+                    showRuleModal,
+                    currentRule,
+                    editingRuleIndex,
+                    keywordInput,
+                    officialSources,
+                    wechatSources,
+                    isLoading,
+                    error,
+                    results,
+                    activeSourceIds,
+                    selectedItem,
+                    groupedResults,
+                    renderedContent,
+                    openRuleModal,
+                    editRule,
+                    closeRuleModal,
+                    addKeyword,
+                    removeKeyword,
+                    handleBackspace,
+                    selectAllOfficial,
+                    deselectAllOfficial,
+                    selectAllWechat,
+                    deselectAllWechat,
+                    saveRule,
+                    removeRule,
+                    getSourceNames,
+                    fetchData,
+                    toggleSource,
+                    isSourceExpanded,
+                    selectItem,
+                    formatTime,
+                    exportToWord,
+                    cleanUrl,
+                    showImageModal,
+                    previewImageUrl,
+                    closeImageModal,
+                    handleContentClick,
+                };
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+</html>
