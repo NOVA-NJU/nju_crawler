@@ -6,6 +6,7 @@ Loads `config/sources/wechat.json` and exposes `WECHAT_SOURCES` and runtime para
 from __future__ import annotations
 
 import os
+import sys
 import json
 from typing import Dict, Any, List, Union
 
@@ -31,10 +32,17 @@ TESSDATA_DIR = ""   # OCR数据目录路径，可用环境变量覆盖
 
 DATABASE_PATH = os.getenv("CRAWLER_DB_PATH", "./data/crawler.db")  # SQLite数据库文件路径
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def _runtime_base_dir() -> str:
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(os.path.abspath(sys.executable))
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+BASE_DIR = _runtime_base_dir()
 SOURCES_DIR = os.path.join(BASE_DIR, "config", "sources")
 WECHAT_CONFIG_FILE = os.path.join(SOURCES_DIR, "wechat.json")
-SESSION_FILE = os.path.join(BASE_DIR, "cfg", "session.json")
+SESSION_DIR = os.getenv("WECHAT_SESSION_DIR", os.path.join(BASE_DIR, "cfg"))
+SESSION_FILE = os.getenv("WECHAT_SESSION_FILE", os.path.join(SESSION_DIR, "session.json"))
 
 WECHAT_SOURCES: List[dict] = []
 WECHAT_SESSION: Dict[str, Any] = {}

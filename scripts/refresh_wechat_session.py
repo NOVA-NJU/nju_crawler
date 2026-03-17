@@ -13,7 +13,14 @@ import requests
 from requests import Response
 from requests.exceptions import RequestException, SSLError
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+def _runtime_project_root() -> Path:
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent.parent
+
+
+PROJECT_ROOT = _runtime_project_root()
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 

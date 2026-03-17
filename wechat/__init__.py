@@ -1,9 +1,15 @@
 """Wechat package exports.
 
-Expose the lifecycle manager so the main application can compose lifespans.
+Keep package import lightweight; lazily load optional runtime integrations.
 """
 
-from .lifecycle import wechat_lifespan  # re-export lifespan manager
-
 __all__ = ["wechat_lifespan"]
+
+
+def __getattr__(name: str):
+    if name == "wechat_lifespan":
+        from .lifecycle import wechat_lifespan
+
+        return wechat_lifespan
+    raise AttributeError(f"module 'wechat' has no attribute {name!r}")
 
