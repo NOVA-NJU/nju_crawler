@@ -1,190 +1,128 @@
-```
+# nju_crawler
+
+南京大学教育资讯聚合与抓取平台，支持：
+- 学院官网资讯抓取
+- 微信公众号会话刷新与采集
+- 统一 API 查询与存储
+
+## 目录结构
+
+```text
 nju_crawler/
-├─ main.py                # 主应用入口
-├─ requirements.txt       # 依赖列表
-├─ .env                   # 环境变量配置
-├─ crawler/               # 学院官网爬虫模块
-│    ├─ __init__.py
-│    ├─ config.py
-│    ├─ models.py
-│    ├─ services.py
-│    ├─ router.py
-│    └─ lifecycle.py
-├─ wechat/                # 微信公众号爬虫模块
-│    ├─ __init__.py
-│    ├─ config.py
-│    ├─ models.py
-│    ├─ services.py
-│    └─ router.py
-├─ storage/               # 公共数据库与API模块
-│    ├─ __init__.py
-│    ├─ config.py
-│    ├─ database.py
-│    └─ router.py         # 统一查询API
-└─ ...
+├─ main.py
+├─ requirements.txt
+├─ config/
+│  └─ sources/
+├─ crawler/
+├─ wechat/
+├─ storage/
+├─ scripts/
+│  ├─ refresh_wechat_session.py
+│  └─ refresh_wechat_session_gui.py
+└─ dist/
+   └─ refresh_wechat_session_gui.exe
 ```
 
-# 南京大学教育资讯爬虫平台（nju_crawler）
+## 快速开始（开发环境）
 
-本项目为南京大学教育资讯聚合与爬取平台，支持自动采集各学院官网及微信公众号的新闻、通知等内容，并通过统一 API 提供查询与导出。
+1. 创建虚拟环境
 
----
-
-## 一、环境准备
-
-- Python 3.8 及以上（推荐 3.10+）
-- Windows/Linux/macOS 均可运行
-- 推荐使用虚拟环境（venv）
-- 浏览器驱动（如 geckodriver for Firefox，需配合 Selenium 使用）
-- 微信公众号采集需有相关权限
-
-### 依赖安装
-
-1. 创建并激活虚拟环境：
-   ```bash
-   python -m venv venv
-   # Linux/macOS
-   source venv/bin/activate
-   # Windows
-   .\venv\Scripts\activate
-   ```
-2. 安装依赖：
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. 安装浏览器与驱动（以 Firefox/geckodriver 为例）：
-   - [下载 Firefox 浏览器](https://www.mozilla.org/zh-CN/firefox/new/)
-   - [下载 geckodriver](https://github.com/mozilla/geckodriver/releases)
-   - 将 geckodriver 放入项目目录或系统 PATH
-
-4. 配置环境变量（可选，推荐 .env 文件）：
-   在项目根目录新建 `.env`，如：
-   ```env
-   CRAWL_INTERVAL=3600
-   REQUEST_TIMEOUT=30
-   MAX_RETRIES=3
-   AUTO_CRAWL_ENABLED=true
-   CRAWLER_DB_PATH=./data/crawler.db
-   ```
-
----
-
-## 二、项目启动
-
-1. 启动主服务：
-   ```bash
-   python main.py
-   # 或开发模式
-   uvicorn main:app --reload
-   ```
-2. 访问 API 文档：
-   - Swagger UI: http://127.0.0.1:8000/docs
-   - ReDoc: http://127.0.0.1:8000/redoc
-
----
-
-## 三、目录结构说明
-
-```
-nju_crawler/
-├─ main.py                # 主应用入口
-├─ requirements.txt       # 依赖列表
-├─ .env                   # 环境变量配置
-├─ crawler/               # 官网爬虫模块
-├─ wechat/                # 公众号爬虫模块
-├─ storage/               # 数据库与API
-├─ config/sources/        # 官网与公众号源配置
-└─ ...
+```bash
+python -m venv venv
 ```
 
----
+Windows:
 
-## 四、自定义与添加数据源
+```bash
+.\venv\Scripts\activate
+```
 
-### 1. 添加/自定义官网源
+2. 安装依赖
 
-所有官网源配置均位于 `config/sources/` 目录下，每个学院/部门一个 JSON 文件（如 `arch.json`）。
+```bash
+pip install -r requirements.txt
+```
 
-**步骤：**
-1. 复制或新建一个 JSON 文件（如 `mycollege.json`）。
-2. 按如下结构填写：
-   ```json
-   {
-     "sources": [
-       {
-         "id": "mycollege_news",
-         "name": "我的学院-新闻",
-         "type": "api",  // 或 html
-         "base_url": "https://mycollege.nju.edu.cn",
-         "list_url": "https://mycollege.nju.edu.cn/news/index.html",
-         "pagination_mode": "api",  // 或 html
-         "api_url": "https://mycollege.nju.edu.cn/api/news",
-         "max_pages": 3,
-         "headers": { ... },
-         "payload": { ... },
-         "selectors": {
-           "item_container": "infolist",
-           "title": "title",
-           "date": "releasetime",
-           "url": "url"
-         }
-       }
-     ]
-   }
-   ```
-3. 主要字段说明：
-   - `id`：唯一标识，建议格式为“学院缩写_栏目名”
-   - `type`：数据获取方式，支持 `api` 或 `html`（页面解析）
-   - `selectors`：用于定位新闻列表、标题、时间、链接等字段的 CSS 选择器或 JSON 路径
-   - 其他字段可参考现有配置
-4. 配置完成后，可用如下命令测试：
-   ```bash
-   python test_config.py config/sources/mycollege.json mycollege_news
-   ```
+3. 启动服务
 
-### 2. 添加/自定义公众号源
+```bash
+python main.py
+```
 
-所有公众号源配置在 `config/sources/wechat.json` 文件中，为一个数组，每个对象代表一个公众号。
+API 文档：
+- `http://127.0.0.1:8000/docs`
+- `http://127.0.0.1:8000/redoc`
 
-**步骤：**
-1. 打开 `config/sources/wechat.json`，按如下格式添加：
-   ```json
-   {
-     "id": "wechat_xxxxxxxx",
-     "name": "我的公众号",
-     "biz": "xxxxxxxx",
-     "count": 5,
-     "created_at": 1234567890
-   }
-   ```
-   - `id`：格式为 `wechat_` + 公众号 biz 字段
-   - `name`：公众号名称
-   - `biz`：公众号唯一标识，可通过抓包或第三方工具获取
-   - `count`：每次采集的推文数量
-   - `created_at`：添加时间戳
-2. 保存后，重启服务即可生效。
+## 微信 Session 刷新工具（推荐给无 Python 环境用户）
 
----
+本仓库提供 GUI 可执行文件：
 
-## 五、常见问题与建议
+- `dist/refresh_wechat_session_gui.exe`
 
-- **依赖安装慢？** 可使用阿里云源：
-  ```bash
-  pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
-  ```
-- **Selenium 报错？** 检查浏览器与驱动版本匹配，驱动需在 PATH。
-- **公众号采集失败？** 需有对应权限，biz 可通过抓包获取。
-- **API 无数据？** 检查 config/sources/ 下的配置文件与源站点结构是否一致。
+对应 Release 下载：
+- [WeChat Session GUI EXE (2026-03-17)](https://github.com/NOVA-NJU/nju_crawler/releases/tag/v2026.03.17-wechat-session-gui)
 
----
+### 使用方式
 
-## 六、协作与开发规范
+1. 双击运行 `refresh_wechat_session_gui.exe`
+2. 点击“开始扫码并更新 Session”
+3. 在弹出的浏览器页面直接扫码登录（无需再保存二维码图片）
+4. 程序拿到 session 后会自动关闭浏览器，并上传到配置的接口
 
-- 推荐每位开发者使用虚拟环境，避免依赖冲突
-- 新增依赖请写入 `requirements.txt` 并同步
-- 敏感信息（如数据库路径、API 密钥）请用 `.env` 管理，勿提交到 Git
-- 统一通过 `main.py` 启动或集成到其他 FastAPI 项目
+### 产物位置
 
----
+- `session.json` 默认保存到：`<exe 同目录>/cfg/session.json`
+- 运行错误日志：`<exe 同目录>/refresh_wechat_session_error.log`
 
-如有问题请联系项目维护者。
+## 环境变量
+
+### Session 文件位置
+
+- `WECHAT_SESSION_DIR`：会话目录（默认 `<exe目录>/cfg`）
+- `WECHAT_SESSION_FILE`：会话文件完整路径（优先级高于 `WECHAT_SESSION_DIR`）
+
+### 上传配置
+
+- `WECHAT_SESSION_SYNC_URLS`：上传地址列表，逗号分隔
+- `WECHAT_SESSION_SYNC_AUTH_TOKEN`：Bearer Token
+- `WECHAT_SESSION_SYNC_HEADERS`：额外请求头 JSON
+- `WECHAT_SESSION_UPLOAD_MODE`：`json` 或 `file`
+- `WECHAT_SESSION_FILE_FIELD`：`file` 模式表单字段名
+- `WECHAT_SESSION_SYNC_TIMEOUT`：上传超时秒数
+
+### 浏览器优先顺序
+
+- `WECHAT_LOGIN_BROWSERS`：默认 `edge,firefox`
+
+示例：
+
+```env
+WECHAT_LOGIN_BROWSERS=edge,firefox
+WECHAT_SESSION_SYNC_URLS=https://example.com/api/session,https://example2.com/api/session
+WECHAT_SESSION_UPLOAD_MODE=json
+WECHAT_SESSION_SYNC_TIMEOUT=60
+```
+
+## 常见问题
+
+### 1. 点击开始后不弹浏览器
+
+- 先关闭已运行的旧版 exe 进程再重试
+- 查看错误日志：`refresh_wechat_session_error.log`
+
+### 2. 扫码后还提示失败
+
+- 检查网络是否可访问 `https://mp.weixin.qq.com/`
+- 检查目标上传接口是否可达、鉴权是否正确
+
+### 3. 浏览器驱动异常
+
+- 默认优先 Edge，失败回退 Firefox
+- 可通过 `WECHAT_LOGIN_BROWSERS` 调整顺序
+
+## 开发说明
+
+- 请勿提交敏感信息（token、cookie、私钥）
+- 新增依赖请同步 `requirements.txt`
+- 建议通过 PR 合并变更并保留变更说明
+
